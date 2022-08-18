@@ -1,0 +1,16 @@
+.icon {
+    display: flex;
+    justify-content: center;
+}
+
+.avatar {
+    border-radius: 50%;
+}
+.list{
+    position: relative;
+}
+.btn-delete{
+ position: absolute;
+ z-index: 999;
+ margin: 30px;
+}
