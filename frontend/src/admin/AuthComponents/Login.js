@@ -156,7 +156,7 @@ const Login = () => {
                   name="role"
                 >
                   <option value="">Select role</option>
-                  <option value="Admin">Admin</option>
+                  <option value="admin">Admin</option>
                   <option value="chairman">Chairman</option>
                   <option value="user">User</option>
                 </Input>
