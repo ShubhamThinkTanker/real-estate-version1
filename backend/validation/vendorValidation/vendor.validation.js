@@ -14,7 +14,7 @@ module.exports = async function validatecreateInput(data) {
     data.lastname = !isEmpty(data.lastname) ? data.lastname : "";
 
     if (Validator.isEmpty(data.name)) {
-        errors.name = "Name  is required";
+        errors.name = "First name  is required";
     }
     if (Validator.isEmpty(data.mobile_no)) {
         errors.mobile_no = "Mobile number  is required";
@@ -29,7 +29,7 @@ module.exports = async function validatecreateInput(data) {
         errors.address = "Address  is required";
     }
     if (Validator.isEmpty(data.lastname)) {
-        errors.lastname = "Lastname  is required";
+        errors.lastname = "Last name  is required";
     }
     if(data.mobile_no){
         var phoneno = /^\d{10}$/;

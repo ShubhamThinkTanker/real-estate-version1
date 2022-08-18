@@ -6,6 +6,8 @@ const { fileUploadToS3, deleteImage } = require("../../helper/s3aws");
 
 exports.chairmanCreate = async (reqbody, id, hash) => {
 	try {
+		console.log(reqbody, "reqbody");
+
 		var link = await fileUploadToS3(reqbody.profile_image);
 		const newUser = new ChairmanModel({
 			name: reqbody.name,
@@ -15,6 +17,11 @@ exports.chairmanCreate = async (reqbody, id, hash) => {
 			gender: reqbody.gender,
 			role: reqbody.role,
 			profile_image: link["link"],
+			address: reqbody.address,
+			city: reqbody.city,
+			state: reqbody.state,
+			country: reqbody.country,
+			status: reqbody.status || "active",
 			resetPasswordToken: reqbody.resetPasswordToken,
 			resetPasswordExpires: reqbody.resetPasswordExpires,
 			created_by: id
@@ -27,17 +34,21 @@ exports.chairmanCreate = async (reqbody, id, hash) => {
 };
 
 // ------***------  user Save Data Api -------****--------//
-exports.userCreate = async (reqbody, id) => {
+exports.userCreate = async (reqbody, id, hash) => {
 	try {
 		var link = await fileUploadToS3(reqbody.profile_image);
-		console.log(link, "link");
+
 		const newUsers = new ChairmanModel({
 			name: reqbody.name,
 			email: reqbody.email,
-			password: reqbody.password,
+			password: hash,
 			mobile_no: reqbody.mobile_no,
 			gender: reqbody.gender,
 			role: reqbody.role,
+			address: reqbody.address,
+			city: reqbody.city,
+			status: reqbody.status || "active",
+			country: reqbody.country,
 			profile_image: link["link"],
 			resetPasswordToken: reqbody.resetPasswordToken,
 			resetPasswordExpires: reqbody.resetPasswordExpires,
@@ -51,53 +62,9 @@ exports.userCreate = async (reqbody, id) => {
 	}
 }
 
-exports.chairmanCreate = async (reqbody, id, hash) => {
-	try {
-		var link = await fileUploadToS3(reqbody.profile_image, "Profile_Image")
-		const newChairman = new ChairmanModel({
-			name: reqbody.name,
-			email: reqbody.email,
-			password: hash,
-			mobile_no: reqbody.mobile_no,
-			gender: reqbody.gender,
-			role: reqbody.role,
-			profile_image: link['link'],
-			resetPasswordToken: reqbody.resetPasswordToken,
-			resetPasswordExpires: reqbody.resetPasswordExpires,
-			created_by: id,
-		});
-		return await newChairman.save();
-	} catch (error) {
-		console.log(" Add new User Error : ", error);
-		return { error: error };
-	}
-};
 
-// ------***------  user Save Data Api -------****--------//
-exports.userCreate = async (reqbody, id, hash) => {
-	try {
-		var link = await fileUploadToS3(reqbody.profile_image, "Profile_Image")
-		const newUsers = new ChairmanModel(
-			{
-				name: reqbody.name,
-				email: reqbody.email,
-				password: hash,
-				mobile_no: reqbody.mobile_no,
-				gender: reqbody.gender,
-				role: reqbody.role,
-				profile_image: link['link'],
-				resetPasswordToken: reqbody.resetPasswordToken,
-				resetPasswordExpires: reqbody.resetPasswordExpires,
-				created_by: id,
-			},
-		);
 
-		return await newUsers.save();
-	} catch (error) {
-		console.log("  Error-------------user : ", error);
-		return { error: error };
-	}
-};
+
 
 // ------***------  Check Email Exist Or Not -------****--------//
 
@@ -225,7 +192,7 @@ exports.getAllChairman = async (reqQuery, sort_array, filter_value) => {
 			var regex = new RegExp(filter_value, "i");
 			console.log(regex, ":regex");
 			filter_value = {
-				$or: [{ mobile_no: regex }, { email: regex }, { name: regex }]
+				$or: [{ mobile_no: regex }, { email: regex }, { name: regex }, { status: regex }]
 			};
 		} else {
 			filter_value = {};

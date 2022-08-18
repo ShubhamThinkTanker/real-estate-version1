@@ -63,7 +63,7 @@ const CustomHeader = (props) => {
 							color='primary'
 							tag={Link}
 							to={'/announcement/add'}>
-							Create Announcement
+							Create 
 						</Button.Ripple>
 					</div>
 				</Col>
@@ -236,7 +236,7 @@ const Table = ({ columns }) => {
 							handelDelete(e.selectedRows)
 						}
 						columns={columns}
-						data={getAllChairmanData?.data.Chairman_Details}
+						// data={getAllChairmanData?.data.Chairman_Details}
 						paginationServer
 						paginationRowsPerPageOptions={datatable_per_raw}
 						paginationPerPage={table_data.limit}

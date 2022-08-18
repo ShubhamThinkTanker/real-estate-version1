@@ -93,7 +93,6 @@ module.exports = {
     getone: async (res, id) => {
         try {
             let Announcement = await announcementmodel.findById({ _id: id });
-
             return Announcement;
         } catch (error) {
 

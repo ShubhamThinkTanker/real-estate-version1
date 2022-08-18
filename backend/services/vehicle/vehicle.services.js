@@ -68,6 +68,7 @@ module.exports = {
     delete: async (id) => {
         try {
             let deleteVehicle = await Vehicle.findByIdAndDelete(id);
+
             return deleteVehicle
         } catch (error) {
             console.log("Error : ", error);
@@ -78,7 +79,7 @@ module.exports = {
 
     deleteMultiple: async (id) => {
         try {
-            let deleteMultipleVehicle = await Vehicle.deleteMany({ '_id': { '$in': id } });
+            let deleteMultipleVehicle = await Vehicle.deleteMany({ _id: { $in: id } });
             console.log(deleteMultipleVehicle,"deleteMultipleVehicle");
             return deleteMultipleVehicle;
         } catch (error) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
+import { User, Smartphone, Home, Briefcase, Tool } from 'react-feather';
 import {
 	VendorGetAction,
 	EditVendorAction,
@@ -16,7 +16,12 @@ import {
 	Form,
 	Button,
 	Label,
+	FormGroup,
+	InputGroupAddon,
+	InputGroup,
+	InputGroupText,
 } from 'reactstrap';
+
 import { Link } from 'react-router-dom';
 import '@styles/react/libs/flatpickr/flatpickr.scss';
 import { VENDOR_EDIT_RESET } from '../../../redux/Constants/userConstants';
@@ -93,125 +98,198 @@ const EditVendor = () => {
 					<CardBody>
 						<Form onSubmit={(e) => onSubmit(e)}>
 							<Row>
-								<Col md='6' sm='12' className='mb-1'>
-									<Label className='form-label' for='name'>
-										First Name
-									</Label>
-									<Input
-										type='text'
-										name='name'
-										id='name'
-										placeholder='First Name'
-										defaultValue={vendor.name}
-										onChange={(e) => onInputChange(e)}
-									/>
-									{errorVendorEditData &&
-									errorVendorEditData.name ? (
-										<div className='error'>
-											{errorVendorEditData.name}
-										</div>
-									) : null}
+								<Col md='6' sm='12'>
+									<FormGroup className="mb-2">
+										<Label className='form-label' for='name'>
+											First Name
+										</Label>
+										<InputGroup className={errorVendorEditData && errorVendorEditData.name ? "is-invalid input-group-merge" : 'input-group-merge'}>
+											<InputGroupAddon addonType='prepend'>
+												<InputGroupText className={errorVendorEditData && errorVendorEditData.name ? "is-invalid" : ''}>
+													<User size={15} />
+												</InputGroupText>
+											</InputGroupAddon>
+											<Input
+												className='p-1'
+												type='text'
+												name='name'
+												id='name'
+												placeholder='First Name'
+												defaultValue={vendor.name}
+												onChange={(e) => onInputChange(e)}
+											/>
+										</InputGroup>
+										{errorVendorEditData &&
+											errorVendorEditData.name ? (
+											<div className='error'>
+												{errorVendorEditData.name}
+											</div>
+										) : null}
+									</FormGroup>
 								</Col>
-								<Col md='6' sm='12' className='mb-1'>
-									<Label
-										className='form-label'
-										for='lastname'>
-										Last Name
-									</Label>
-									<Input
-										type='text'
-										name='lastname'
-										id='lastname'
-										placeholder='Last Name'
-										defaultValue={vendor.lastname}
-										onChange={(e) => onInputChange(e)}
-									/>
-									{errorVendorEditData &&
-									errorVendorEditData.lastname ? (
-										<div className='error'>
-											{errorVendorEditData.lastname}
-										</div>
-									) : null}
+
+
+								<Col md='6' sm='12' >
+									<FormGroup className="mb-2">
+										<Label
+											className='form-label'
+											for='lastname'>
+											Last Name
+										</Label>
+										<InputGroup className={errorVendorEditData && errorVendorEditData.lastname ? "is-invalid input-group-merge" : 'input-group-merge'}>
+											<InputGroupAddon addonType='prepend'>
+												<InputGroupText className={errorVendorEditData && errorVendorEditData.lastname ? "is-invalid" : ''}>
+													<User size={15} />
+												</InputGroupText>
+											</InputGroupAddon>
+
+											<Input
+												className='p-1'
+												type='text'
+												name='lastname'
+												id='lastname'
+												placeholder='Last Name'
+												defaultValue={vendor.lastname}
+												onChange={(e) => onInputChange(e)}
+											/>
+										</InputGroup>
+										{errorVendorEditData &&
+											errorVendorEditData.lastname ? (
+											<div className='error'>
+												{errorVendorEditData.lastname}
+											</div>
+										) : null}
+									</FormGroup>
 								</Col>
-								<Col md='6' sm='12' className='mb-1'>
-									<Label
-										className='form-label'
-										for='mobile_no'>
-										Mobile No
-									</Label>
-									<Input
-										type='number'
-										name='mobile_no'
-										id='mobile_no'
-										placeholder='Mobile no'
-										defaultValue={vendor.mobile_no}
-										onChange={(e) => onInputChange(e)}
-									/>
-									{errorVendorEditData &&
-									errorVendorEditData.mobile_no ? (
-										<div className='error'>
-											{errorVendorEditData.mobile_no}
-										</div>
-									) : null}
+
+
+								<Col md='6' sm='12' >
+									<FormGroup className="mb-2">
+										<Label
+											className='form-label'
+											for='mobile_no'>
+											Mobile No
+										</Label>
+										<InputGroup className={errorVendorEditData && errorVendorEditData.mobile_no ? "is-invalid input-group-merge" : 'input-group-merge'}>
+											<InputGroupAddon addonType='prepend'>
+												<InputGroupText className={errorVendorEditData && errorVendorEditData.mobile_no ? "is-invalid" : ''}>
+													<Smartphone size={15} />
+												</InputGroupText>
+											</InputGroupAddon>
+
+											<Input
+												className='p-1'
+												type='number'
+												name='mobile_no'
+												id='mobile_no'
+												placeholder='Mobile no'
+												defaultValue={vendor.mobile_no}
+												onChange={(e) => onInputChange(e)}
+											/>
+										</InputGroup>
+										{errorVendorEditData &&
+											errorVendorEditData.mobile_no ? (
+											<div className='error'>
+												{errorVendorEditData.mobile_no}
+											</div>
+										) : null}
+									</FormGroup>
 								</Col>
-								<Col md='6' sm='12' className='mb-1'>
-									<Label
-										className='form-label'
-										for='profession'>
-										Profession
-									</Label>
-									<Input
-										type='text'
-										name='profession'
-										id='profession'
-										placeholder='Profession'
-										defaultValue={vendor.profession}
-										onChange={(e) => onInputChange(e)}
-									/>
-									{errorVendorEditData &&
-									errorVendorEditData.profession ? (
-										<div className='error'>
-											{errorVendorEditData.profession}
-										</div>
-									) : null}
+
+								<Col md='6' sm='12'>
+									<FormGroup className="mb-2">
+										<Label
+											className='form-label'
+											for='profession'>
+											Profession
+										</Label>
+										<InputGroup className={errorVendorEditData && errorVendorEditData.profession ? "is-invalid input-group-merge" : 'input-group-merge'}>
+											<InputGroupAddon addonType='prepend'>
+												<InputGroupText className={errorVendorEditData && errorVendorEditData.profession ? "is-invalid" : ''}>
+													<Briefcase size={15} />
+												</InputGroupText>
+											</InputGroupAddon>
+
+											<Input
+												className='p-1'
+												type='text'
+												name='profession'
+												id='profession'
+												placeholder='Profession'
+												defaultValue={vendor.profession}
+												onChange={(e) => onInputChange(e)}
+											/>
+										</InputGroup>
+										{errorVendorEditData &&
+											errorVendorEditData.profession ? (
+											<div className='error'>
+												{errorVendorEditData.profession}
+											</div>
+										) : null}
+									</FormGroup>
 								</Col>
-								<Col md='6' sm='12' className='mb-1'>
-									<Label className='form-label' for='service'>
-										Type of Service
-									</Label>
-									<Input
-										type='text'
-										name='services'
-										id='service'
-										placeholder='Service'
-										defaultValue={vendor.services}
-										onChange={(e) => onInputChange(e)}
-									/>
-									{errorVendorEditData &&
-									errorVendorEditData.services ? (
-										<div className='error'>
-											{errorVendorEditData.services}
-										</div>
-									) : null}
+
+
+								<Col md='6' sm='12' >
+									<FormGroup className="mb-2">
+										<Label className='form-label' for='service'>
+											Type of Service
+										</Label>
+										<InputGroup className={errorVendorEditData && errorVendorEditData.services ? "is-invalid input-group-merge" : 'input-group-merge'}>
+											<InputGroupAddon addonType='prepend'>
+												<InputGroupText className={errorVendorEditData && errorVendorEditData.services ? "is-invalid" : ''}>
+													<Tool size={15} />
+												</InputGroupText>
+											</InputGroupAddon>
+
+											<Input
+												className='p-1'
+												type='text'
+												name='services'
+												id='service'
+												placeholder='Service'
+												defaultValue={vendor.services}
+												onChange={(e) => onInputChange(e)}
+											/>
+										</InputGroup>
+										{errorVendorEditData &&
+											errorVendorEditData.services ? (
+											<div className='error'>
+												{errorVendorEditData.services}
+											</div>
+										) : null}
+									</FormGroup>
 								</Col>
-								<Col md='6' sm='12' className='mb-1'>
-									<Label className='form-label' for='address'>
-										Address
-									</Label>
-									<Input
-										type='text'
-										name='address'
-										id='address'
-										placeholder='Address'
-										defaultValue={vendor.address}
-										onChange={(e) => onInputChange(e)}
-									/>
-									{errorVendorEditData &&
-									errorVendorEditData.address ? (
-										<div className='error'>
-											{errorVendorEditData.address}
-										</div>
-									) : null}
+
+								<Col md='6' sm='12' >
+									<FormGroup className="mb-2">
+										<Label className='form-label' for='address'>
+											Address
+										</Label>
+										<InputGroup className={errorVendorEditData && errorVendorEditData.address ? "is-invalid input-group-merge" : 'input-group-merge'}>
+											<InputGroupAddon addonType='prepend'>
+												<InputGroupText className={errorVendorEditData && errorVendorEditData.address ? "is-invalid" : ''}>
+													<Home size={15} />
+												</InputGroupText>
+											</InputGroupAddon>
+											<Input
+												className='p-1'
+												type='textarea'
+												rows='2'
+												name='address'
+												id='address'
+												placeholder='Address'
+												defaultValue={vendor.address}
+												onChange={(e) => onInputChange(e)}
+											/>
+										</InputGroup>
+										{errorVendorEditData &&
+											errorVendorEditData.address ? (
+											<div className='error'>
+												{errorVendorEditData.address}
+											</div>
+										) : null}
+									</FormGroup>
 								</Col>
 								<Col sm='12'>
 									<div className='d-flex '>

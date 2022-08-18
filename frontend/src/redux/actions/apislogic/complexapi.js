@@ -1,91 +1,178 @@
-import axios from "axios";
-import { configHeader } from "../../../localstorage/localdata";
+import axios from 'axios';
+import { configHeader } from '../../../localstorage/localdata';
 import {
-  COMPLEX_CREATE_ERROR,
-  COMPLEX_CREATE_REQUEST,
-  COMPLEX_CREATE_SUCCESS,
-  COMPLEX_GET_ERROR,
-  COMPLEX_GET_REQUEST,
-  COMPLEX_GET_SUCCESS,
-  COMPLEX_LIST_ERROR,
-  COMPLEX_LIST_REQUEST,
-  COMPLEX_LIST_SUCCESS
-} from "../../Constants/userConstants";
+	COMPLEX_CREATE_ERROR,
+	COMPLEX_CREATE_REQUEST,
+	COMPLEX_CREATE_SUCCESS,
+	COMPLEX_GET_ERROR,
+	COMPLEX_GET_REQUEST,
+	COMPLEX_GET_SUCCESS,
+	COMPLEX_LIST_ERROR,
+	COMPLEX_LIST_REQUEST,
+	COMPLEX_LIST_SUCCESS,
+	COMPLEX_EDIT_REQUEST,
+	COMPLEX_EDIT_ERROR,
+	COMPLEX_EDIT_SUCCESS,
+	COMPLEX_DELETE_ERROR,
+	COMPLEX_DELETE_REQUEST,
+	COMPLEX_DELETE_SUCCESS,
+	COMPLEX_MULTI_DELETE_REQUEST,
+	COMPLEX_MULTI_DELETE_SUCCESS,
+	COMPLEX_MULTI_DELETE_ERROR,
+} from '../../Constants/userConstants';
 
 export const ComplexListAction = (queryString) => async (dispatch) => {
-  try {
-    dispatch({
-      type: COMPLEX_LIST_REQUEST
-    });
+	try {
+		dispatch({
+			type: COMPLEX_LIST_REQUEST,
+		});
 
-    const { data } = await axios.get(
-      "/realestate/find?" + queryString,
-      configHeader
-    );
+		const { data } = await axios.get(
+			'/realestate/find?' + queryString,
+			configHeader
+		);
 
-    dispatch({
-      type: COMPLEX_LIST_SUCCESS,
-      payload: data
-    });
-  } catch (error) {
-    dispatch({
-      type: COMPLEX_LIST_ERROR,
-      payload:
-        error.response && error.response.data.errors
-          ? error.response.data.errors
-          : error.message
-    });
-  }
+		dispatch({
+			type: COMPLEX_LIST_SUCCESS,
+			payload: data,
+		});
+	} catch (error) {
+		dispatch({
+			type: COMPLEX_LIST_ERROR,
+			payload:
+				error.response && error.response.data.errors
+					? error.response.data.errors
+					: error.message,
+		});
+	}
 };
 
 export const ComplexGetAction = (complexid) => async (dispatch) => {
-  try {
-    dispatch({
-      type: COMPLEX_GET_REQUEST
-    });
-    const { data } = await axios.get(
-      `/realestate/findid/${complexid}`,
-      configHeader
-    );
+	try {
+		dispatch({
+			type: COMPLEX_GET_REQUEST,
+		});
+		const { data } = await axios.get(
+			`/realestate/findid/${complexid}`,
+			configHeader
+		);
 
-    dispatch({
-      type: COMPLEX_GET_SUCCESS,
-      payload: data
-    });
-  } catch (error) {
-    dispatch({
-      type: COMPLEX_GET_ERROR,
-      payload:
-        error.response && error.response.data.errors
-          ? error.response.data.errors
-          : error.message
-    });
-  }
+		dispatch({
+			type: COMPLEX_GET_SUCCESS,
+			payload: data,
+		});
+	} catch (error) {
+		dispatch({
+			type: COMPLEX_GET_ERROR,
+			payload:
+				error.response && error.response.data.errors
+					? error.response.data.errors
+					: error.message,
+		});
+	}
 };
 
 export const ComplexCreateAction = (realestateData) => async (dispatch) => {
-  try {
-    dispatch({
-      type: COMPLEX_CREATE_REQUEST
-    });
+	try {
+		dispatch({
+			type: COMPLEX_CREATE_REQUEST,
+		});
 
-    const { data } = await axios.post(
-      `/realestate/add`,
-      realestateData,
-      configHeader
-    );
+		const { data } = await axios.post(
+			`/realestate/add`,
+			realestateData,
+			configHeader
+		);
 
-    dispatch({
-      type: COMPLEX_CREATE_SUCCESS,
-      payload: data
-    });
-  } catch (error) {
-    dispatch({
-      type: COMPLEX_CREATE_ERROR,
-      payload:
-        error.response && error.response.data.errors
-          ? error.response.data.errors
-          : error.message
-    });
-  }
+		dispatch({
+			type: COMPLEX_CREATE_SUCCESS,
+			payload: data,
+		});
+	} catch (error) {
+		dispatch({
+			type: COMPLEX_CREATE_ERROR,
+			payload:
+				error.response && error.response.data.errors
+					? error.response.data.errors
+					: error.message,
+		});
+	}
+};
+
+export const EditComplexAction =
+	(updateid, complexdata) => async (dispatch) => {
+		try {
+			dispatch({
+				type: COMPLEX_EDIT_REQUEST,
+			});
+
+			const { data } = await axios.put(
+				`/realestate/update/${updateid}`,
+				complexdata,
+				{
+					configHeader,
+				}
+			);
+
+			dispatch({
+				type: COMPLEX_EDIT_SUCCESS,
+				payload: data,
+			});
+		} catch (error) {
+			dispatch({
+				type: COMPLEX_EDIT_ERROR,
+				payload:
+					error.response && error.response.data.errors
+						? error.response.data.errors
+						: error.message,
+			});
+		}
+	};
+export const ComplexDeleteAction = (deleteid) => async (dispatch) => {
+	try {
+		dispatch({
+			type: COMPLEX_DELETE_REQUEST,
+		});
+
+		const { data } = await axios.delete(
+			`/realestate/delete/${deleteid}`,
+			configHeader
+		);
+
+		dispatch({
+			type: COMPLEX_DELETE_SUCCESS,
+			payload: data,
+		});
+	} catch (error) {
+		dispatch({
+			type: COMPLEX_DELETE_ERROR,
+			payload:
+				error.response && error.response.data.errors
+					? error.response.data.errors
+					: error.message,
+		});
+	}
+};
+
+export const ComplexMultiAction = (multiid) => async (dispatch) => {
+	try {
+		dispatch({
+			type: COMPLEX_MULTI_DELETE_REQUEST,
+		});
+
+		const { data } = await axios.post(`/realestate/delete_many/`, multiid);
+
+		dispatch({
+			type: COMPLEX_MULTI_DELETE_SUCCESS,
+			payload: data,
+		});
+	} catch (error) {
+		dispatch({
+			type: COMPLEX_MULTI_DELETE_ERROR,
+			payload:
+				error.response && error.response.data.errors
+					? error.response.data.errors
+					: error.message,
+		});
+	}
 };

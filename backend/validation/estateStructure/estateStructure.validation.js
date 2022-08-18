@@ -2,7 +2,7 @@ const Validator = require("validator");
 const isEmpty = require("../isEmpty");
 
 
-module.exports = function                           validateEstateStructure(data) {
+module.exports = function                      validateEstateStructure(data) {
 
     let errors = {};
      

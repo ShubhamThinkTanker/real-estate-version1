@@ -14,10 +14,26 @@ const validateForgotPasswordInput = require('../../validation/userValidation/for
 const validateForgotChagePasswordInput = require("../../validation/userValidation/resetPasswordValidation");
 const { deleteImage } = require("../../helper/s3aws");
 var generator = require("generate-password");
-
+const { Country, State, City } = require("country-state-city")
 
 module.exports = {
 
+
+    GetAllCountry: async (req, res, next) => {
+        try {
+
+            // let Countrys = require('country-state-city').Country;
+            let State = require('country-state-city').State;
+            res.json({ "message": State.getAllStates() })
+
+
+
+            console.log(State.getAllStates(), ":Country");
+
+        } catch (error) {
+            console.log(error, ":error");
+        }
+    },
 
 
 
@@ -48,9 +64,9 @@ module.exports = {
                 return commonResponse.customErrorResponse(res, 422, 'Something went wrong', errors);
             }
 
-            if (req.files != undefined && req.files.profile_image != undefined) {
-                req.body.profile_image = req.files.profile_image;
-            }
+            // if (req.files != undefined && req.files.profile_image != undefined) {
+            //     req.body.profile_image = req.files.profile_image;
+            // }
 
             var password = generator.generate({
                 length: 10,
@@ -142,7 +158,7 @@ module.exports = {
                 numbers: true,
             });
             bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(password, salt, async (err, hash) => {
+                bcrypt.hash(password, salt, async (err,) => {
                     if (err) throw err;
                     const email = req.body.email
 
@@ -325,7 +341,7 @@ module.exports = {
             let filter_value = req.query.filter_value || "";
             let findAllUser = await ChairmanService.getAllChairman(req.query, sort_array, filter_value);
             let Total_count = await ChairmanModel.countDocuments({ role: "chairman" })
-            console.log(Total_count, ":Total_count");
+            // console.log(Total_count, ":Total_count");
             if (findAllUser) {
                 return commonResponse.success(res, 200, 'Successfully get All Chairman', { TotalCount: Total_count, Chairman_Details: findAllUser });
             } else {

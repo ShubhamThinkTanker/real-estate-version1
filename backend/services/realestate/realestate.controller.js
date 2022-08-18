@@ -118,4 +118,26 @@ module.exports = {
         }
     },
 
+    deleteMulti: async (req, res, next) => {
+        try {
+            let id = req.body.id
+
+            id.forEach(element => {
+                if (element.replace(/\s/g, "") == "") {
+                    return commonResponse.customErrorResponse(res, 422, 'Empty String Does Note Accepted');
+                }
+            });
+
+            let Realestate = await realestateservices.deletemulti(id);
+            if (Realestate.deletedCount == 0) {
+                return commonResponse.customErrorResponse(res, 422, 'Realestate Not deleted of this id');
+            }
+
+            commonResponse.success(res, 200, "successfully deleted multiple", Realestate);
+
+        } catch (error) {
+            return next(error);
+        }
+    }
+
 }

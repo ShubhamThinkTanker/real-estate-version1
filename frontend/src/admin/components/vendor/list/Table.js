@@ -55,7 +55,7 @@ const CustomHeader = (props) => {
 							color='primary'
 							tag={Link}
 							to={'/vendor/add'}>
-							Create Vendor
+							Create
 						</Button.Ripple>
 					</div>
 				</Col>
@@ -73,7 +73,7 @@ const Table = ({ columns }) => {
 		dispatch(VendorListAction());
 	}, []);
 
-	// ** Chairman filter options
+	// ** Vendor filter options
 
 	const [deletedRow, setDeletedRow] = useState([]);
 

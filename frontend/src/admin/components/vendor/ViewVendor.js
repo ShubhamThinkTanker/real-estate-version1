@@ -11,8 +11,12 @@ import {
 	Form,
 	Button,
 	Label,
+	FormGroup,
+	InputGroup,
+	InputGroupText,
+	InputGroupAddon
 } from 'reactstrap';
-
+import { Briefcase, Smartphone, User, Tool, Home } from 'react-feather';
 function ViewVendor() {
 	const { id } = useParams();
 	const dispatch = useDispatch();
@@ -30,101 +34,166 @@ function ViewVendor() {
 					<CardBody>
 						<Form onSubmit={(e) => onSubmit(e)}>
 							<Row>
-								<Col md='6' sm='12' className='mb-1'>
-									<Label className='form-label' for='name'>
-										First Name
-									</Label>
-									<Input
-										type='text'
-										name='name'
-										id='name'
-										placeholder='First Name'
-										disabled={true}
-										defaultValue={
-											getVendorsRecords['data'].name
-										}
-									/>
+								<Col md='6' sm='12'>
+									<FormGroup className="mb-2">
+										<Label className='form-label' for='name'>
+											First Name
+										</Label>
+										<InputGroup className='input-group-merge disabled'>
+											<InputGroupAddon addonType='prepend'>
+												<InputGroupText>
+													<User size={15} />
+												</InputGroupText>
+											</InputGroupAddon>
+											<Input
+												className='p-1'
+												type='text'
+												name='name'
+												id='name'
+												placeholder='First Name'
+												disabled={true}
+												defaultValue={
+													getVendorsRecords['data'].name
+												}
+											/>
+										</InputGroup>
+									</FormGroup>
 								</Col>
-								<Col md='6' sm='12' className='mb-1'>
-									<Label
-										className='form-label'
-										for='lastname'>
-										Last Name
-									</Label>
-									<Input
-										type='text'
-										name='lastname'
-										id='lastname'
-										placeholder='Last Name'
-										disabled={true}
-										defaultValue={
-											getVendorsRecords['data'].lastname
-										}
-									/>
+								<Col md='6' sm='12'>
+									<FormGroup className="mb-2">
+										<Label
+											className='form-label'
+											for='lastname'>
+											Last Name
+										</Label>
+										<InputGroup className='input-group-merge disabled'>
+											<InputGroupAddon addonType='prepend'>
+												<InputGroupText>
+													<User size={15} />
+												</InputGroupText>
+											</InputGroupAddon>
+
+											<Input
+												className='p-1'
+												type='text'
+												name='lastname'
+												id='lastname'
+												placeholder='Last Name'
+												disabled={true}
+												defaultValue={
+													getVendorsRecords['data']
+														.lastname
+												}
+											/>
+										</InputGroup>
+									</FormGroup>
 								</Col>
-								<Col md='6' sm='12' className='mb-1'>
+								<Col md='6' sm='12'>
+								<FormGroup className="mb-2">
 									<Label
 										className='form-label'
 										for='mobile_no'>
 										Mobile No
 									</Label>
-									<Input
-										type='number'
-										name='mobile_no'
-										id='mobile_no'
-										placeholder='Mobile no'
-										disabled={true}
-										defaultValue={
-											getVendorsRecords['data'].mobile_no
-										}
-									/>
+									<InputGroup className='input-group-merge disabled'>
+									<InputGroupAddon addonType='prepend'>
+										<InputGroupText>
+											<Smartphone size={15} />
+										</InputGroupText>
+										</InputGroupAddon>
+										<Input
+											className='p-1'
+											type='number'
+											name='mobile_no'
+											id='mobile_no'
+											placeholder='Mobile no'
+											disabled={true}
+											defaultValue={
+												getVendorsRecords['data']
+													.mobile_no
+											}
+										/>
+									</InputGroup>
+									</FormGroup>
 								</Col>
-								<Col md='6' sm='12' className='mb-1'>
+								<Col md='6' sm='12'>
+								<FormGroup className="mb-2">
 									<Label
 										className='form-label'
 										for='profession'>
 										Profession
 									</Label>
-									<Input
-										type='text'
-										name='profession'
-										id='profession'
-										placeholder='Profession'
-										disabled={true}
-										defaultValue={
-											getVendorsRecords['data'].profession
-										}
-									/>
+									<InputGroup className='input-group-merge disabled'>
+									<InputGroupAddon addonType='prepend'>
+										<InputGroupText>
+											<Briefcase size={15} />
+										</InputGroupText>
+										</InputGroupAddon>
+										<Input
+											className='p-1'
+											type='text'
+											name='profession'
+											id='profession'
+											placeholder='Profession'
+											disabled={true}
+											defaultValue={
+												getVendorsRecords['data']
+													.profession
+											}
+										/>
+									</InputGroup>
+									</FormGroup>
 								</Col>
-								<Col md='6' sm='12' className='mb-1'>
+								<Col md='6' sm='12' >
+								<FormGroup className="mb-2">
 									<Label className='form-label' for='service'>
 										Type of Service
 									</Label>
-									<Input
-										type='text'
-										name='services'
-										id='service'
-										placeholder='Service'
-										disabled={true}
-										defaultValue={
-											getVendorsRecords['data'].services
-										}
-									/>
+									<InputGroup className='input-group-merge disabled'>
+									<InputGroupAddon addonType='prepend'>
+										<InputGroupText>
+											<Tool size={15} />
+										</InputGroupText>
+										</InputGroupAddon>
+										<Input
+											className='p-1'
+											type='text'
+											name='services'
+											id='service'
+											placeholder='Service'
+											disabled={true}
+											defaultValue={
+												getVendorsRecords['data']
+													.services
+											}
+										/>
+									</InputGroup>
+									</FormGroup>
 								</Col>
-								<Col md='6' sm='12' className='mb-1'>
+								<Col md='6' sm='12'>
+								<FormGroup className="mb-2">
 									<Label className='form-label' for='address'>
 										Address
 									</Label>
-									<Input
-										type='text'
-										name='address'
-										id='address'
-										placeholder='Address'
-										disabled={true}
-										defaultValue={
-											getVendorsRecords['data'].address
-										}
-									/>
+									<InputGroup className='input-group-merge disabled'>
+									<InputGroupAddon addonType='prepend'>
+										<InputGroupText>
+											<Home size={15} />
+										</InputGroupText>
+										</InputGroupAddon>
+										<Input
+											type='text'
+											name='address'
+											id='address'
+											placeholder='Address'
+											disabled={true}
+											defaultValue={
+												getVendorsRecords['data']
+													.address
+											}
+										/>
+									</InputGroup>
+									</FormGroup>
 								</Col>
 								<Col sm='12'>
 									<Button.Ripple

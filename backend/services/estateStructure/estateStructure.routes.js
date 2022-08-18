@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const estateStructurecontroller = require('./estateStructure.controller')
 
-
+const {ensureAuthenticatedChairman} = require('../../helper/guards')
 router.post(
-    '/create',
+    '/create',ensureAuthenticatedChairman,
     estateStructurecontroller.addEstateStructure);
 
 
@@ -17,12 +17,16 @@ router.get(
 
 
 router.put(
-    '/update/:id',
+    '/update/:id',ensureAuthenticatedChairman,
     estateStructurecontroller.updateEstateStructure);
 
 
 router.delete(
     '/delete/:id',
     estateStructurecontroller.deleteEstateStructure);
+
+router.delete(
+        '/delete_multiple_estatestructure',
+        estateStructurecontroller.deleteMultipleEstateStructure);
 
 module.exports = router;

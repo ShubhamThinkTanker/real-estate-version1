@@ -1,0 +1,1 @@
+{"version":3,"sources":["admin/components/announcement/EditAnnouncement.js"],"names":["EditAnnouncement"],"mappings":"mJAAA,uBAMeA,UAJf,WACC,OAAO","file":"static/js/40.4027e17a.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nfunction EditAnnouncement() {\r\n\treturn <div>EditAnnouncement</div>;\r\n}\r\n\r\nexport default EditAnnouncement;\r\n"],"sourceRoot":""}

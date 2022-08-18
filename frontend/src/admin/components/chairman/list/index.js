@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
-import { UncontrolledDropdown } from 'reactstrap';
+import { Badge, UncontrolledDropdown } from 'reactstrap';
 import { Edit, Eye, Trash2, User, Users } from 'react-feather';
 import '../../../../components-css/userandchairman.css';
 import { UserDeleteAction } from '../../../../redux/actions/apislogic/userapis';
@@ -101,7 +101,7 @@ const ChairmanList = () => {
 
 	const columns = [
 		{
-			name: 'Name',
+			name: 'Full Name',
 			minWidth: '230px',
 			selector: 'name',
 			sortable: true,
@@ -134,6 +134,27 @@ const ChairmanList = () => {
 			selector: 'role',
 			cell: (row) => renderRole(row),
 			sortable: false,
+		},
+
+		{
+			name: 'Status',
+			minWidth: '120px',
+			selector: 'status',
+			cell: (row) => {
+				console.log(row.status);
+				return (
+					<Badge
+						color={
+							row.status === 'active'
+								? 'light-success'
+								: 'light-danger'
+						}
+						pill>
+						{row.status.toUpperCase()}
+					</Badge>
+				);
+			},
+			sortable: true,
 		},
 
 		{

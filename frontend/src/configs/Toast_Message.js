@@ -4,10 +4,8 @@ import { toast } from 'react-toastify';
 import { ChairmanListAction } from '../redux/actions/apislogic/chairmanapis';
 import { ComplexCreateAction } from '../redux/actions/apislogic/complexapi';
 import { UserListAction } from '../redux/actions/apislogic/userapis';
-import {
-	VendorGetAction,
-	VendorListAction,
-} from '../redux/actions/apislogic/vendorapis';
+import { VendorListAction } from '../redux/actions/apislogic/vendorapis';
+import { ComplexListAction } from '../redux/actions/apislogic/complexapi';
 import {
 	CHAIRMAN_REGISTER_RESET,
 	COMPLEX_CREATE_RESET,
@@ -19,7 +17,11 @@ import {
 	VENDOR_EDIT_RESET,
 	VENDOR_MULTI_DELETE_RESET,
 	VENDOR_REGISTER_RESET,
+	COMPLEX_EDIT_RESET,
+	COMPLEX_DELETE_RESET,
+	COMPLEX_MULTI_DELETE_RESET,
 } from '../redux/Constants/userConstants';
+import { Toast, ToastBody, ToastHeader, Spinner, Row, Col } from 'reactstrap';
 
 // Chairman message
 export const User_Chairman_Message = (setDeletedRow) => {
@@ -35,9 +37,15 @@ export const User_Chairman_Message = (setDeletedRow) => {
 
 	useEffect(() => {
 		if (ChairmanRegisterData) {
-			toast.success('Chairman create successfully', {
-				className: 'toast-success-btn',
-			});
+			<Toast>
+				<ToastHeader close={close} icon='success'>
+					Success
+				</ToastHeader>
+				<ToastBody>Chairman Created Successfully</ToastBody>
+			</Toast>;
+			// toast.success('Chairman create successfully', {
+			// 	className: 'toast-success-btn',
+			// });
 			dispatch({ type: CHAIRMAN_REGISTER_RESET });
 			dispatch(ChairmanListAction());
 		} else if (UserEditData) {
@@ -82,9 +90,15 @@ export const User_Data_Message = (setDeletedRow) => {
 
 	useEffect(() => {
 		if (UserRegisterData) {
-			toast.success('User create successfully', {
-				className: 'toast-success-btn',
-			});
+			<Toast>
+				<ToastHeader close={close} icon='success'>
+					Success
+				</ToastHeader>
+				<ToastBody>User create successfully</ToastBody>
+			</Toast>;
+			// toast.success('User create successfully', {
+			// 	className: 'toast-success-btn',
+			// });
 			dispatch({ type: USER_REGISTER_RESET });
 		} else if (UserEditData) {
 			toast.success('User update successfully', {
@@ -119,7 +133,14 @@ export const Complex_Data_Message = (setDeletedRow) => {
 	const dispatch = useDispatch();
 	const addComplexRecord = useSelector((state) => state.createComplexRecord);
 	const { ComplexCreateData } = addComplexRecord;
-
+	const EditDataMessage = useSelector((state) => state.EditComplexData);
+	const { ComplexEditData } = EditDataMessage;
+	const deleteresponse = useSelector((state) => state.DeleteComplex);
+	var { deleteComplexData } = deleteresponse;
+	const complexDeleteMulti = useSelector(
+		(state) => state.ComplexdeleteMultiData
+	);
+	const { ComplexdeleteMultiData } = complexDeleteMulti;
 	useEffect(() => {
 		if (ComplexCreateData) {
 			toast.success('Realestate create successfully', {
@@ -127,8 +148,32 @@ export const Complex_Data_Message = (setDeletedRow) => {
 			});
 			dispatch({ type: COMPLEX_CREATE_RESET });
 			dispatch(ComplexCreateAction());
+		} else if (ComplexEditData) {
+			toast.success('Realestate Update Successfully', {
+				className: 'toast-success-btn',
+			});
+			dispatch({ type: COMPLEX_EDIT_RESET });
+		} else if (deleteComplexData) {
+			toast.error('Realestate delete successfully!', {
+				className: 'toast-delete-btn ',
+			});
+			dispatch({ type: COMPLEX_DELETE_RESET });
+			dispatch(ComplexListAction());
+		} else if (ComplexdeleteMultiData) {
+			toast.error('Data delete successfully!', {
+				className: 'toast-user-delete-btn',
+			});
+			dispatch({ type: COMPLEX_MULTI_DELETE_RESET });
+			dispatch(ComplexListAction());
+			setDeletedRow([]);
 		}
-	}, [dispatch, ComplexCreateData]);
+	}, [
+		dispatch,
+		ComplexCreateData,
+		ComplexEditData,
+		deleteComplexData,
+		ComplexdeleteMultiData,
+	]);
 };
 
 // Vendor message
@@ -154,18 +199,18 @@ export const Vendor_Data_Message = (setDeletedRow) => {
 			dispatch({ type: VENDOR_REGISTER_RESET });
 		} else if (deleteVendorData) {
 			toast.error('Data delete successfully!', {
-				className: 'toast-delete-btn ',
+				// className: 'toast-delete-btn ',
 			});
 			dispatch({ type: VENDOR_DELETE_RESET });
 			dispatch(VendorListAction());
 		} else if (VendorEditData) {
 			toast.success('Vendor Update Successfully', {
-				className: 'toast-success-btn',
+				// className: 'toast-success-btn',
 			});
 			dispatch({ type: VENDOR_EDIT_RESET });
 		} else if (VendordeleteMultiData) {
 			toast.error('Data delete successfully!', {
-				className: 'toast-user-delete-btn',
+				// className: 'toast-user-delete-btn',
 			});
 			dispatch({ type: VENDOR_MULTI_DELETE_RESET });
 			dispatch(VendorListAction());

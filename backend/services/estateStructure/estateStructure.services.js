@@ -2,9 +2,13 @@ const EstateStructure = require('./estateStructure.model')
 const { commonResponse } = require("../../helper");
 
 module.exports = {
-    save: async (data) => {
+    save: async (reqBody, id) => {
         try {
-            const newEstateStructure = new EstateStructure(data);
+            const newEstateStructure = new EstateStructure({
+                real_estates_id: id,
+                estate: reqBody.estate
+            });
+            console.log(newEstateStructure, "newEstateStructure");
             return await newEstateStructure.save();
         } catch (error) {
             console.log("Error : ", error);
@@ -25,9 +29,6 @@ module.exports = {
     get: async (id) => {
         try {
             let getEsatateStructureBYId = await EstateStructure.findById({ _id: id }).lean();
-
-
-
             if (getEsatateStructureBYId || getEsatateStructureBYId != null) {
                 return getEsatateStructureBYId;
             }
@@ -37,12 +38,12 @@ module.exports = {
         }
     },
 
-    update: async (id, reqBody) => {
+    update: async ( reqBody,id) => {
+ 
         try {
             let updateEstateStructureData = await EstateStructure.findOneAndUpdate({ _id: id }, { $set: reqBody }, { new: true, }).lean();
-            if (!updateEstateStructureData || updateEstateStructureData != null) {
-                return updateEstateStructureData;
-            }
+            return updateEstateStructureData;
+
         } catch (error) {
             console.log("Error : ", error);
             return new Error(error);
@@ -52,16 +53,23 @@ module.exports = {
     delete: async (id) => {
 
         try {
-            let deleteEstateStructureData = await EstateStructure.findOneAndDelete({ _id: id }).lean();
-
-            if (!deleteEstateStructureData || deleteEstateStructureData != null) {
-                return deleteEstateStructureData;
-            }
+            let deleteEstateStructureData = await EstateStructure.findOneAndDelete(id);
+            return deleteEstateStructureData
 
         } catch (error) {
             console.log("Error : ", error);
             return new Error(error);
         }
 
+    },
+
+    deleteMultiple: async (id) => {
+        try {
+            let deleteMultipleEstateStructure = await EstateStructure.deleteMany({ _id: { $in: id } });
+            return deleteMultipleEstateStructure;
+        } catch (error) {
+            console.log('Error : ', error);
+            return new Error(error);
+        }
     },
 }

@@ -128,38 +128,29 @@ module.exports = {
                 return commonResponse.customErrorResponse(res, 422, 'Enter a valid id');
             }
             let deleteVehicle = await vehicleServices.delete(id)
-            if (!deleteVehicle) {
-                return commonResponse.customErrorResponse(res, 422, 'Vehicle not found in this id');
+
+            if (deleteVehicle) {
+                return commonResponse.success(res, 200, "successfully delete vehicle", deleteVehicle);
             }
-            return commonResponse.success(res, 200, "successfully delete vehicle", deleteVehicle);
+            return commonResponse.customErrorResponse(res, 422, 'Something went wrong');
         } catch (error) {
             console.log(" Not delete vehicle --> ", error);
             return next(error);
         }
     },
 
-        // -- delete multiple vehicle   -- //
-    deleteMultiplevehicle: async(req,res,next)=>{
+    // -- delete multiple vehicle   -- //
+
+    deleteMultiplevehicle: async (req, res, next) => {
         try {
             let id = req.body.id
-            if(id && id.length == 0){
-                return commonResponse.customErrorResponse(res, 422, 'Enter a id in array');
-            }
-            id.forEach(element => {
-                if (element.replace(/\s/g, "") == "") {
-                    return commonResponse.customErrorResponse(res, 422, 'Empty String Does Note Accepted');
-                }
-            });
             let deleteMultipleVehicle = await vehicleServices.deleteMultiple(id);
-            console.log(deleteMultipleVehicle,"deleteMultipleVehicle.........");
-        
+
             if (deleteMultipleVehicle.deletedCount == 0) {
                 return commonResponse.customErrorResponse(res, 422, 'Vehicle not deleted  ');
             } else {
                 return commonResponse.success(res, 200, "successfully multipal deleted vehicle ", deleteMultipleVehicle);
             }
-
-           
         } catch (error) {
             console.log(" Not delete multiple vehicle --> ", error);
             return next(error);
@@ -170,6 +161,5 @@ module.exports = {
 
 
 
-    
 
-          
+

@@ -65,6 +65,17 @@ module.exports = {
             console.log("Error : ", error);
             return new Error(error);
         }
+    },
+
+    deletemulti: async (id) => {
+        try {
+
+            let Realestates = await Realestate.deleteMany({ '_id': { '$in': id } });
+            return Realestates;
+        } catch (error) {
+            console.log("Error : ", error);
+            return new Error(error);
+        }
     }
 }
 

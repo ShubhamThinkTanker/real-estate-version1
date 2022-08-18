@@ -25,6 +25,9 @@ import {
 	ComplexCreateReducer,
 	ComplexGetReducer,
 	ComplexListReducer,
+	EditComplexreducer,
+	ComplexDeleteReducer,
+	ComplexmultiReducer,
 } from './complexReducers/complexReducers';
 import auth from './auth';
 import navbar from './navbar';
@@ -62,11 +65,12 @@ const rootReducer = combineReducers({
 	createComplexRecord: ComplexCreateReducer,
 	vendorRecords: VendorGetReducer,
 	registerVendorData: VendorRegisterReducer,
-	DeleteVendor: VendorDeleteReducer,
+	DeleteComplex: ComplexDeleteReducer,
 	getAllComplexRecord: ComplexListReducer,
-	getidComplexRecord: ComplexGetReducer,
 	VendordeleteMultiData: VendormultiReducer,
 	EditVendorData: EditVendoreducer,
+	EditComplexData: EditComplexreducer,
+	ComplexdeleteMultiData: ComplexmultiReducer,
 });
 
 export default rootReducer;

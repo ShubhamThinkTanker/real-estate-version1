@@ -49,12 +49,12 @@ export default [
 		  },
 
 	{
-		id: 'complexApp',
-		title: 'Complex',
+		id: 'realestateApp',
+		title: 'Realestate',
 		icon: <Home size={20} />,
 		children: [
 			{
-				id: 'complexManage',
+				id: 'realestateManage',
 				title: 'Lists',
 				icon: <Circle size={12} />,
 				navLink: '/complex/list',

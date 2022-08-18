@@ -10,7 +10,7 @@ mongoose.connect(
     if (err) {
       console.log("MongoDB Database Connection Error", err);
     } else {
-      
+
       console.log("MongoDB Connection Done!!");
     }
   }

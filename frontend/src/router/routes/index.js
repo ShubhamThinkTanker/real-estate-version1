@@ -116,6 +116,12 @@ const Routes = [
 			import('../../admin/components/complex/ViewComplex')
 		),
 	},
+	{
+		path: '/complex/edit/:id',
+		component: lazy(() =>
+			import('../../admin/components/complex/EditComplex')
+		),
+	},
 
 	{
 		path: '/profile',

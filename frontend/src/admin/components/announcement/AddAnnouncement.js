@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 function AddAnnouncement() {
 	return (
 		<>
-			<h3>Create Chairman</h3>
+			<h3>Create</h3>
 			<Row>
 				<Col sm='12'>
 					<Form onSubmit={(e) => onSubmit(e)}>

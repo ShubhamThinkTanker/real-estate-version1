@@ -14,7 +14,6 @@ const chairmanSchema = mongoose.Schema(
         },
         password: {
             type: String,
-            required: true,
         },
         mobile_no: {
             type: String,
@@ -30,11 +29,32 @@ const chairmanSchema = mongoose.Schema(
             required: false,
             default: ""
         },
+        address: {
+            type: String,
+            required: false,
+        },
+        city: {
+            type: String,
+            required: false,
+        },
+        state: {
+            type: String,
+            required: false,
+        },
+        country: {
+            type: String,
+            required: false,
+        },
         role: {
             type: String,
             enum: ["admin", "chairman", "user"],
             default: "user",
             required: false,
+        },
+        status: {
+            type: String,
+            enum: ["active", "inactive"],
+            default: "active",
         },
         resetPasswordToken: {
             type: String
