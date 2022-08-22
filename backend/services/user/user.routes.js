@@ -32,6 +32,6 @@ router.put('/update/:id', controller.update);
 router.delete('/delete/:id', controller.delete);
 router.post('/delete_many', controller.deleteMulti);
 
-router.get('/country', controller.GetAllCountry);
+// router.get('/country', controller.GetAllCountry);
 
 module.exports = router;
