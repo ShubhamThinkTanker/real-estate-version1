@@ -12,7 +12,7 @@ module.exports = function validateLoginInput(data) {
   data.role = !isEmpty(data.role) ? data.role : "";
 
   if (Validator.isEmpty(data.username)) {
-    errors.username = "Email or Mobile no is Required";
+    errors.username = "Email or Mobile no is required";
   }
 
 
