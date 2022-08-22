@@ -30,7 +30,7 @@ import { isUserLoggedIn } from '@utils';
 import Logout from '../LogoutTime/Logout';
 import { userdatas } from '../localstorage/localdata';
 import { ToastContainer } from 'react-toastify';
-
+import 'react-toastify/dist/ReactToastify.css';
 const Router = () => {
 	// ** Hooks
 	const [layout, setLayout] = useLayout();
@@ -133,14 +133,7 @@ const Router = () => {
 
 			return (
 				<Route path={LayoutPaths} key={index}>
-					<ToastContainer
-					// position='top-right'
-					// autoClose={3000}
-					// hideProgressBar={false}
-					// newestOnTop={false}
-					// closeOnClick
-					// rtl={false}
-					/>
+					<ToastContainer />
 					<LayoutTag
 						routerProps={routerProps}
 						layout={layout}

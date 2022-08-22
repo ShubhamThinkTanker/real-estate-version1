@@ -40,10 +40,10 @@ import { VENDOR_REGISTER_RESET } from '../../../redux/Constants/userConstants';
 const AddVendor = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
-	function handleChange(e) {
-		setFileSend(e.target.files[0]);
-		setFile(URL.createObjectURL(e.target.files[0]));
-	}
+	// function handleChange(e) {
+	// 	setFileSend(e.target.files[0]);
+	// 	setFile(URL.createObjectURL(e.target.files[0]));
+	// }
 
 	const [values, setValues] = useState({
 		name: '',
@@ -381,6 +381,7 @@ const AddVendor = () => {
 									) : null}
 								</FormGroup>
 							</Col>
+							
 							<Col sm='12'>
 								<div className='d-flex '>
 									<Button.Ripple

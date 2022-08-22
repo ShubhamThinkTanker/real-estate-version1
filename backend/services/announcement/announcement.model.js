@@ -22,11 +22,14 @@ let announcementSchema = mongoose.Schema({
     image: {
         type: String
     },
-    from_date: {
-        type: Date
+    start_date: {
+        type: String
     },
-    to_date: {
-        type: Date
+    end_date: {
+        type: String
+    },
+    location: {
+        type: String
     },
     created_at: {
         type: Date,

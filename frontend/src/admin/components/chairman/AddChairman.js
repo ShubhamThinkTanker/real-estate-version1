@@ -57,10 +57,12 @@ const AddChairman = () => {
 	const registerRecords = useSelector((state) => state.registerChairmanData);
 	var { error, ChairmanRegisterData } = registerRecords;
 
+
+
 	useEffect(() => {
 		if (ChairmanRegisterData) {
 			history.push('/chairman/list');
-			
+
 		}
 	}, [ChairmanRegisterData]);
 

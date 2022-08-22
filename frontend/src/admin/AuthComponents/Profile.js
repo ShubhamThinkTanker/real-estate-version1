@@ -61,7 +61,7 @@ const Profile = () => {
 
   const EditDatMessage = useSelector((state) => state.EditUSerData);
   const { error: errorUserEditData, UserEditData } = EditDatMessage;
-  console.log(UserEditData, "SET NEW");
+  // console.log(UserEditData, "SET NEW");
   useEffect(() => {
     setUser(userdatas.User_Details);
     if (UserEditData) {

@@ -13,7 +13,7 @@ router.delete('/delete/:id', controller.delete);
 
 router.get('/get_Announcement/:id', controller.getbyid);
 
-router.post('/delete_many', controller.deleteMulti);
+router.delete('/delete_many', controller.deleteMulti);
 
 
 

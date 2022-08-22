@@ -94,9 +94,7 @@ const EditVendor = () => {
 		<>
 			<BreadCrumbs
 				breadCrumbTitle='Vendor'
-				breadCrumbParent={
-					<Link to='/vendor/list'>Vendor List</Link>
-				}
+				breadCrumbParent={<Link to='/vendor/list'>Vendor List</Link>}
 				breadCrumbActive='Vendor Edit'
 			/>
 			{vendor && (
@@ -105,13 +103,27 @@ const EditVendor = () => {
 						<Form onSubmit={(e) => onSubmit(e)}>
 							<Row>
 								<Col md='6' sm='12'>
-									<FormGroup className="mb-2">
-										<Label className='form-label' for='name'>
+									<FormGroup className='mb-2'>
+										<Label
+											className='form-label'
+											for='name'>
 											First Name
 										</Label>
-										<InputGroup className={errorVendorEditData && errorVendorEditData.name ? "is-invalid input-group-merge" : 'input-group-merge'}>
+										<InputGroup
+											className={
+												errorVendorEditData &&
+												errorVendorEditData.name
+													? 'is-invalid input-group-merge'
+													: 'input-group-merge'
+											}>
 											<InputGroupAddon addonType='prepend'>
-												<InputGroupText className={errorVendorEditData && errorVendorEditData.name ? "is-invalid" : ''}>
+												<InputGroupText
+													className={
+														errorVendorEditData &&
+														errorVendorEditData.name
+															? 'is-invalid'
+															: ''
+													}>
 													<User size={15} />
 												</InputGroupText>
 											</InputGroupAddon>
@@ -122,11 +134,13 @@ const EditVendor = () => {
 												id='name'
 												placeholder='First Name'
 												defaultValue={vendor.name}
-												onChange={(e) => onInputChange(e)}
+												onChange={(e) =>
+													onInputChange(e)
+												}
 											/>
 										</InputGroup>
 										{errorVendorEditData &&
-											errorVendorEditData.name ? (
+										errorVendorEditData.name ? (
 											<div className='error'>
 												{errorVendorEditData.name}
 											</div>
@@ -134,17 +148,28 @@ const EditVendor = () => {
 									</FormGroup>
 								</Col>
 
-
-								<Col md='6' sm='12' >
-									<FormGroup className="mb-2">
+								<Col md='6' sm='12'>
+									<FormGroup className='mb-2'>
 										<Label
 											className='form-label'
 											for='lastname'>
 											Last Name
 										</Label>
-										<InputGroup className={errorVendorEditData && errorVendorEditData.lastname ? "is-invalid input-group-merge" : 'input-group-merge'}>
+										<InputGroup
+											className={
+												errorVendorEditData &&
+												errorVendorEditData.lastname
+													? 'is-invalid input-group-merge'
+													: 'input-group-merge'
+											}>
 											<InputGroupAddon addonType='prepend'>
-												<InputGroupText className={errorVendorEditData && errorVendorEditData.lastname ? "is-invalid" : ''}>
+												<InputGroupText
+													className={
+														errorVendorEditData &&
+														errorVendorEditData.lastname
+															? 'is-invalid'
+															: ''
+													}>
 													<User size={15} />
 												</InputGroupText>
 											</InputGroupAddon>
@@ -156,11 +181,13 @@ const EditVendor = () => {
 												id='lastname'
 												placeholder='Last Name'
 												defaultValue={vendor.lastname}
-												onChange={(e) => onInputChange(e)}
+												onChange={(e) =>
+													onInputChange(e)
+												}
 											/>
 										</InputGroup>
 										{errorVendorEditData &&
-											errorVendorEditData.lastname ? (
+										errorVendorEditData.lastname ? (
 											<div className='error'>
 												{errorVendorEditData.lastname}
 											</div>
@@ -168,17 +195,28 @@ const EditVendor = () => {
 									</FormGroup>
 								</Col>
 
-
-								<Col md='6' sm='12' >
-									<FormGroup className="mb-2">
+								<Col md='6' sm='12'>
+									<FormGroup className='mb-2'>
 										<Label
 											className='form-label'
 											for='mobile_no'>
 											Mobile No
 										</Label>
-										<InputGroup className={errorVendorEditData && errorVendorEditData.mobile_no ? "is-invalid input-group-merge" : 'input-group-merge'}>
+										<InputGroup
+											className={
+												errorVendorEditData &&
+												errorVendorEditData.mobile_no
+													? 'is-invalid input-group-merge'
+													: 'input-group-merge'
+											}>
 											<InputGroupAddon addonType='prepend'>
-												<InputGroupText className={errorVendorEditData && errorVendorEditData.mobile_no ? "is-invalid" : ''}>
+												<InputGroupText
+													className={
+														errorVendorEditData &&
+														errorVendorEditData.mobile_no
+															? 'is-invalid'
+															: ''
+													}>
 													<Smartphone size={15} />
 												</InputGroupText>
 											</InputGroupAddon>
@@ -190,11 +228,13 @@ const EditVendor = () => {
 												id='mobile_no'
 												placeholder='Mobile no'
 												defaultValue={vendor.mobile_no}
-												onChange={(e) => onInputChange(e)}
+												onChange={(e) =>
+													onInputChange(e)
+												}
 											/>
 										</InputGroup>
 										{errorVendorEditData &&
-											errorVendorEditData.mobile_no ? (
+										errorVendorEditData.mobile_no ? (
 											<div className='error'>
 												{errorVendorEditData.mobile_no}
 											</div>
@@ -203,15 +243,27 @@ const EditVendor = () => {
 								</Col>
 
 								<Col md='6' sm='12'>
-									<FormGroup className="mb-2">
+									<FormGroup className='mb-2'>
 										<Label
 											className='form-label'
 											for='profession'>
 											Profession
 										</Label>
-										<InputGroup className={errorVendorEditData && errorVendorEditData.profession ? "is-invalid input-group-merge" : 'input-group-merge'}>
+										<InputGroup
+											className={
+												errorVendorEditData &&
+												errorVendorEditData.profession
+													? 'is-invalid input-group-merge'
+													: 'input-group-merge'
+											}>
 											<InputGroupAddon addonType='prepend'>
-												<InputGroupText className={errorVendorEditData && errorVendorEditData.profession ? "is-invalid" : ''}>
+												<InputGroupText
+													className={
+														errorVendorEditData &&
+														errorVendorEditData.profession
+															? 'is-invalid'
+															: ''
+													}>
 													<Briefcase size={15} />
 												</InputGroupText>
 											</InputGroupAddon>
@@ -223,11 +275,13 @@ const EditVendor = () => {
 												id='profession'
 												placeholder='Profession'
 												defaultValue={vendor.profession}
-												onChange={(e) => onInputChange(e)}
+												onChange={(e) =>
+													onInputChange(e)
+												}
 											/>
 										</InputGroup>
 										{errorVendorEditData &&
-											errorVendorEditData.profession ? (
+										errorVendorEditData.profession ? (
 											<div className='error'>
 												{errorVendorEditData.profession}
 											</div>
@@ -235,15 +289,28 @@ const EditVendor = () => {
 									</FormGroup>
 								</Col>
 
-
-								<Col md='6' sm='12' >
-									<FormGroup className="mb-2">
-										<Label className='form-label' for='service'>
+								<Col md='6' sm='12'>
+									<FormGroup className='mb-2'>
+										<Label
+											className='form-label'
+											for='service'>
 											Type of Service
 										</Label>
-										<InputGroup className={errorVendorEditData && errorVendorEditData.services ? "is-invalid input-group-merge" : 'input-group-merge'}>
+										<InputGroup
+											className={
+												errorVendorEditData &&
+												errorVendorEditData.services
+													? 'is-invalid input-group-merge'
+													: 'input-group-merge'
+											}>
 											<InputGroupAddon addonType='prepend'>
-												<InputGroupText className={errorVendorEditData && errorVendorEditData.services ? "is-invalid" : ''}>
+												<InputGroupText
+													className={
+														errorVendorEditData &&
+														errorVendorEditData.services
+															? 'is-invalid'
+															: ''
+													}>
 													<Tool size={15} />
 												</InputGroupText>
 											</InputGroupAddon>
@@ -255,11 +322,13 @@ const EditVendor = () => {
 												id='service'
 												placeholder='Service'
 												defaultValue={vendor.services}
-												onChange={(e) => onInputChange(e)}
+												onChange={(e) =>
+													onInputChange(e)
+												}
 											/>
 										</InputGroup>
 										{errorVendorEditData &&
-											errorVendorEditData.services ? (
+										errorVendorEditData.services ? (
 											<div className='error'>
 												{errorVendorEditData.services}
 											</div>
@@ -267,14 +336,28 @@ const EditVendor = () => {
 									</FormGroup>
 								</Col>
 
-								<Col md='6' sm='12' >
-									<FormGroup className="mb-2">
-										<Label className='form-label' for='address'>
+								<Col md='6' sm='12'>
+									<FormGroup className='mb-2'>
+										<Label
+											className='form-label'
+											for='address'>
 											Address
 										</Label>
-										<InputGroup className={errorVendorEditData && errorVendorEditData.address ? "is-invalid input-group-merge" : 'input-group-merge'}>
+										<InputGroup
+											className={
+												errorVendorEditData &&
+												errorVendorEditData.address
+													? 'is-invalid input-group-merge'
+													: 'input-group-merge'
+											}>
 											<InputGroupAddon addonType='prepend'>
-												<InputGroupText className={errorVendorEditData && errorVendorEditData.address ? "is-invalid" : ''}>
+												<InputGroupText
+													className={
+														errorVendorEditData &&
+														errorVendorEditData.address
+															? 'is-invalid'
+															: ''
+													}>
 													<Home size={15} />
 												</InputGroupText>
 											</InputGroupAddon>
@@ -286,11 +369,13 @@ const EditVendor = () => {
 												id='address'
 												placeholder='Address'
 												defaultValue={vendor.address}
-												onChange={(e) => onInputChange(e)}
+												onChange={(e) =>
+													onInputChange(e)
+												}
 											/>
 										</InputGroup>
 										{errorVendorEditData &&
-											errorVendorEditData.address ? (
+										errorVendorEditData.address ? (
 											<div className='error'>
 												{errorVendorEditData.address}
 											</div>
@@ -306,12 +391,12 @@ const EditVendor = () => {
 											Save Changes
 										</Button.Ripple>
 										<Button.Ripple
-									color='danger'
-									tag={Link}
-									to='/vendor/list'
-									outline>
-									Cancel
-								</Button.Ripple>
+											color='danger'
+											tag={Link}
+											to='/vendor/list'
+											outline>
+											Cancel
+										</Button.Ripple>
 									</div>
 								</Col>
 							</Row>

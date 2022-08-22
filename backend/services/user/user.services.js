@@ -6,7 +6,7 @@ const { fileUploadToS3, deleteImage } = require("../../helper/s3aws");
 
 exports.chairmanCreate = async (reqbody, id, hash) => {
 	try {
-		console.log(reqbody.profile_image, "reqbody");
+		// console.log(reqbody, "reqbody");
 
 		var link = await fileUploadToS3(reqbody.profile_image);
 		const newUser = new ChairmanModel({
@@ -103,7 +103,7 @@ exports.is_mobile_no_exist = async (reqBody) => {
 
 exports.Update = async (token, id) => {
 	try {
-		console.log(id, ":id");
+		// console.log(id, ":id");
 
 		const updatetoken = await ChairmanModel.updateOne({ _id: id }, { resetPasswordToken: token, resetPasswordExpires: Date.now() })
 
@@ -139,7 +139,7 @@ exports.FindAdmin = async (reqBody) => {
 		const user = await ChairmanModel.findOne({
 			$or: [{ email: reqBody.email }, { mobile_no: reqBody.mobile_no }]
 		});
-		console.log(user, ":user");
+		// console.log(user, ":user");
 		if (!user) {
 			return false;
 		}
@@ -190,7 +190,7 @@ exports.getAllChairman = async (reqQuery, sort_array, filter_value) => {
 		let SKIP = (reqQuery.page - 1) * reqQuery.limit;
 		if (filter_value != "") {
 			var regex = new RegExp(filter_value, "i");
-			console.log(regex, ":regex");
+			// console.log(regex, ":regex");
 			filter_value = {
 				$or: [{ mobile_no: regex }, { email: regex }, { name: regex }, { status: regex }]
 			};

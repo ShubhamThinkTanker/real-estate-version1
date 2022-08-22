@@ -22,7 +22,7 @@
 // 	COMPLEX_MULTI_DELETE_RESET,
 // } from '../redux/Constants/userConstants';
 
-// Chairman message
+// // Chairman message
 // export const User_Chairman_Message = (setDeletedRow) => {
 // 	const dispatch = useDispatch();
 // 	const registerRecords = useSelector((state) => state.registerChairmanData);
@@ -163,7 +163,7 @@
 // 	]);
 // };
 
-// Vendor message
+// // Vendor message
 // export const Vendor_Data_Message = (setDeletedRow) => {
 // 	const dispatch = useDispatch();
 // 	const registerRecords = useSelector((state) => state.registerVendorData);
@@ -178,33 +178,6 @@
 // 	);
 // 	const { VendordeleteMultiData } = vendorDeleteMulti;
 
-// useEffect(() => {
-// 	if (VendorRegisterData) {
-// 		// toast.success('Vendor Create Successfully', {
-// 		// 	className: 'toast-success-btn',
-// 		// });
-// 		dispatch({ type: VENDOR_REGISTER_RESET });
-// 	} else if (deleteVendorData) {
-// 		toast.error('Data delete successfully!', {
-// 			// className: 'toast-delete-btn ',
-// 		});
-// 		dispatch({ type: VENDOR_DELETE_RESET });
-// 		dispatch(VendorListAction());
-// 	} else if (VendorEditData) {
-// 		toast.success('Vendor Update Successfully', {
-// 			// className: 'toast-success-btn',
-// 		});
-// 		dispatch({ type: VENDOR_EDIT_RESET });
-// 	} else if (VendordeleteMultiData) {
-// 		toast.error('Data delete successfully!', {
-// 			// className: 'toast-user-delete-btn',
-// 		});
-// 		dispatch({ type: VENDOR_MULTI_DELETE_RESET });
-// 		dispatch(VendorListAction());
-// 		setDeletedRow([]);
-// 	}
-// }, [dispatch, VendorRegisterData, deleteVendorData, VendordeleteMultiData]);
-// };
 // 	useEffect(() => {
 // 		if (VendorRegisterData) {
 // 			toast.success('Vendor Create Successfully', {

@@ -160,7 +160,7 @@ module.exports = {
 
             commonResponse.success(res, 200, "successfully get", Maintenance);
         } catch (error) {
-            console.log(error, "88989")
+            console.log(error, "maintainance error")
             return next(error);
         }
     },
@@ -184,6 +184,7 @@ module.exports = {
 
         } catch (error) {
             console.log(error, ":error");
+            return next(error);
         }
     },
 

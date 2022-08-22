@@ -35,7 +35,7 @@ module.exports = {
             let state = 'gujrat'
             let city = 'Ahemedabad'
             let address = '561 Odhav'
-            let role = 'chairman'
+            let role = 'user'
             users.push({
                 "name": name,
                 "email": email,
@@ -64,9 +64,9 @@ module.exports = {
     GetAllCountry: async (req, res, next) => {
         try {
 
-            // let Countrys = require('country-state-city').Country;
-            let State = require('country-state-city').State;
-            res.json({ "message": State.getAllStates() })
+            let Countrys = require('country-state-city').City;
+            // let State = require('country-state-city').State;
+            res.json({ "message": Countrys.getAllCountries() })
 
 
 
@@ -200,7 +200,7 @@ module.exports = {
                 numbers: true,
             });
             bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(password, salt, async (err,) => {
+                bcrypt.hash(password, salt, async (err,hash) => {
                     if (err) throw err;
                     const email = req.body.email
 
@@ -231,8 +231,9 @@ module.exports = {
                         }
                     });
 
-
+                 
                     let user = await ChairmanService.userCreate(req.body, id, hash);
+                    
 
                     if (user) {
                         return commonResponse.success(res, 200, "Successfully Create User", user);

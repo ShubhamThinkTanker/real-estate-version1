@@ -4,7 +4,7 @@ const  Mongoose  = require("mongoose");
 
 module.exports = async function validatecreateInput(data) {
     let errors = {};
-    console.log(data,"datavali")
+    // console.log(data,"datavali")
     data.realestate_name = !isEmpty(data.realestate_name) ? data.realestate_name : "";
     data.address = !isEmpty(data.address) ? data.address : "";
     data.city = !isEmpty(data.city) ? data.city : "";

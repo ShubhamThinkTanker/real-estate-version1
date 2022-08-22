@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { configHeader } from '../../../localstorage/localdata';
+import { toast } from 'react-toastify';
+import '../../.././index.css';
 import {
 	COMPLEX_CREATE_ERROR,
 	COMPLEX_CREATE_REQUEST,
@@ -13,12 +15,15 @@ import {
 	COMPLEX_EDIT_REQUEST,
 	COMPLEX_EDIT_ERROR,
 	COMPLEX_EDIT_SUCCESS,
+	COMPLEX_EDIT_RESET,
 	COMPLEX_DELETE_ERROR,
 	COMPLEX_DELETE_REQUEST,
 	COMPLEX_DELETE_SUCCESS,
 	COMPLEX_MULTI_DELETE_REQUEST,
 	COMPLEX_MULTI_DELETE_SUCCESS,
 	COMPLEX_MULTI_DELETE_ERROR,
+	COMPLEX_MULTI_DELETE_RESET,
+	COMPLEX_DELETE_RESET,
 } from '../../Constants/userConstants';
 
 export const ComplexListAction = (queryString) => async (dispatch) => {
@@ -88,6 +93,9 @@ export const ComplexCreateAction = (realestateData) => async (dispatch) => {
 			type: COMPLEX_CREATE_SUCCESS,
 			payload: data,
 		});
+		if (data) {
+			toast.success('Realestate Created Successfully');
+		}
 	} catch (error) {
 		dispatch({
 			type: COMPLEX_CREATE_ERROR,
@@ -118,6 +126,10 @@ export const EditComplexAction =
 				type: COMPLEX_EDIT_SUCCESS,
 				payload: data,
 			});
+			if (data) {
+				toast.success('Realestate Updated Successfully');
+			}
+			dispatch({ type: COMPLEX_EDIT_RESET });
 		} catch (error) {
 			dispatch({
 				type: COMPLEX_EDIT_ERROR,
@@ -143,6 +155,11 @@ export const ComplexDeleteAction = (deleteid) => async (dispatch) => {
 			type: COMPLEX_DELETE_SUCCESS,
 			payload: data,
 		});
+		if (data) {
+			toast.error('Realestate Deleted Successfully');
+		}
+		dispatch({ type: COMPLEX_DELETE_RESET });
+		dispatch(ComplexListAction());
 	} catch (error) {
 		dispatch({
 			type: COMPLEX_DELETE_ERROR,
@@ -166,6 +183,12 @@ export const ComplexMultiAction = (multiid) => async (dispatch) => {
 			type: COMPLEX_MULTI_DELETE_SUCCESS,
 			payload: data,
 		});
+		if (data) {
+			toast.error('Realestate Deleted Successfully');
+		}
+		dispatch({ type: COMPLEX_MULTI_DELETE_RESET });
+		dispatch(ComplexListAction());
+		setDeletedRow([]);
 	} catch (error) {
 		dispatch({
 			type: COMPLEX_MULTI_DELETE_ERROR,

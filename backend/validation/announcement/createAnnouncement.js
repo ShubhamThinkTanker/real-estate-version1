@@ -7,9 +7,10 @@ module.exports = function validateRegisterInput(data) {
     data.title = !isEmpty(data.title) ? data.title : "";
     data.description = !isEmpty(data.description) ? data.description : "";
     data.image = !isEmpty(data.image) ? data.image : "";
-    data.from_date = !isEmpty(data.from_date) ? data.from_date : "";
-    data.to_date = !isEmpty(data.to_date) ? data.to_date : "";
-   
+    data.start_date = !isEmpty(data.start_date) ? data.start_date : "";
+    data.end_date = !isEmpty(data.end_date) ? data.end_date : "";
+    data.location = !isEmpty(data.location) ? data.location : "";
+
 
     if (Validator.isEmpty(data.title)) {
         errors.title = "Title is required.";
@@ -18,16 +19,16 @@ module.exports = function validateRegisterInput(data) {
     if (Validator.isEmpty(data.description)) {
         errors.description = "Description is required";
     }
-    // if (Validator.isEmpty(data.image)) {
-    //     errors.image = "image field is required";
-    // }
-   
-    if (Validator.isEmpty(data.to_date)) {
-        errors.to_date = "To date is required.";
+    if (Validator.isEmpty(data.location)) {
+        errors.location = "Location field is required";
     }
 
-    if (Validator.isEmpty(data.from_date)) {
-        errors.from_date = "From date is required";
+    if (Validator.isEmpty(data.end_date)) {
+        errors.end_date = "To date is required.";
+    }
+
+    if (Validator.isEmpty(data.start_date)) {
+        errors.start_date = "From date is required";
     }
     return {
         errors,

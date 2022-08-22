@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	EditRegisterAction,
 	UserGetAction,
-	UserRegisterAction,
 } from '../../../redux/actions/apislogic/userapis';
 import { useHistory, useParams } from 'react-router-dom';
 import BreadCrumbs from '../../../@core/components/breadcrumbs';
@@ -65,6 +64,10 @@ const EditChairman = () => {
 		mobile_no: '',
 		email: '',
 		gender: '',
+		address:'',
+		country:'',
+		state:'',
+		city:'',
 		profile_image: '',
 	});
 	const [img, setImg] = useState();
@@ -119,6 +122,10 @@ const EditChairman = () => {
 			mobile_no: getUsersRecords && getUsersRecords['data']['mobile_no'],
 			email: getUsersRecords && getUsersRecords['data']['email'],
 			gender: getUsersRecords && getUsersRecords['data']['gender'],
+			address: getUsersRecords && getUsersRecords['data']['address'],
+			country: getUsersRecords && getUsersRecords['data']['country'],
+			state: getUsersRecords && getUsersRecords['data']['state'],
+			city: getUsersRecords && getUsersRecords['data']['city'],
 			profile_image:
 				getUsersRecords && getUsersRecords['data']['profile_image'],
 		});

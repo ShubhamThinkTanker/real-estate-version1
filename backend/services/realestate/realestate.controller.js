@@ -93,7 +93,7 @@ module.exports = {
 
             commonResponse.success(res, 200, "successfully get", realesate);
         } catch (error) {
-            console.log(error, "88989")
+            console.log(error, "realestate error")
             return next(error);
         }
     },

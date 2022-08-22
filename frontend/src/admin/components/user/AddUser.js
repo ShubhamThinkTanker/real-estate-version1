@@ -3,11 +3,12 @@ import "@styles/react/libs/flatpickr/flatpickr.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-// ** Third Party Components
-import { Lock, Edit, Trash2 } from "react-feather";
+
+
 
 import { Link } from "react-router-dom";
 import {
+  Card,
   Col,
   CustomInput,
   Form,
@@ -17,21 +18,42 @@ import {
   Row,
   Table,
   Button,
-  FormGroup
+  FormGroup,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  CardBody
 } from "reactstrap";
+
+import {
+  Lock,
+	Edit,
+	Trash2,
+	Home,
+	User,
+	Mail,
+	Smartphone,
+} from 'react-feather';
+
 import { UserRegisterAction } from "../../../redux/actions/apislogic/userapis";
 import { USER_REGISTER_RESET } from "../../../redux/Constants/userConstants";
+import BreadCrumbs from '../../../@core/components/breadcrumbs';
 
 const AddUser = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [filesend, setFileSend] = useState();
+  const [genderRadio, setGenderRadio] = useState('male');
 
   const [values, setValues] = useState({
     name: "",
     email: "",
     mobile_no: "",
-    gender: "",
+    address: '',
+    country: '',
+    state: '',
+    city: '',
+
     role: "user"
   });
 
@@ -42,7 +64,7 @@ const AddUser = () => {
     if (UserRegisterData) {
       history.push("/user/list");
     }
-  }, [UserRegisterData && UserRegisterData]);
+  }, UserRegisterData);
 
   useEffect(() => {
     dispatch({ type: USER_REGISTER_RESET });
@@ -51,15 +73,19 @@ const AddUser = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const { name, email, mobile_no, gender, role } = values;
+    const { name, email, mobile_no, role, address, country, state, city } = values;
 
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("mobile_no", mobile_no);
-    formData.append("gender", gender);
-    formData.append("role", role);
-    formData.append("profile_image", filesend);
+    formData.append('profile_image', filesend);
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('mobile_no', mobile_no);
+    formData.append('address', address);
+    formData.append('country', country);
+    formData.append('state', state);
+    formData.append('city', city);
+    formData.append('gender', genderRadio);
+    formData.append('role', role);
     dispatch(UserRegisterAction(formData));
   };
 
@@ -73,94 +99,29 @@ const AddUser = () => {
     reader.readAsDataURL(files[0]);
   };
 
+  const handleChangeInput = (e) => {
+		setValues({ ...values, [e.target.name]: e.target.value });
+	};
   const [img, setImg] = useState(
     "https://grandimageinc.com/wp-content/uploads/2015/09/icon-user-default.png"
   );
 
   return (
     <>
-      <h3>Create User</h3>
-      <Row>
-        <Col sm="12">
+      <BreadCrumbs
+        breadCrumbTitle='User'
+        breadCrumbParent={
+          <Link to='/user/list'>Users List</Link>
+        }
+        breadCrumbActive='Create User'
+      />
+      <Card>
+        <CardBody>
+
+
           <Form onSubmit={(e) => onSubmit(e)}>
             <Row>
-              <Col md="6" sm="12">
-                <FormGroup>
-                  <Label for="name">Name</Label>
-                  <Input
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Name"
-                    defaultValue={values.name}
-                    onChange={(e) => (values["name"] = e.target.value)}
-                  />
-                  {error && error.name ? (
-                    <div className="error">{error.name}</div>
-                  ) : null}
-                </FormGroup>
-              </Col>
-              <Col md="6" sm="12">
-                <FormGroup>
-                  <Label for="email">Email</Label>
-                  <Input
-                    type="text"
-                    id="email"
-                    name="email"
-                    placeholder="Email"
-                    defaultValue={values.email}
-                    onChange={(e) => (values["email"] = e.target.value)}
-                  />
-                  {error && error.email ? (
-                    <div className="error">{error.email}</div>
-                  ) : null}
-                </FormGroup>
-              </Col>
-              <Col md="6" sm="12">
-                <FormGroup>
-                  <Label for="mobile_no">Mobile No</Label>
-                  <Input
-                    type="text"
-                    id="mobile_no"
-                    name="mobile_no"
-                    placeholder="Mobile No"
-                    defaultValue={values.mobile_no}
-                    onChange={(e) => (values["mobile_no"] = e.target.value)}
-                  />
-                  {error && error.mobile_no ? (
-                    <div className="error">{error.mobile_no}</div>
-                  ) : null}
-                </FormGroup>
-              </Col>
-              <Col md="6" sm="12">
-                <Label for="gender">Gender</Label>
-                <br></br>
-                <CustomInput
-                  type="radio"
-                  id="gender1"
-                  name="gender"
-                  inline
-                  label="Male"
-                  defaultValue="male"
-                  onChange={(e) => (values["gender"] = e.target.value)}
-                  defaultChecked={values["gender"] == "male"}
-                />
-                <CustomInput
-                  type="radio"
-                  id="gender2"
-                  name="gender"
-                  inline
-                  label="Female"
-                  defaultValue="female"
-                  onChange={(e) => (values["gender"] = e.target.value)}
-                  defaultChecked={values["gender"] == "female"}
-                />
-                {error && error.gender ? (
-                  <div className="error">{error.gender}</div>
-                ) : null}
-              </Col>
-
-              <Col sm="12">
+            <Col sm="12">
                 <Label for="image">Profile Image</Label>
                 <Media className="mb-2">
                   <img
@@ -177,10 +138,9 @@ const AddUser = () => {
                         className="mr-75 mb-0"
                         color="primary"
                       >
-                        <span className="d-none d-sm-block">Upload</span>
-                        <span className="d-block d-sm-none">
-                          <Edit size={14} />
-                        </span>
+                       Upload
+                       
+                  
                         <Input
                           type="file"
                           hidden
@@ -189,25 +149,362 @@ const AddUser = () => {
                           accept="image/*"
                         />
                       </Button.Ripple>
-                      <Button.Ripple color="secondary" outline>
-                        <span
-                          className="d-none d-sm-block"
-                          onClick={() =>
-                            setImg(
-                              "https://grandimageinc.com/wp-content/uploads/2015/09/icon-user-default.png"
-                            )
-                          }
-                        >
+                      <Button.Ripple 
+                      color="danger" 
+                      outline
+                      onClick={
+                        ()=>  setImg(
+                          "https://grandimageinc.com/wp-content/uploads/2015/09/icon-user-default.png"
+                        )
+                      }>
                           Remove
-                        </span>
-                        <span className="d-block d-sm-none">
-                          <Trash2 size={14} />
-                        </span>
                       </Button.Ripple>
                     </div>
                   </Media>
                 </Media>
+                {error && error.profile_image ? (
+									<div className='error'>
+										{error.profile_image}
+									</div>
+								) : null}
               </Col>
+
+              <Col md='6' sm="12">
+                <FormGroup className='mb-2'>
+                  <Label for="name">Name</Label>
+                  <InputGroup
+										className={
+											error && error.name
+												? 'is-invalid input-group-merge'
+												: 'input-group-merge mb-1'
+										}>
+										<InputGroupAddon addonType='prepend'>
+											<InputGroupText
+												className={
+													error && error.name
+														? 'is-invalid'
+														: ''
+												}>
+												<User size={15} />
+											</InputGroupText>
+										</InputGroupAddon>
+                  <Input
+                  className={
+                    error && error.name
+                      ? 'is-invalid'
+                      : ''
+                  }
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Name"
+                    defaultValue={values.name}
+                    onChange={handleChangeInput}
+                  />
+                  	</InputGroup>
+                  {error && error.name ? (
+                    <div className="error">{error.name}</div>
+                  ) : null}
+                </FormGroup>
+              </Col>
+
+
+              <Col md='6' sm='12'>
+								<FormGroup className='mb-2'>
+									<Label for='email'>Email</Label>
+									<InputGroup
+										className={
+											error && error.email
+												? 'is-invalid input-group-merge'
+												: 'input-group-merge'
+										}>
+										<InputGroupAddon addonType='prepend'>
+											<InputGroupText
+												className={
+													error && error.email
+														? 'is-invalid'
+														: ''
+												}>
+												<Mail size={15} />
+											</InputGroupText>
+										</InputGroupAddon>
+										<Input
+											className={
+												error && error.email
+													? 'is-invalid'
+													: ''
+											}
+											type='text'
+											id='email'
+											name='email'
+											placeholder='Email'
+											defaultValue={values.email}
+											onChange={handleChangeInput}
+										/>
+									</InputGroup>
+									{error && error.email ? (
+										<div className='error'>
+											{error.email}
+										</div>
+									) : null}
+								</FormGroup>
+							</Col>
+
+
+            	<Col md='6' sm='12'>
+								<FormGroup className='mb-2'>
+									<Label for='mobile_no'>Mobile No</Label>
+									<InputGroup
+										className={
+											error && error.mobile_no
+												? 'is-invalid input-group-merge'
+												: 'input-group-merge'
+										}>
+										<InputGroupAddon addonType='prepend'>
+											<InputGroupText
+												className={
+													error && error.mobile_no
+														? 'is-invalid'
+														: ''
+												}>
+												<Smartphone size={15} />
+											</InputGroupText>
+										</InputGroupAddon>
+										<Input
+											className={
+												error && error.mobile_no
+													? 'is-invalid'
+													: ''
+											}
+											type='text'
+											id='mobile_no'
+											name='mobile_no'
+											placeholder='Mobile No'
+											defaultValue={values.mobile_no}
+											onChange={handleChangeInput}
+										/>
+									</InputGroup>
+									{error && error.mobile_no ? (
+										<div className='error'>
+											{error.mobile_no}
+										</div>
+									) : null}
+								</FormGroup>
+							</Col>
+
+							<Col md='6' sm='12'>
+								<FormGroup className='mb-2'>
+									<Label className='form-label' for='address'>
+										Address
+									</Label>
+
+									<InputGroup
+										className={
+											error && error.address
+												? 'is-invalid input-group-merge'
+												: 'input-group-merge'
+										}>
+										<InputGroupAddon addonType='prepend'>
+											<InputGroupText
+												className={
+													error && error.address
+														? 'is-invalid'
+														: ''
+												}>
+												<Home size={15} />
+											</InputGroupText>
+										</InputGroupAddon>
+										<Input
+											className={
+												error && error.address
+													? 'is-invalid'
+													: ''
+											}
+											type='text'
+											name='address'
+											id='address'
+											placeholder='Address'
+											defaultValue={values.address}
+											onChange={handleChangeInput}
+										/>
+									</InputGroup>
+									{error && error.address ? (
+										<div className='error'>
+											{error.address}
+										</div>
+									) : null}
+								</FormGroup>
+							</Col>
+
+							<Col md='6' sm='12'>
+								<FormGroup className='mb-2'>
+									<Label
+										className='form-label'
+										for='mobileno'>
+										Country
+									</Label>
+									<Input
+										type='select'
+										onChange={handleChangeInput}
+										name='country'>
+										<option value=''>Select Country</option>
+										<option value='india'>India</option>
+									</Input>
+								</FormGroup>
+							</Col>
+
+							<Col md='6' sm='12'>
+								<FormGroup className='mb-2'>
+									<Label
+										className='form-label'
+										for='profession'>
+										State
+									</Label>
+									<Input
+										type='select'
+										onChange={handleChangeInput}
+										name='state'>
+										<option value=''>Select State</option>
+										<option value='gujarat'>Gujarat</option>
+										<option value='gujarat'>
+											Madhya Pradesh
+										</option>
+										<option value='gujarat'>
+											Andhra Pradesh
+										</option>
+										<option value='gujarat'>
+											Himachal Pradesh
+										</option>
+										<option value='gujarat'>
+											Arunachal Pradesh
+										</option>
+										<option value='gujarat'>
+											Uttar Pradesh
+										</option>
+										<option value='gujarat'>Sikkim</option>
+										<option value='gujarat'>
+											Chhattisgath
+										</option>
+										<option value='gujarat'>
+											Uttrakhand
+										</option>
+										<option value='gujarat'>
+											Jharkhand
+										</option>
+										<option value='gujarat'>Kerala</option>
+										<option value='gujarat'>
+											Meghalaya
+										</option>
+										<option value='gujarat'>Tripura</option>
+										<option value='gujarat'>Manipur</option>
+										<option value='gujarat'>Assam</option>
+										<option value='gujarat'>Haryana</option>
+										<option value='gujarat'>Goa</option>
+										<option value='gujarat'>
+											Rajasthan
+										</option>
+										<option value='gujarat'>
+											Maharashtra
+										</option>
+										<option value='gujarat'>Punjab</option>
+										<option value='gujarat'>Bihar</option>
+										<option value='gujarat'>
+											Karnataka
+										</option>
+										<option value='gujarat'>
+											Jammu and Kashmir
+										</option>
+										<option value='gujarat'>Tamil</option>
+										<option value='gujarat'>
+											West Bangal
+										</option>
+										<option value='gujarat'>
+											Telangana
+										</option>
+									</Input>
+								</FormGroup>
+							</Col>
+
+							<Col md='6' sm='12'>
+								<FormGroup className='mb-2'>
+									<Label className='form-label' for='service'>
+										City
+									</Label>
+									<Input
+										type='select'
+										onChange={handleChangeInput}
+										name='city'>
+										<option value=''>Select City</option>
+										<option value='ahmedabad'>
+											Ahmedabad
+										</option>
+										<option value='surat'>Surat</option>
+										<option value='rajkot'>Rajkot</option>
+										<option value='rajkot'>Vadodara</option>
+										<option value='rajkot'>
+											Bhavnagar
+										</option>
+										<option value='rajkot'>Jamnagar</option>
+										<option value='rajkot'>
+											Ghandhinagar
+										</option>
+										<option value='rajkot'>Anand</option>
+										<option value='rajkot'>Navsari</option>
+										<option value='rajkot'>Morbi</option>
+										<option value='rajkot'>Nadiad</option>
+										<option value='rajkot'>Bhuj</option>
+										<option value='rajkot'>Vapi</option>
+										<option value='rajkot'>Patan</option>
+										<option value='rajkot'>Botad</option>
+										<option value='rajkot'>Amreli</option>
+										<option value='rajkot'>Deesa</option>
+										<option value='rajkot'>Jetpur</option>
+										<option value='rajkot'>Dahod</option>
+										<option value='rajkot'>Veraval</option>
+									</Input>
+								</FormGroup>
+							</Col>
+
+							<Col md='6' sm='12'>
+								<Label for='gender'>Gender</Label>
+								<FormGroup className='mb-2'>
+									<br></br>
+									<CustomInput
+										type='radio'
+										id='gender1'
+										name='gender'
+										inline
+										label='Male'
+										checked={
+											genderRadio === 'male'
+												? true
+												: false
+										}
+										defaultValue='male'
+										onChange={(e) =>
+											setGenderRadio(e.target.value)
+										}
+									/>
+
+									<CustomInput
+										type='radio'
+										id='gender2'
+										name='gender'
+										inline
+										label='Female'
+										checked={
+											genderRadio === 'female'
+												? true
+												: false
+										}
+										defaultValue='female'
+										onChange={(e) =>
+											setGenderRadio(e.target.value)
+										}
+									/>
+								</FormGroup>
+							</Col>
+        
 
               <Col sm="12">
                 <div className="permissions border mt-1">
@@ -275,7 +572,7 @@ const AddUser = () => {
                   Save Changes
                 </Button.Ripple>
                 <Button.Ripple
-                  color="secondary"
+                  color="danger"
                   tag={Link}
                   to="/user/list"
                   outline
@@ -285,8 +582,9 @@ const AddUser = () => {
               </Col>
             </Row>
           </Form>
-        </Col>
-      </Row>
+
+        </CardBody>
+      </Card>
     </>
   );
 };

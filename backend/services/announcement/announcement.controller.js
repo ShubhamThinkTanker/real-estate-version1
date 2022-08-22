@@ -23,7 +23,7 @@ module.exports = {
             }
 
             let Announcement = await announcementService.announcementCreate(req.body);
-
+            // console.log(Announcement,"Announcement");
             if (Announcement) {
                 return commonResponse.success(res, 200, "Successfully Create Announcement", Announcement);
             } else {
@@ -123,7 +123,7 @@ module.exports = {
 
             commonResponse.success(res, 200, "successfully get", Announcement);
         } catch (error) {
-            console.log(error, "88989")
+            console.log(error, "announcement error")
             return next(error);
         }
     },

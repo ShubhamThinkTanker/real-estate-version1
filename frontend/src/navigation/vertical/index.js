@@ -51,6 +51,12 @@ export default [
 						icon: <Circle size={12} />,
 						navLink: '/user/list',
 					},
+					{
+						id: 'userManage',
+						title: 'Add',
+						icon: <Circle size={12} />,
+						navLink: '/user/add',
+					},
 				],
 		  },
 

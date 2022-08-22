@@ -5,7 +5,7 @@ const Mongoose = require("mongoose");
 
 module.exports = async function validatecreateInput(data) {
     let errors = {};
-    console.log(data, "datavali")
+    // console.log(data, "datavali")
     data.name = !isEmpty(data.name) ? data.name : "";
     data.mobile_no = !isEmpty(data.mobile_no) ? data.mobile_no : "";
     data.profession = !isEmpty(data.profession) ? data.profession : "";
@@ -37,7 +37,7 @@ module.exports = async function validatecreateInput(data) {
             errors.mobile_no = "Mobile number should be 10 digit ";
         }
     }
-    console.log(errors, "errors");
+    // console.log(errors, "errors");
     return {
         errors,
         isValid: isEmpty(errors)

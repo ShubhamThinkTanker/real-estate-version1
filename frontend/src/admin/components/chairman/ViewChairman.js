@@ -23,6 +23,7 @@ import {
 	InputGroupAddon,
 } from 'reactstrap';
 import BreadCrumbs from '../../../@core/components/breadcrumbs';
+
 const ViewChairman = () => {
 	const { id } = useParams();
 	const dispatch = useDispatch();

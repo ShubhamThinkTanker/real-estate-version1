@@ -12,12 +12,12 @@ module.exports = {
     createVendor: async (req, res, next) => {
 
         try {
-            console.log(req.body);
+            // console.log(req.body);
             
             var { errors, isValid } = await validatecreateInput(req.body)
             
             if (isValid === false) {
-                console.log(isValid,"00000")
+                // console.log(isValid,"00000")
 
                 return commonResponse.customErrorResponse(res, 422, 'Something went wrong', errors);
             }
@@ -61,16 +61,16 @@ module.exports = {
     updateVendor : async (req,res,next) => {
         try {
         const id = req.params.id;
-        console.log(id,"id")
+        // console.log(id,"id")
         const idverify = ObjectId.isValid(id);
             if(!idverify){
                 return commonResponse.customErrorResponse(res, 422, 'Enter a valid id');
             }
         const vendorbody = req.body;
-        console.log(vendorbody,"vendorbody")
+        // console.log(vendorbody,"vendorbody")
         const { errors, isValid } = await validatecreateInput(vendorbody);
         if(isValid == false){
-            console.log("11111")
+            // console.log("11111")
             return commonResponse.customErrorResponse(res, 422, 'Something went wrong', errors);
         }
         let updateVendorData = await vendorServices.update(id, vendorbody);
@@ -89,7 +89,7 @@ module.exports = {
     deleteVendor : async (req,res,next) => {
         try{
             const id = req.params.id;
-            console.log(id,"id")
+            // console.log(id,"id")
             const idverify = ObjectId.isValid(id);
             if(!idverify){
                 return commonResponse.customErrorResponse(res, 422, 'Enter a valid id');
@@ -117,7 +117,7 @@ module.exports = {
             if(!vendor){
                 return commonResponse.customErrorResponse(res, 422, 'vendor Not found for this id');
             }
-            console.log(vendor,"vendor")
+            // console.log(vendor,"vendor")
             commonResponse.success(res,  200, "successfully get", vendor);
         } catch (error) {
             console.log(error,"88989")
@@ -129,7 +129,7 @@ module.exports = {
     deleteMulti: async(req,res,next) => {
         try{
             let body = req.body.id;
-            console.log(body,"vendors ")
+            // console.log(body,"vendors ")
         
             if(body && body.length == 0){
                 return commonResponse.customErrorResponse(res, 422, 'Enter a id in array');

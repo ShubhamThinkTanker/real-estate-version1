@@ -41,6 +41,15 @@ import {
 	VendorRegisterReducer,
 } from './vendorReducers/vendorReducer';
 
+import {
+	AnnouncementRegisterReducer,
+	AnnouncementGetReducer,
+	AnnouncementListReducer,
+	EditAnnouncementReducer,
+	AnnouncementDeleteReducer,
+	AnnouncementmultiReducer,
+} from './announcementReducer/announcementReducer';
+
 const rootReducer = combineReducers({
 	auth,
 	navbar,
@@ -71,6 +80,19 @@ const rootReducer = combineReducers({
 	EditVendorData: EditVendoreducer,
 	EditComplexData: EditComplexreducer,
 	ComplexdeleteMultiData: ComplexmultiReducer,
+
+	registerAnnouncementData :AnnouncementRegisterReducer,
+	announcementRecords: AnnouncementGetReducer,
+	getAllAnnouncement : AnnouncementListReducer,
+	EditAnnouncementData : EditAnnouncementReducer,
+	DeleteAnnouncement : AnnouncementDeleteReducer,
+	AnnouncementdeleteMultiData : AnnouncementmultiReducer
+
+
+
+
+
+
 });
 
 export default rootReducer;

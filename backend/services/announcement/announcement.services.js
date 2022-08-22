@@ -11,8 +11,9 @@ module.exports = {
                 title: reqbody.title,
                 description: reqbody.description,
                 image: link['link'],
-                from_date: reqbody.from_date,
-                to_date: reqbody.to_date,
+                start_date: reqbody.start_date,
+                end_date: reqbody.end_date,
+                location: reqbody.location,
                 created_by: id,
             });
             return await newAnnouncement.save();
@@ -67,7 +68,7 @@ module.exports = {
             }
 
             let updatedAnnouncement = await announcementmodel.findOneAndUpdate({ _id: id }, { $set: reqBody }, { new: true, }).lean();
-            console.log(updatedAnnouncement, "updatedAnnouncement");
+            // console.log(updatedAnnouncement, "updatedAnnouncement");
 
             return updatedAnnouncement;
         } catch (error) {

@@ -1,4 +1,4 @@
-// ** Vendor List Component
+// ** Announcement List Component
 import Table from './Table';
 // ** Styles
 import '@styles/react/apps/app-users.scss';
@@ -11,78 +11,119 @@ import { UncontrolledDropdown } from 'reactstrap';
 import { Edit, Eye, Trash2, Speaker } from 'react-feather';
 
 import {
-	VendorListAction,
-	VendorDeleteAction,
-} from '../../../../redux/actions/apislogic/vendorapis';
+	AnnouncementListAction,
+	AnnouncementDeleteAction,
+} from '../../../../redux/actions/apislogic/announcementapis';
 import swal from 'sweetalert';
 
 const AnnouncementList = () => {
-	// const dispatch = useDispatch();
 
-	// useEffect(() => {
-	// 	dispatch(VendorListAction());
-	// }, []);
+	const dispatch = useDispatch();
 
-	// const OneDeleteRecord = (id) => {
-	// 	swal({
-	// 		title: 'Are you sure?',
-	// 		text: 'Once deleted, you will not be able to recover this data!',
-	// 		icon: 'warning',
-	// 		buttons: true,
-	// 		dangerMode: true,
-	// 	}).then((willDelete) => {
-	// 		if (willDelete) {
-	// 			dispatch(VendorDeleteAction(id));
-	// 		} else {
-	// 			swal('Your data  is safe!');
-	// 		}
-	// 	});
+	const OneDeleteRecord = (id) => {
+		swal({
+			title: 'Are you sure?',
+			text: 'Once deleted, you will not be able to recover this data!',
+			icon: 'warning',
+			buttons: true,
+			dangerMode: true,
+		}).then((willDelete) => {
+			if (willDelete) {
+				dispatch(AnnouncementDeleteAction(id));
+			} else {
+				swal('Your data  is safe!');
+			}
+		});
+	};
+
+
+	useEffect(() => {
+		dispatch(AnnouncementListAction());
+	}, []);
+
+
+	// const renderAnnouncement = (row) => {
+	// 	const stateNum = Math.floor(Math.random() * 6),
+	// 		states = [
+	// 			'light-success',
+	// 			'light-danger',
+	// 			'light-warning',
+	// 			'light-info',
+	// 			'light-primary',
+	// 			'light-secondary',
+	// 		],
+	// 		color = states[stateNum];
+	// 	if (row.image.length) {
+	// 		return (
+	// 			<Avatar
+	// 				className='mr-1'
+	// 				width='32'
+	// 				height='32'
+	// 				img={row.image}
+	// 			/>
+	// 		);
+	// 	} else {
+	// 		return (
+	// 			<Avatar
+	// 				width='32'
+	// 				height='32'
+	// 				color={color || 'primary'}
+	// 				className='mr-1'
+	// 				content={row.title || ''}
+	// 				initials
+	// 			/>
+	// 		);
+	// 	}
 	// };
 
 	const columns = [
-		// {
-		// 	name: 'No',
-		// 	selector: (row, index) => index + 1,
-		// },
+
 		{
-			id: 'image',
-			name: 'Image',
-			selector: (row) => row.image,
-			sortable: false,
-		},
-		{
-			id: 'title',
+		
 			name: 'Title',
-			selector: (row) => row.title,
+			minWidth: "15%",
+			selector :'title',
+			cell: (row) => row.title,
+				// <div className='d-flex justify-content-left align-items-center'>
+				// 	{renderAnnouncement(row)}
+				// 	<div className='d-flex flex-column'>{row.title}</div>
+				// </div>
+			// ),
 			sortable: true,
 		},
+	
 		{
-			id: ' society',
-			name: ' Society Name',
-			selector: (row) => row.society,
-			sortable: true,
-		},
-		{
-			id: 'description',
+		
 			name: 'Description',
-			selector: (row) => row.description,
+			minWidth: "15%",
+			selector : 'description',
+			cell: (row) => row.description,
 			sortable: true,
 		},
-
 		{
-			id: ' from_date',
-			name: 'Starting Date',
-			selector: (row) => row.from_date,
+		
+			name: 'start-date',
+			minWidth: "15%",
+			selector : 'start_date',
+			cell: (row) => row.start_date,
 			sortable: true,
 		},
-
 		{
-			id: 'to_date',
-			name: 'Ending Date',
-			selector: (row) => row.to_date,
+		
+			name: 'end_date',
+			minWidth: "15%",
+			selector : 'end_date',
+			cell: (row) => row.end_date,
 			sortable: true,
 		},
-
+		{
+		
+			name: 'location',
+			minWidth: "15%",
+			selector : 'location',
+			cell: (row) => row.location,
+			sortable: true,
+		},
 		{
 			name: 'Actions',
 			cell: (row) => {

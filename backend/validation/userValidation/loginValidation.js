@@ -23,7 +23,7 @@ module.exports = function validateLoginInput(data) {
   if (Validator.isEmpty(data.role)) {
     errors.role = "Role is required";
   }
-  console.log(errors, "isEmpty(errors)");
+  // console.log(errors, "isEmpty(errors)");
 
 
   return {

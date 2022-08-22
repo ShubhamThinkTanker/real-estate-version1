@@ -14,7 +14,7 @@ module.exports = function validateRegisterInput(data) {
     data.country = !isEmpty(data.country) ? data.country : "";
 
 
-
+    // console.log(data, "shubham");
 
     if (Validator.isEmpty(data.name)) {
         errors.name = "Name is required.";

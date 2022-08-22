@@ -1,10 +1,11 @@
 import React, { Fragment, useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
-import { ChevronDown } from 'react-feather';
+import { ChevronDown , ChevronsDown, Plus, Trash} from 'react-feather';
 import DataTable from 'react-data-table-component';
 import swal from 'sweetalert';
 import { selectThemeColors } from '@utils';
+
 // CALL IT ONCE IN YOUR APP
 import {
 	Card,
@@ -31,44 +32,44 @@ import {
 
 // ** Table Header
 
-const CustomHeader = (props) => {
-	const onSearch = (e) => {
-		e.preventDefault();
-		props.handleFilter(e);
-	};
+// const CustomHeader = (props) => {
+// 	const onSearch = (e) => {
+// 		e.preventDefault();
+// 		props.handleFilter(e);
+// 	};
 
-	return (
-		<div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
-			<Row>
-				<Col xl='6' className='d-flex align-items-center p-0'></Col>
-				<Col
-					xl='6'
-					className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'>
-					<div className='d-flex align-items-center mb-sm-0 mb-1 mr-1 search-chairman-btn'>
-						<Label className='mb-0' for='search-invoice'>
-							Search:
-						</Label>
-						<Input
-							id='search-invoice'
-							className='ml-50 w-100'
-							type='text'
-							value={props.value}
-							onChange={onSearch}
-						/>
-					</div>
-					<div>
-						<Button.Ripple
-							color='primary'
-							tag={Link}
-							to={'/user/add'}>
-							Create User
-						</Button.Ripple>
-					</div>
-				</Col>
-			</Row>
-		</div>
-	);
-};
+// 	return (
+// 		<div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
+// 			<Row>
+// 				<Col xl='6' className='d-flex align-items-center p-0'></Col>
+// 				<Col
+// 					xl='6'
+// 					className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'>
+// 					<div className='d-flex align-items-center mb-sm-0 mb-1 mr-1 search-chairman-btn'>
+// 						<Label className='mb-0' for='search-invoice'>
+// 							Search:
+// 						</Label>
+// 						<Input
+// 							id='search-invoice'
+// 							className='ml-50 w-100'
+// 							type='text'
+// 							value={props.value}
+// 							onChange={onSearch}
+// 						/>
+// 					</div>
+// 					<div>
+// 						<Button.Ripple
+// 							color='primary'
+// 							tag={Link}
+// 							to={'/user/add'}>
+// 							Create User
+// 						</Button.Ripple>
+// 					</div>
+// 				</Col>
+// 			</Row>
+// 		</div>
+// 	);
+// };
 
 const Table = ({ columns }) => {
 	const dispatch = useDispatch();
@@ -82,16 +83,16 @@ const Table = ({ columns }) => {
 		dispatch(UserListAction());
 	}, []);
 
-	// ** Chairman filter options
+	// ** user filter options
 
 	const statusOptions = [
-		{ value: '', label: 'Select Status', number: 0 },
-		{ value: 'pending', label: 'Pending', number: 1 },
-		{ value: 'active', label: 'Active', number: 2 },
-		{ value: 'inactive', label: 'Inactive', number: 3 },
+		{ value: 'active', label: 'Active' },
+		{ value: 'inactive', label: 'Inactive' },
 	];
-
 	const [deletedRow, setDeletedRow] = useState([]);
+
+	const [limit, setPerPage] = useState(datatable_per_page);
+	const [sort_order, setSort_order] = useState('desc');
 
 	const handelDelete = (selectedRow) => {
 		setDeletedRow(selectedRow);
@@ -121,26 +122,40 @@ const Table = ({ columns }) => {
 			: swal('Please Select One Data');
 	};
 
-	const [perPage, setPerPage] = useState(datatable_per_page);
-
-	const [sort_order, setSort_order] = useState('desc');
 	const [filter_value, setFilter_value] = useState('');
-
 	const table_data = {
 		page: 1,
-		limit: perPage,
+		limit: limit,
 		filter_value: filter_value,
 		sort_order: sort_order,
 		order_column: 'updated_at',
 	};
 
 	const [queryString, setQueryString] = useState(
-		`page=${table_data.page}&limit=${table_data.limit}&filter_value=${table_data.filter_value}&sort_order=${table_data.sort_order}&order_column=${table_data.order_column}`
+		`page=${table_data.page}&limit=${table_data.per_page}&filter_value=${table_data.filter_value}&sort_order=${table_data.sort_order}&order_column=${table_data.order_column}`
 	);
 
 	useEffect(() => {
 		dispatch(UserListAction(queryString));
 	}, [dispatch, queryString]);
+
+	const handleSort = (column, sortDirection) => {
+		setSort_order(sortDirection);
+		tableChangeHandler({
+			...table_data,
+			sort_order: sortDirection,
+			order_column: column.selector,
+		});
+	};
+
+	const handlePageChange = (page) => {
+		tableChangeHandler({ ...table_data, page: page });
+	};
+
+	const handlePerRowsChange = (newPerPage, page) => {
+		setPerPage(newPerPage);
+		tableChangeHandler({ ...table_data, page: page, limit: newPerPage });
+	};
 
 	const tableChangeHandler = (data) => {
 		let queryStr = Object.keys(data)
@@ -161,23 +176,9 @@ const Table = ({ columns }) => {
 		setFilter_value(value);
 	};
 
-	const handleSort = (column, sortDirection) => {
-		setSort_order(sortDirection);
-		tableChangeHandler({
-			...table_data,
-			sort_order: sortDirection,
-			order_column: column.selector,
-		});
-	};
-
-	const handlePerRowsChange = async (newPerPage, page) => {
-		setPerPage(newPerPage);
-		tableChangeHandler({ ...table_data, page, limit: newPerPage });
-	};
-
-	const handlePageChange = (page) => {
-		tableChangeHandler({ ...table_data, page });
-	};
+	useEffect(() => {
+		dispatch(UserListAction());
+	}, []);
 
 	const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
 		<div className='custom-control custom-checkbox'>
@@ -190,6 +191,62 @@ const Table = ({ columns }) => {
 			<label className='custom-control-label' onClick={onClick} />
 		</div>
 	));
+
+	const CustomHeader = (props) => {
+		const onSearch = (e) => {
+			e.preventDefault();
+			props.handleFilter(e);
+		};
+		return (
+			<div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
+				<Row>
+					<Col xl='6' className='d-flex align-items-center p-0'>
+						<div className='ml-1'>
+							{deletedRow.length !== 0 && (
+								<Button.Ripple
+									color='danger'
+									onClick={(e) => DeleteAll(e)}>
+									<Trash size={16} />
+									<span className='align-middle ml-1'>
+										Delete
+									</span>
+								</Button.Ripple>
+							)}
+						</div>
+					</Col>
+					<Col
+						xl='6'
+						className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'>
+						<div className='d-flex align-items-center mb-sm-0 mb-1 mr-1 search-chairman-btn'>
+							<Label className='mb-0' for='search-invoice'>
+								Search:
+							</Label>
+							<Input
+								id='search-invoice'
+								className='ml-50 w-100'
+								type='text'
+								value={props.value}
+								onChange={onSearch}
+								placeholder='Search'
+							/>
+						</div>
+						<div>
+							<Button.Ripple
+								color='primary'
+								tag={Link}
+								to={'/user/add'}>
+								<Plus size={16} />
+								<span className='align-middle ml-1'>
+									Create
+								</span>
+							</Button.Ripple>
+						</div>
+					</Col>
+				</Row>
+			</div>
+		);
+	};
+
 
 	return (
 		<Fragment>
@@ -213,47 +270,40 @@ const Table = ({ columns }) => {
 			</Card>
 
 			<Card>
-				<div className='app-user-list list'>
-					<div className='btn-delete'>
-						{deletedRow.length != 0 ? (
-							<Button.Ripple
-								color='danger'
-								onClick={(e) => DeleteAll(e)}>
-								Delete
-							</Button.Ripple>
-						) : null}
-					</div>
+			<div className='app-user-list list'>
 					<DataTable
-						columns={columns}
-						data={getAllUserData?.data.User_Details}
-						progressPending={getAllUserLoading}
-						noHeader
-						pagination
-						paginationServer
-						paginationTotalRows={getAllUserData?.data.TotalCount}
-						paginationRowsPerPageOptions={datatable_per_raw}
-						onChangeRowsPerPage={handlePerRowsChange}
-						onChangePage={handlePageChange}
-						onSort={handleSort}
-						paginationPerPage={table_data.limit}
-						sortIcon={<ChevronDown size={5} />}
-						selectableRowsComponent={BootstrapCheckbox}
-						fixedHeader
-						fixedHeaderScrollHeight='400px'
-						sortServer={true}
-						striped={true}
-						highlightOnHover={true}
-						selectableRows
-						onSelectedRowsChange={(e) =>
-							handelDelete(e.selectedRows)
-						}
-						subHeaderComponent={
-							<CustomHeader
-								value={filter_value}
-								handleFilter={handleFilter}
-							/>
-						}
-						subHeader
+							className='react-dataTable'
+							noHeader
+							pagination
+							selectableRows
+							onSelectedRowsChange={(e) =>
+								handelDelete(e.selectedRows)
+							}
+							columns={columns}
+							data={getAllUserData?.data.User_Details}
+							paginationServer
+							paginationRowsPerPageOptions={datatable_per_raw}
+							paginationPerPage={table_data.limit}
+							paginationTotalRows={
+								getAllUserData?.data.TotalCount
+							}
+							sortIcon={<ChevronDown size={5} />}
+							selectableRowsComponent={BootstrapCheckbox}
+							onChangeRowsPerPage={handlePerRowsChange}
+							onChangePage={handlePageChange}
+							onSort={handleSort}
+							fixedHeader
+							// fixedHeaderScrollHeight='400px'
+							sortServer={true}
+							striped={true}
+							progressPending={getAllUserLoading}
+							subHeaderComponent={
+								<CustomHeader
+									value={filter_value}
+									handleFilter={handleFilter}
+								/>
+							}
+							subHeader
 					/>
 				</div>
 			</Card>

@@ -7,7 +7,7 @@ module.exports = {
     //create vendor
     save:async(data) => {
         try {
-            console.log(data,"2322")
+            // console.log(data,"2322")
             const newvendor = new Vendor(data);
             return await newvendor.save();
         } catch (error) {
@@ -22,7 +22,7 @@ module.exports = {
             let SKIP = (reqQuery.page - 1) * reqQuery.limit
             if (filter_value != '') {
                 var regex = new RegExp(filter_value, 'i')
-                console.log(regex, ":regex");
+                // console.log(regex, ":regex");
                 filter_value = {
                     $or: [
                         { 'name': regex },
@@ -37,14 +37,14 @@ module.exports = {
             } else {
                 filter_value = {};
             }
-            console.log(filter_value,"filter_value")
+            // console.log(filter_value,"filter_value")
             let getAllVendor = await Vendor.find(
                 filter_value
             ).limit(LIMIT)
                 .skip(SKIP)
                 .sort([sort_array])
             // console.log("user...",user);
-            console.log(getAllVendor)
+            // console.log(getAllVendor)
             return getAllVendor;
     } catch (error) {
         console.log("Error : ", error);
@@ -68,7 +68,7 @@ module.exports = {
     delete: async(id) => {
         try{
             let deleteVendor = await Vendor.findByIdAndDelete(id);
-            console.log(deleteVendor,"9909009")
+            // console.log(deleteVendor,"9909009")
             return deleteVendor
         } catch (error){
             console.log("Error : ", error);
@@ -91,7 +91,7 @@ module.exports = {
     //deletemulti
     deletemulti:async(id) => {
         try{
-            console.log(id)
+            // console.log(id)
             let vendor = await Vendor.deleteMany({_id:{$in:id}});
             return vendor;
         } catch(error){

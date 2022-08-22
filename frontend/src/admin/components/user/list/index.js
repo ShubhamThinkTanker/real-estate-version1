@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import "../../../../components-css/userandchairman.css";
-import { UncontrolledDropdown } from "reactstrap";
+import { UncontrolledDropdown ,Badge } from "reactstrap";
 import { Edit, Eye, Trash2, User, Users } from "react-feather";
 
 import {
@@ -15,6 +15,7 @@ import {
   UserListAction
 } from "../../../../redux/actions/apislogic/userapis";
 import Avatar from "@components/avatar";
+import BreadCrumbs from '@components/breadcrumbs';
 
 const ChairmanList = () => {
   const dispatch = useDispatch();
@@ -103,77 +104,102 @@ const ChairmanList = () => {
   };
 
   const columns = [
-    {
-      name: "Name",
-      minWidth: "230px",
-      selector: "name",
-      sortable: true,
-      cell: (row) => (
-        <div className="d-flex justify-content-left align-items-center">
-          {renderChairman(row)}
-          <div className="d-flex flex-column">{row.name}</div>
-        </div>
-      )
-    },
-    {
-      name: "User Email",
-      minWidth: "280px",
-      selector: "email",
-      cell: (row) => row.email,
-      sortable: true
-    },
+  	{
+			name: 'Full Name',
+			minWidth: '18%',
+			selector: 'name',
+			sortable: true,
+			cell: (row) => (
+				<div className='d-flex justify-content-left align-items-center'>
+					{renderChairman(row)}
+					<div className='d-flex flex-column'>{row.name}</div>
+				</div>
+			),
+		},
+		{
+			name: 'Email',
+			minWidth: '25%',
+			selector: 'email',
+			cell: (row) => row.email,
+			sortable: true,
+		},
+
+		{
+			name: 'Mobile No',
+			minWidth: '10%',
+			selector: 'mobile_no',
+			cell: (row) => row.mobile_no,
+			sortable: false,
+		},
+
+		{
+			name: 'Role',
+			minWidth: '5%',
+			selector: 'role',
+			cell: (row) => renderRole(row),
+			sortable: false,
+		},
+
+		{
+			name: 'Status',
+			minWidth: '5%',
+			selector: 'status',
+			cell: (row) => {
+				return (
+					<Badge
+						color={
+							row.status === 'active'
+								? 'light-success'
+								: 'light-danger'
+						}
+						pill>
+						{row.status.toUpperCase()}
+					</Badge>
+				);
+			},
+			sortable: true,
+		},
 
     {
-      name: "Mobile No",
-      minWidth: "170px",
-      selector: "mobile_no",
-      cell: (row) => row.mobile_no,
-      sortable: false
-    },
+			name: 'Actions',
+			cell: (row) => {
+				return (
+					<div className='d-inline '>
+						{/* <UncontrolledDropdown> */}
+						<Link
+							to={`/user/view/${row._id}`}
+							className='text-primary'>
+							<Eye size={18} />
+						</Link>
 
-    {
-      name: "Role",
-      minWidth: "120px",
-      selector: "role",
-      cell: (row) => renderRole(row),
-      sortable: false
-    },
+						<Link
+							to={`/user/edit/${row._id}`}
+							className='text-warning mx-1'>
+							<Edit size={18} />
+						</Link>
 
-    {
-      name: "Actions",
-      cell: (row) => {
-        return (
-          <div className="d-flex ">
-            <UncontrolledDropdown>
-              <Link to={`/user/view/${row._id}`} style={{ color: "black" }}>
-                <Eye size={18} />
-              </Link>
-
-              <Link to={`/user/edit/${row._id}`}>
-                <Edit size={18} className="edit-btn" />
-              </Link>
-
-              <Trash2
-                size={18}
-                className="delete-btn"
-                style={{ cursor: "pointer" }}
-                onClick={() => OneDeleteRecord(row._id)}
-              />
-            </UncontrolledDropdown>
-          </div>
-        );
-      }
-    }
+						<Trash2
+							className='text-danger'
+							size={18}
+							onClick={() => OneDeleteRecord(row._id)}
+							style={{ cursor: 'pointer' }}
+						/>
+						{/* </UncontrolledDropdown> */}
+					</div>
+				);
+			},
+		},
   ];
 
   return (
-    <div className="app-user-list">
-      <h3>
-        <User style={{ marginRight: "20px" }} />
-        User List
-      </h3>
-      <Table columns={columns} />
-    </div>
+    <div className='app-user-list'>
+    <BreadCrumbs
+      breadCrumbTitle='User'
+      breadCrumbParent='User'
+      breadCrumbActive='User List'
+    />
+    <Table columns={columns} />
+  </div>
   );
 };
 

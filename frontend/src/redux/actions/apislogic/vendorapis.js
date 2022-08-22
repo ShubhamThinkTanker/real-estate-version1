@@ -1,4 +1,5 @@
 import axios from 'axios';
+import '../../.././index.css';
 import { configHeader } from '../../../localstorage/localdata';
 import {
 	VENDOR_REGISTER_ERROR,
@@ -13,12 +14,15 @@ import {
 	VENDOR_DELETE_ERROR,
 	VENDOR_DELETE_REQUEST,
 	VENDOR_DELETE_SUCCESS,
+	VENDOR_DELETE_RESET,
 	VENDOR_EDIT_REQUEST,
 	VENDOR_EDIT_SUCCESS,
 	VENDOR_EDIT_ERROR,
+	VENDOR_EDIT_RESET,
 	VENDOR_MULTI_DELETE_REQUEST,
 	VENDOR_MULTI_DELETE_SUCCESS,
 	VENDOR_MULTI_DELETE_ERROR,
+	VENDOR_MULTI_DELETE_RESET,
 } from '../../Constants/userConstants';
 import { toast } from 'react-toastify';
 
@@ -34,7 +38,7 @@ export const VendorRegisterAction = (registerdata) => async (dispatch) => {
 		);
 
 		if (data) {
-			toast.success('Vendor Created Successfully');
+			toast.success(' Vendor Created Successfully');
 		}
 
 		dispatch({
@@ -118,6 +122,11 @@ export const VendorDeleteAction = (deleteid) => async (dispatch) => {
 			type: VENDOR_DELETE_SUCCESS,
 			payload: data,
 		});
+		if (data) {
+			toast.error('Vendor Deleted Successfully');
+		}
+		dispatch({ type: VENDOR_DELETE_RESET });
+		dispatch(VendorListAction());
 	} catch (error) {
 		dispatch({
 			type: VENDOR_DELETE_ERROR,
@@ -141,6 +150,12 @@ export const VendorMultiAction = (multiid) => async (dispatch) => {
 			type: VENDOR_MULTI_DELETE_SUCCESS,
 			payload: data,
 		});
+		if (data) {
+			toast.error('Vendor Deleted Successfully');
+		}
+		dispatch({ type: VENDOR_MULTI_DELETE_RESET });
+		dispatch(VendorListAction());
+		setDeletedRow([]);
 	} catch (error) {
 		dispatch({
 			type: VENDOR_MULTI_DELETE_ERROR,
@@ -170,6 +185,10 @@ export const EditVendorAction = (updateid, vendordata) => async (dispatch) => {
 			type: VENDOR_EDIT_SUCCESS,
 			payload: data,
 		});
+		if (data) {
+			toast.success('Vendor Updated Successfully');
+		}
+		dispatch({ type: VENDOR_EDIT_RESET });
 	} catch (error) {
 		dispatch({
 			type: VENDOR_EDIT_ERROR,

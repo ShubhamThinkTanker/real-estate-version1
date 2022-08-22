@@ -8,7 +8,7 @@ module.exports = {
                 real_estates_id: id,
                 estate: reqBody.estate
             });
-            console.log(newEstateStructure, "newEstateStructure");
+            // console.log(newEstateStructure, "newEstateStructure");
             return await newEstateStructure.save();
         } catch (error) {
             console.log("Error : ", error);

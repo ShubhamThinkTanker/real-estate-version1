@@ -24,7 +24,7 @@ module.exports = {
             let SKIP = (reqQuery.page - 1) * reqQuery.limit;
             if (filter_value != '') {
                 var regex = new RegExp(filter_value, 'i');
-                console.log(regex, ':regex');
+                // console.log(regex, ':regex');
                 filter_value = {
                     $or: [{ month: regex }],
                 };
@@ -66,7 +66,7 @@ module.exports = {
 
         try {
             let updatedMaintenanceStructure = await maintenanceStructure.findOneAndDelete({ _id: id }).lean();
-            console.log(updatedMaintenanceStructure, ":updatedMaintenanceStructure");
+            // console.log(updatedMaintenanceStructure, ":updatedMaintenanceStructure");
             if (!updatedMaintenanceStructure || updatedMaintenanceStructure != null) {
                 return updatedMaintenanceStructure;
             }
