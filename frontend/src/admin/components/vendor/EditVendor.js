@@ -21,7 +21,7 @@ import {
 	InputGroup,
 	InputGroupText,
 } from 'reactstrap';
-
+import BreadCrumbs from '../../../@core/components/breadcrumbs';
 import { Link } from 'react-router-dom';
 import '@styles/react/libs/flatpickr/flatpickr.scss';
 import { VENDOR_EDIT_RESET } from '../../../redux/Constants/userConstants';
@@ -92,7 +92,13 @@ const EditVendor = () => {
 	};
 	return (
 		<>
-			<h3>Edit Vendor</h3>
+			<BreadCrumbs
+				breadCrumbTitle='Vendor'
+				breadCrumbParent={
+					<Link to='/vendor/list'>Vendor List</Link>
+				}
+				breadCrumbActive='Vendor Edit'
+			/>
 			{vendor && (
 				<Card>
 					<CardBody>
@@ -274,7 +280,7 @@ const EditVendor = () => {
 											</InputGroupAddon>
 											<Input
 												className='p-1'
-												type='textarea'
+												type='text'
 												rows='2'
 												name='address'
 												id='address'
@@ -300,13 +306,12 @@ const EditVendor = () => {
 											Save Changes
 										</Button.Ripple>
 										<Button.Ripple
-											outline
-											color='secondary'
-											type='cancel'
-											tag={Link}
-											to={'/vendor/list'}>
-											Cancel
-										</Button.Ripple>
+									color='danger'
+									tag={Link}
+									to='/vendor/list'
+									outline>
+									Cancel
+								</Button.Ripple>
 									</div>
 								</Col>
 							</Row>

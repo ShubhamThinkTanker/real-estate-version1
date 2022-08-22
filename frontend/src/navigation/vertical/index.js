@@ -27,10 +27,16 @@ export default [
 				icon: <Users size={20} />,
 				children: [
 					{
-						id: 'userManage',
+						id: 'chairManList',
 						title: 'Lists',
 						icon: <Circle size={12} />,
 						navLink: '/chairman/list',
+					},
+					{
+						id: 'chairManAdd',
+						title: 'Add',
+						icon: <Circle size={12} />,
+						navLink: '/chairman/add',
 					},
 				],
 		  }
@@ -54,10 +60,16 @@ export default [
 		icon: <Home size={20} />,
 		children: [
 			{
-				id: 'realestateManage',
+				id: 'realestateList',
 				title: 'Lists',
 				icon: <Circle size={12} />,
 				navLink: '/complex/list',
+			},
+			{
+				id: 'realestateAdd',
+				title: 'Add',
+				icon: <Circle size={12} />,
+				navLink: '/complex/add',
 			},
 		],
 	},
@@ -65,13 +77,19 @@ export default [
 	{
 		id: 'VendorApp',
 		title: 'Vendor',
-		icon: <Tool size={20} />,
+		icon: <User size={20} />,
 		children: [
 			{
 				id: 'complexManage',
 				title: 'Lists',
 				icon: <Circle size={12} />,
 				navLink: '/vendor/list',
+			},
+			{
+				id: 'complexManage',
+				title: 'Add',
+				icon: <Circle size={12} />,
+				navLink: '/vendor/add',
 			},
 		],
 	},
@@ -86,6 +104,12 @@ export default [
 				title: 'Lists',
 				icon: <Circle size={12} />,
 				navLink: '/announcement/list',
+			},
+			{
+				id: 'announcementManage',
+				title: 'Add',
+				icon: <Circle size={12} />,
+				navLink: '/announcement/add',
 			},
 		],
 	},

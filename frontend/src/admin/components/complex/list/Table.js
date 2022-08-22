@@ -1,64 +1,18 @@
 import React, { Fragment, useState, useEffect, forwardRef } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChevronDown } from 'react-feather';
+import { ChevronDown, Trash, Plus } from 'react-feather';
 import DataTable from 'react-data-table-component';
 import swal from 'sweetalert';
 import { Card, Input, Row, Col, Label, Button } from 'reactstrap';
-
-// ** Styles
-import '@styles/react/libs/react-select/_react-select.scss';
-import '@styles/react/libs/tables/react-dataTable-component.scss';
-
 import { Link } from 'react-router-dom';
 import { ComplexMultiAction } from '../../../../redux/actions/apislogic/complexapi';
 import {
 	datatable_per_page,
 	datatable_per_raw,
 } from '../../../../configs/constant_array';
-import { Complex_Data_Message } from '../../../../configs/Toast_Message';
 import { ComplexListAction } from '../../../../redux/actions/apislogic/complexapi';
 
 // ** Table Header
-
-const CustomHeader = (props) => {
-	const onSearch = (e) => {
-		e.preventDefault();
-		props.handleFilter(e);
-	};
-
-	return (
-		<div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
-			<Row>
-				<Col xl='6' className='d-flex align-items-center p-0'></Col>
-				<Col
-					xl='6'
-					className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'>
-					<div className='d-flex align-items-center mb-sm-0 mb-1 mr-1 search-chairman-btn'>
-						<Label className='mb-0' for='search-invoice'>
-							Search:
-						</Label>
-						<Input
-							id='search-invoice'
-							className='ml-50 w-100'
-							type='text'
-							value={props.value}
-							onChange={onSearch}
-						/>
-					</div>
-					<div>
-						<Button.Ripple
-							color='primary'
-							tag={Link}
-							to={'/complex/add'}>
-							Create
-						</Button.Ripple>
-					</div>
-				</Col>
-			</Row>
-		</div>
-	);
-};
 
 const Table = ({ columns }) => {
 	const dispatch = useDispatch();
@@ -80,29 +34,27 @@ const Table = ({ columns }) => {
 	const DeleteAll = (e) => {
 		deletedRow.length != 0
 			? swal({
-					title: 'Are you sure?',
-					text: 'Once deleted, you will not be able to recover this data!',
-					icon: 'warning',
-					buttons: true,
-					dangerMode: true,
-			  }).then((willDelete) => {
-					if (willDelete) {
-						let multiRecordDelete = deletedRow.map(
-							(ele) => ele._id
-						);
-						let deleteObj = {
-							id: multiRecordDelete,
-						};
-						dispatch(ComplexMultiAction(deleteObj));
-					} else {
-						swal('Your data  is safe!');
-					}
-			  })
+				title: 'Are you sure?',
+				text: 'Once deleted, you will not be able to recover this data!',
+				icon: 'warning',
+				buttons: true,
+				dangerMode: true,
+			}).then((willDelete) => {
+				if (willDelete) {
+					let multiRecordDelete = deletedRow.map(
+						(ele) => ele._id
+					);
+					let deleteObj = {
+						id: multiRecordDelete,
+					};
+					dispatch(ComplexMultiAction(deleteObj));
+				} else {
+					swal('Your data  is safe!');
+				}
+			})
 			: swal('Please Select One Data');
 	};
-	{
-		Complex_Data_Message(setDeletedRow);
-	}
+
 	const [perPage, setPerPage] = useState(datatable_per_page);
 
 	const [sort_order, setSort_order] = useState('desc');
@@ -171,20 +123,67 @@ const Table = ({ columns }) => {
 		</div>
 	));
 
+	const CustomHeader = (props) => {
+		const onSearch = (e) => {
+			e.preventDefault();
+			props.handleFilter(e);
+		};
+
+		return (
+			<div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
+				<Row>
+
+					<Col xl='6' className='d-flex align-items-center p-0'>
+						<div className='ml-1'>
+							{deletedRow.length !== 0 && (
+								<Button.Ripple
+									color='danger'
+									onClick={(e) => DeleteAll(e)}>
+									<Trash size={16} />
+									<span className='align-middle ml-1'>
+										Delete
+									</span>
+								</Button.Ripple>
+							)}
+						</div>
+					</Col>
+					<Col
+						xl='6'
+						className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'>
+						<div className='d-flex align-items-center mb-sm-0 mb-1 mr-1 search-chairman-btn'>
+							<Label className='mb-0' for='search-invoice'>
+								Search:
+							</Label>
+							<Input
+								id='search-invoice'
+								className='ml-50 w-100'
+								type='text'
+								value={props.value}
+								onChange={onSearch}
+							/>
+						</div>
+						<div>
+							<Button.Ripple
+								color='primary'
+								tag={Link}
+								to={'/complex/add'}>
+								<Plus size={16} />
+								<span className='align-middle ml-1'>
+									Create
+								</span>
+							</Button.Ripple>
+						</div>
+					</Col>
+				</Row>
+			</div>
+		);
+	};
 	return (
 		<Fragment>
 			<Card>
 				<div className='app-user-list list'>
-					<div className='btn-delete'>
-						{deletedRow.length != 0 ? (
-							<Button.Ripple
-								color='danger'
-								onClick={(e) => DeleteAll(e)}>
-								Delete
-							</Button.Ripple>
-						) : null}
-					</div>
 					<DataTable
+						className='react-dataTable'
 						noHeader
 						pagination
 						selectableRows
@@ -204,9 +203,7 @@ const Table = ({ columns }) => {
 						onSort={handleSort}
 						highlightOnHover={true}
 						fixedHeader
-						fixedHeaderScrollHeight='400px'
 						sortServer={true}
-						striped={true}
 						progressPending={getAllComplexLoading}
 						subHeaderComponent={
 							<CustomHeader

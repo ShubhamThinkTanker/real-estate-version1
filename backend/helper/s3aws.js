@@ -15,7 +15,7 @@ const s3 = new AWS.S3();
 
 
 // var link ;
-exports.fileUploadToS3 = async function fileUploadToS3(file,folder) {
+exports.fileUploadToS3 = async function fileUploadToS3(file, folder) {
 
   var fileName = `${Date.now()}-${file.name}`
   const params = {
@@ -35,11 +35,11 @@ exports.fileUploadToS3 = async function fileUploadToS3(file,folder) {
 
 };
 
-exports.deleteImage = async (link,folder) => {
+exports.deleteImage = async (link, folder) => {
 
   await s3.deleteObject({
     Bucket: process.env.S3_BUCKET,
-    Key:`${folder}/${link}`,
+    Key: `${folder}/${link}`,
 
   }, function (err, data) {
 

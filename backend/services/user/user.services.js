@@ -6,7 +6,7 @@ const { fileUploadToS3, deleteImage } = require("../../helper/s3aws");
 
 exports.chairmanCreate = async (reqbody, id, hash) => {
 	try {
-		console.log(reqbody, "reqbody");
+		console.log(reqbody.profile_image, "reqbody");
 
 		var link = await fileUploadToS3(reqbody.profile_image);
 		const newUser = new ChairmanModel({

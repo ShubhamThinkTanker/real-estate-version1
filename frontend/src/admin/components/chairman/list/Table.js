@@ -1,8 +1,7 @@
 import React, { Fragment, useState, useEffect, forwardRef } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
-import { ChevronDown } from 'react-feather';
+import { ChevronDown, ChevronsDown, Plus, Trash } from 'react-feather';
 import DataTable from 'react-data-table-component';
 import swal from 'sweetalert';
 import { selectThemeColors } from '@utils';
@@ -17,11 +16,6 @@ import {
 	CardTitle,
 	CardBody,
 } from 'reactstrap';
-
-// ** Styles
-import '@styles/react/libs/react-select/_react-select.scss';
-import '@styles/react/libs/tables/react-dataTable-component.scss';
-
 import { Link } from 'react-router-dom';
 import { MultiDeleteAction } from '../../../../redux/actions/apislogic/userapis';
 import { ChairmanListAction } from '../../../../redux/actions/apislogic/chairmanapis';
@@ -29,48 +23,8 @@ import {
 	datatable_per_page,
 	datatable_per_raw,
 } from '../../../../configs/constant_array';
-import { User_Chairman_Message } from '../../../../configs/Toast_Message';
 
 // ** Table Header
-const CustomHeader = (props) => {
-	const onSearch = (e) => {
-		e.preventDefault();
-		props.handleFilter(e);
-	};
-
-	return (
-		<div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
-			<Row>
-				<Col xl='6' className='d-flex align-items-center p-0'></Col>
-				<Col
-					xl='6'
-					className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'>
-					<div className='d-flex align-items-center mb-sm-0 mb-1 mr-1 search-chairman-btn'>
-						<Label className='mb-0' for='search-invoice'>
-							Search:
-						</Label>
-						<Input
-							id='search-invoice'
-							className='ml-50 w-100'
-							type='text'
-							value={props.value}
-							onChange={onSearch}
-							placeholder='Search'
-						/>
-					</div>
-					<div>
-						<Button.Ripple
-							color='primary'
-							tag={Link}
-							to={'/chairman/add'}>
-							Create
-						</Button.Ripple>
-					</div>
-				</Col>
-			</Row>
-		</div>
-	);
-};
 
 const Table = ({ columns }) => {
 	const dispatch = useDispatch();
@@ -91,10 +45,6 @@ const Table = ({ columns }) => {
 
 	const [limit, setPerPage] = useState(datatable_per_page);
 	const [sort_order, setSort_order] = useState('desc');
-
-	{
-		User_Chairman_Message(setDeletedRow);
-	}
 
 	const handelDelete = (selectedRow) => {
 		setDeletedRow(selectedRow);
@@ -194,6 +144,62 @@ const Table = ({ columns }) => {
 		</div>
 	));
 
+	const CustomHeader = (props) => {
+		const onSearch = (e) => {
+			e.preventDefault();
+			props.handleFilter(e);
+		};
+
+		return (
+			<div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
+				<Row>
+					<Col xl='6' className='d-flex align-items-center p-0'>
+						<div className='ml-1'>
+							{deletedRow.length !== 0 && (
+								<Button.Ripple
+									color='danger'
+									onClick={(e) => DeleteAll(e)}>
+									<Trash size={16} />
+									<span className='align-middle ml-1'>
+										Delete
+									</span>
+								</Button.Ripple>
+							)}
+						</div>
+					</Col>
+					<Col
+						xl='6'
+						className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'>
+						<div className='d-flex align-items-center mb-sm-0 mb-1 mr-1 search-chairman-btn'>
+							<Label className='mb-0' for='search-invoice'>
+								Search:
+							</Label>
+							<Input
+								id='search-invoice'
+								className='ml-50 w-100'
+								type='text'
+								value={props.value}
+								onChange={onSearch}
+								placeholder='Search'
+							/>
+						</div>
+						<div>
+							<Button.Ripple
+								color='primary'
+								tag={Link}
+								to={'/chairman/add'}>
+								<Plus size={16} />
+								<span className='align-middle ml-1'>
+									Create
+								</span>
+							</Button.Ripple>
+						</div>
+					</Col>
+				</Row>
+			</div>
+		);
+	};
+
 	return (
 		<Fragment>
 			<Card>
@@ -217,16 +223,8 @@ const Table = ({ columns }) => {
 
 			<Card>
 				<div className='app-user-list list'>
-					<div className='btn-delete'>
-						{deletedRow.length != 0 ? (
-							<Button.Ripple
-								color='danger'
-								onClick={(e) => DeleteAll(e)}>
-								Delete
-							</Button.Ripple>
-						) : null}
-					</div>
 					<DataTable
+						className='react-dataTable'
 						noHeader
 						pagination
 						selectableRows
@@ -247,7 +245,7 @@ const Table = ({ columns }) => {
 						onChangePage={handlePageChange}
 						onSort={handleSort}
 						fixedHeader
-						fixedHeaderScrollHeight='400px'
+						// fixedHeaderScrollHeight='400px'
 						sortServer={true}
 						striped={true}
 						progressPending={getAllChairmanLoading}
@@ -258,6 +256,7 @@ const Table = ({ columns }) => {
 							/>
 						}
 						subHeader
+						// paginationComponent={CustomPagination}
 					/>
 				</div>
 			</Card>

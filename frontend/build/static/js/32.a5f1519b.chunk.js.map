@@ -1,0 +1,1 @@
+{"version":3,"sources":["admin/components/announcement/ViewAnnouncement.js"],"names":["ViewAnnouncement"],"mappings":"mJAAA,uBAMeA,UAJf,WACC,OAAO","file":"static/js/32.a5f1519b.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nfunction ViewAnnouncement() {\r\n\treturn <div>ViewAnnouncement</div>;\r\n}\r\n\r\nexport default ViewAnnouncement;\r\n"],"sourceRoot":""}

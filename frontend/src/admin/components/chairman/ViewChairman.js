@@ -22,7 +22,7 @@ import {
 	InputGroupText,
 	InputGroupAddon,
 } from 'reactstrap';
-
+import BreadCrumbs from '../../../@core/components/breadcrumbs';
 const ViewChairman = () => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
@@ -35,7 +35,14 @@ const ViewChairman = () => {
 
 	return (
 		<Fragment>
-			<h3>View Chairman</h3>
+			<BreadCrumbs
+				breadCrumbTitle='Chairman'
+				breadCrumbParent={
+					<Link to='/chairman/list'>Chairman List</Link>
+				}
+				breadCrumbActive='View Chairman'
+			/>
+
 			{getUsersRecords && (
 				<Card>
 					<CardBody>
@@ -188,7 +195,7 @@ const ViewChairman = () => {
 
 								<Col sm='12'>
 									<Button.Ripple
-										color='secondary'
+										color='danger'
 										tag={Link}
 										to='/chairman/list'
 										outline>

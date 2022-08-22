@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import '../../../../components-css/userandchairman.css';
-
+import BreadCrumbs from '@components/breadcrumbs';
 import { UncontrolledDropdown } from 'reactstrap';
 import { Edit, Eye, Trash2, Tool } from 'react-feather';
 
@@ -40,19 +40,18 @@ const VendorsList = () => {
 	};
 
 	const columns = [
-		// {
-		// 	name: 'No',
-		// 	selector: (row, index) => index + 1,
-		// },
+	
 		{
 			id: 'name',
 			name: 'First Name',
+			minWidth: "15%",
 			selector: (row) => row.name,
 			sortable: true,
 		},
 		{
 			id: 'lastname',
-			name: 'LastName',
+			name: 'Last Name',
+			minWidth: "15%",
 			selector: (row) => row.lastname,
 			sortable: true,
 		},
@@ -60,12 +59,14 @@ const VendorsList = () => {
 		{
 			id: 'mobile_no',
 			name: 'Mobile No',
+			minWidth: "10%",
 			selector: (row) => row.mobile_no,
 			sortable: false,
 		},
 		{
 			id: 'profession',
 			name: 'profession',
+			minWidth: "10%",
 			selector: (row) => row.profession,
 			sortable: true,
 		},
@@ -73,6 +74,7 @@ const VendorsList = () => {
 		{
 			id: 'services',
 			name: 'services',
+			minWidth: "20%",
 			selector: (row) => row.services,
 			sortable: true,
 		},
@@ -92,16 +94,17 @@ const VendorsList = () => {
 						<UncontrolledDropdown>
 							<Link
 								to={`/vendor/view/${row._id}`}
-								style={{ color: 'black' }}>
+								className='text-primary'>
 								<Eye size={18} />
 							</Link>
 
-							<Link to={`/vendor/edit/${row._id}`}>
-								<Edit size={18} className='edit-btn' />
+							<Link to={`/vendor/edit/${row._id}`}
+							className='text-warning mx-1'>
+							<Edit size={18} />
 							</Link>
 							<Trash2
 								size={18}
-								className='delete-btn'
+								className='text-danger'
 								style={{ cursor: 'pointer' }}
 								onClick={() => OneDeleteRecord(row._id)}
 							/>
@@ -114,11 +117,11 @@ const VendorsList = () => {
 
 	return (
 		<div className='app-user-list'>
-			<h3>
-				<Tool style={{ marginRight: '20px' }} />
-				Vendor List
-			</h3>
-
+			<BreadCrumbs
+				breadCrumbTitle='Vendor'
+				breadCrumbParent='Vendor'
+				breadCrumbActive='Vendor List'
+			/>
 			<Table columns={columns} />
 		</div>
 	);

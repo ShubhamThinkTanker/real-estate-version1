@@ -16,6 +16,7 @@ import {
 	InputGroupText,
 	InputGroupAddon
 } from 'reactstrap';
+import BreadCrumbs from '../../../@core/components/breadcrumbs';
 import { Briefcase, Smartphone, User, Tool, Home } from 'react-feather';
 function ViewVendor() {
 	const { id } = useParams();
@@ -27,8 +28,16 @@ function ViewVendor() {
 	const VendorGetData = useSelector((state) => state.vendorRecords);
 	const { getVendorsRecords } = VendorGetData;
 	return (
+		<>
+			<BreadCrumbs
+				breadCrumbTitle='Vendor'
+				breadCrumbParent={
+					<Link to='/vendor/list'>Vendor List</Link>
+				}
+				breadCrumbActive='Vendor View'
+			/>
 		<Fragment>
-			<h3>View Vendor</h3>
+		
 			{getVendorsRecords && (
 				<Card>
 					<CardBody>
@@ -196,14 +205,13 @@ function ViewVendor() {
 									</FormGroup>
 								</Col>
 								<Col sm='12'>
-									<Button.Ripple
-										outline
-										color='secondary'
-										type='cancel'
-										tag={Link}
-										to={'/vendor/list'}>
-										Cancel
-									</Button.Ripple>
+								<Button.Ripple
+									color='danger'
+									tag={Link}
+									to='/vendor/list'
+									outline>
+									Cancel
+								</Button.Ripple>
 								</Col>
 							</Row>
 						</Form>
@@ -211,6 +219,7 @@ function ViewVendor() {
 				</Card>
 			)}
 		</Fragment>
+		</>
 	);
 }
 

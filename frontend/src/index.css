@@ -1,60 +1,58 @@
 .error {
-    color: red;
+	color: red;
 }
 
 .fa-trash {
-    color: red;
+	color: red;
 }
 
 .edit-btn {
-    margin-left: 1rem;
-    color: black;
-
+	margin-left: 1rem;
+	color: black;
 }
 
 .delete-btn {
-    margin-left: 1rem;
+	margin-left: 1rem;
 }
 
 .forgot-btn {
-    float: right;
-    margin-top: 15px;
+	float: right;
+	margin-top: 15px;
 }
 
-.app-content {
+/* .app-content {
     background-color: white;
-}
+} */
 
 .search-user-btn {
-    width: 418px;
+	width: 418px;
 }
 
 .search-chairman-btn {
-    width: 380px;
+	width: 380px;
 }
 
 .card-user {
-    width: 100%;
-    height: 500px;
+	width: 100%;
+	height: 500px;
 }
 
-
 .toast-success-btn .Toastify__toast-body {
-    color: white;
+	color: white;
 }
 
 .Toastify__toast.Toastify__toast--success .Toastify__progress-bar {
-    background-color: white;
+	background-color: white;
 }
 
 .toast-delete-btn .Toastify__toast-body {
-    color: white;
+	color: white;
 }
 
 .toast-user-delete-btn .Toastify__toast-body {
-    color: white;
+	color: white;
 }
 
 .Toastify__toast.Toastify__toast--error .Toastify__progress-bar {
-    background-color: white;
+	background-color: white;
 }

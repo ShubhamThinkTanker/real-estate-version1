@@ -1,11 +1,9 @@
 import React, { Fragment, useState, useEffect, forwardRef } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
-import Select from 'react-select';
 import { ChevronDown } from 'react-feather';
 import DataTable from 'react-data-table-component';
 import swal from 'sweetalert';
-import { selectThemeColors } from '@utils';
+import {  Trash ,Plus } from 'react-feather';
 import {
 	Card,
 	Input,
@@ -17,11 +15,6 @@ import {
 	CardTitle,
 	CardBody,
 } from 'reactstrap';
-
-// ** Styles
-import '@styles/react/libs/react-select/_react-select.scss';
-import '@styles/react/libs/tables/react-dataTable-component.scss';
-
 import { Link } from 'react-router-dom';
 import { MultiDeleteAction } from '../../../../redux/actions/apislogic/userapis';
 import { ChairmanListAction } from '../../../../redux/actions/apislogic/chairmanapis';
@@ -29,7 +22,6 @@ import {
 	datatable_per_page,
 	datatable_per_raw,
 } from '../../../../configs/constant_array';
-import { User_Chairman_Message } from '../../../../configs/Toast_Message';
 
 // ** Table Header
 const CustomHeader = (props) => {
@@ -63,7 +55,10 @@ const CustomHeader = (props) => {
 							color='primary'
 							tag={Link}
 							to={'/announcement/add'}>
-							Create 
+								<Plus size={16} />
+								<span className='align-middle ml-1'>
+									Create
+								</span>
 						</Button.Ripple>
 					</div>
 				</Col>
@@ -93,10 +88,6 @@ const Table = ({ columns }) => {
 
 	const [limit, setPerPage] = useState(datatable_per_page);
 	const [sort_order, setSort_order] = useState('desc');
-
-	{
-		User_Chairman_Message(setDeletedRow);
-	}
 
 	const handelDelete = (selectedRow) => {
 		setDeletedRow(selectedRow);
@@ -224,11 +215,15 @@ const Table = ({ columns }) => {
 							<Button.Ripple
 								color='danger'
 								onClick={(e) => DeleteAll(e)}>
-								Delete
+						<Trash size={16} />
+									<span className='align-middle ml-1'>
+										Delete
+									</span>
 							</Button.Ripple>
 						) : null}
 					</div>
 					<DataTable
+						className='react-dataTable'
 						noHeader
 						pagination
 						selectableRows

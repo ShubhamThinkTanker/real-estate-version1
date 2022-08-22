@@ -36,12 +36,13 @@ import {
 } from 'reactstrap';
 import { ChairmanRegisterAction } from '../../../redux/actions/apislogic/chairmanapis';
 import { CHAIRMAN_REGISTER_RESET } from '../../../redux/Constants/userConstants';
+import BreadCrumbs from '../../../@core/components/breadcrumbs';
 
 const AddChairman = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const [filesend, setFileSend] = useState();
-
+	const [genderRadio, setGenderRadio] = useState('male');
 	const [values, setValues] = useState({
 		name: '',
 		email: '',
@@ -50,7 +51,6 @@ const AddChairman = () => {
 		country: '',
 		state: '',
 		city: '',
-		gender: '',
 		role: 'chairman',
 	});
 
@@ -60,6 +60,7 @@ const AddChairman = () => {
 	useEffect(() => {
 		if (ChairmanRegisterData) {
 			history.push('/chairman/list');
+			
 		}
 	}, [ChairmanRegisterData]);
 
@@ -70,18 +71,19 @@ const AddChairman = () => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 
-		const { name, email, mobile_no, gender, role } = values;
+		const { name, email, mobile_no, role, address, country, state, city } =
+			values;
 
 		const formData = new FormData();
 		formData.append('profile_image', filesend);
 		formData.append('name', name);
 		formData.append('email', email);
 		formData.append('mobile_no', mobile_no);
-		// formData.append("address",address);
-		// formData.append("country",country);
-		// formData.append("state",state);
-		// formData.append("city",city);
-		formData.append('gender', gender);
+		formData.append('address', address);
+		formData.append('country', country);
+		formData.append('state', state);
+		formData.append('city', city);
+		formData.append('gender', genderRadio);
 		formData.append('role', role);
 		dispatch(ChairmanRegisterAction(formData));
 	};
@@ -96,13 +98,22 @@ const AddChairman = () => {
 		reader.readAsDataURL(files[0]);
 	};
 
+	const handleChangeInput = (e) => {
+		setValues({ ...values, [e.target.name]: e.target.value });
+	};
 	const [img, setImg] = useState(
 		'https://grandimageinc.com/wp-content/uploads/2015/09/icon-user-default.png'
 	);
 
 	return (
 		<>
-			<h3>Create Chairman</h3>
+			<BreadCrumbs
+				breadCrumbTitle='Chairman'
+				breadCrumbParent={
+					<Link to='/chairman/list'>Chairman List</Link>
+				}
+				breadCrumbActive='Create Chairman'
+			/>
 			<Card>
 				<CardBody>
 					<Form onSubmit={(e) => onSubmit(e)}>
@@ -123,12 +134,7 @@ const AddChairman = () => {
 												tag={Label}
 												className='mr-75 mb-0'
 												color='primary'>
-												<span className='d-none d-sm-block'>
-													Upload
-												</span>
-												<span className='d-block d-sm-none'>
-													<Edit size={14} />
-												</span>
+												Upload
 												<Input
 													type='file'
 													hidden
@@ -138,19 +144,14 @@ const AddChairman = () => {
 												/>
 											</Button.Ripple>
 											<Button.Ripple
-												color='secondary'
+												color='danger'
 												outline
 												onClick={() =>
 													setImg(
 														'https://grandimageinc.com/wp-content/uploads/2015/09/icon-user-default.png'
 													)
 												}>
-												<span className='d-none d-sm-block'>
-													Remove
-												</span>
-												<span className='d-block d-sm-none'>
-													<Trash2 size={14} />
-												</span>
+												Remove
 											</Button.Ripple>
 										</div>
 									</Media>
@@ -192,10 +193,7 @@ const AddChairman = () => {
 											name='name'
 											placeholder='Name'
 											defaultValue={values.name}
-											onChange={(e) =>
-												(values['name'] =
-													e.target.value)
-											}
+											onChange={handleChangeInput}
 										/>
 									</InputGroup>
 									{error && error.name ? (
@@ -236,10 +234,7 @@ const AddChairman = () => {
 											name='email'
 											placeholder='Email'
 											defaultValue={values.email}
-											onChange={(e) =>
-												(values['email'] =
-													e.target.value)
-											}
+											onChange={handleChangeInput}
 										/>
 									</InputGroup>
 									{error && error.email ? (
@@ -280,10 +275,7 @@ const AddChairman = () => {
 											name='mobile_no'
 											placeholder='Mobile No'
 											defaultValue={values.mobile_no}
-											onChange={(e) =>
-												(values['mobile_no'] =
-													e.target.value)
-											}
+											onChange={handleChangeInput}
 										/>
 									</InputGroup>
 									{error && error.mobile_no ? (
@@ -327,10 +319,7 @@ const AddChairman = () => {
 											id='address'
 											placeholder='Address'
 											defaultValue={values.address}
-											onChange={(e) =>
-												(values['address'] =
-													e.target.value)
-											}
+											onChange={handleChangeInput}
 										/>
 									</InputGroup>
 									{error && error.address ? (
@@ -350,9 +339,7 @@ const AddChairman = () => {
 									</Label>
 									<Input
 										type='select'
-										onChange={(e) =>
-											(values['country'] = e.target.value)
-										}
+										onChange={handleChangeInput}
 										name='country'>
 										<option value=''>Select Country</option>
 										<option value='india'>India</option>
@@ -369,9 +356,7 @@ const AddChairman = () => {
 									</Label>
 									<Input
 										type='select'
-										onChange={(e) =>
-											(values['state'] = e.target.value)
-										}
+										onChange={handleChangeInput}
 										name='state'>
 										<option value=''>Select State</option>
 										<option value='gujarat'>Gujarat</option>
@@ -441,9 +426,7 @@ const AddChairman = () => {
 									</Label>
 									<Input
 										type='select'
-										onChange={(e) =>
-											(values['city'] = e.target.value)
-										}
+										onChange={handleChangeInput}
 										name='city'>
 										<option value=''>Select City</option>
 										<option value='ahmedabad'>
@@ -486,10 +469,14 @@ const AddChairman = () => {
 										name='gender'
 										inline
 										label='Male'
-										checked
+										checked={
+											genderRadio === 'male'
+												? true
+												: false
+										}
 										defaultValue='male'
 										onChange={(e) =>
-											(values['gender'] = e.target.value)
+											setGenderRadio(e.target.value)
 										}
 									/>
 
@@ -499,9 +486,14 @@ const AddChairman = () => {
 										name='gender'
 										inline
 										label='Female'
+										checked={
+											genderRadio === 'female'
+												? true
+												: false
+										}
 										defaultValue='female'
 										onChange={(e) =>
-											(values['gender'] = e.target.value)
+											setGenderRadio(e.target.value)
 										}
 									/>
 								</FormGroup>
@@ -602,10 +594,10 @@ const AddChairman = () => {
 									className='mb-1 mb-sm-0 mr-0 mr-sm-1'
 									type='submit'
 									color='primary'>
-									Save Changes
+									Submit
 								</Button.Ripple>
 								<Button.Ripple
-									color='secondary'
+									color='danger'
 									tag={Link}
 									to='/chairman/list'
 									outline>

@@ -20,18 +20,22 @@ import {
 	VENDOR_MULTI_DELETE_SUCCESS,
 	VENDOR_MULTI_DELETE_ERROR,
 } from '../../Constants/userConstants';
+import { toast } from 'react-toastify';
 
 export const VendorRegisterAction = (registerdata) => async (dispatch) => {
+	dispatch({
+		type: VENDOR_REGISTER_REQUEST,
+	});
 	try {
-		dispatch({
-			type: VENDOR_REGISTER_REQUEST,
-		});
-
 		const { data } = await axios.post(
 			`/vendor/create`,
 			registerdata,
 			configHeader
 		);
+
+		if (data) {
+			toast.success('Vendor Created Successfully');
+		}
 
 		dispatch({
 			type: VENDOR_REGISTER_SUCCESS,

@@ -7,7 +7,7 @@ import {
 	UserRegisterAction,
 } from '../../../redux/actions/apislogic/userapis';
 import { useHistory, useParams } from 'react-router-dom';
-
+import BreadCrumbs from '../../../@core/components/breadcrumbs';
 import {
 	Lock,
 	Edit,
@@ -140,8 +140,16 @@ const EditChairman = () => {
 	};
 
 	return (
+		<>
+		<BreadCrumbs
+				breadCrumbTitle='Chairman'
+				breadCrumbParent={
+					<Link to='/chairman/list'>Chairman List</Link>
+				}
+				breadCrumbActive='Edit Chairman'
+			/>
 		<Fragment>
-			<h3>Edit Chairman</h3>
+		
 			{user && (
 				<Card>
 					<CardBody>
@@ -158,12 +166,7 @@ const EditChairman = () => {
 													tag={Label}
 													className='mr-75 mb-0'
 													color='primary'>
-													<span className='d-none d-sm-block'>
-														Upload
-													</span>
-													<span className='d-block d-sm-none'>
-														<Edit size={14} />
-													</span>
+													Upload
 													<Input
 														type='file'
 														hidden
@@ -175,17 +178,12 @@ const EditChairman = () => {
 													/>
 												</Button.Ripple>
 												<Button.Ripple
-													color='secondary'
+													color='danger'
 													outline
 													onClick={() =>
 														setFileSend()
 													}>
-													<span className='d-none d-sm-block'>
-														Remove
-													</span>
-													<span className='d-block d-sm-none'>
-														<Trash2 size={14} />
-													</span>
+													Remove
 												</Button.Ripple>
 											</div>
 										</Media>
@@ -277,6 +275,12 @@ const EditChairman = () => {
 												}
 											/>
 										</InputGroup>
+										{errorsUSerEdit &&
+										errorsUSerEdit.email ? (
+											<div className='error'>
+												{errorsUSerEdit.email}
+											</div>
+										) : null}
 									</FormGroup>
 								</Col>
 
@@ -704,7 +708,7 @@ const EditChairman = () => {
 										Save Changes
 									</Button.Ripple>
 									<Button.Ripple
-										color='secondary'
+										color='danger'
 										tag={Link}
 										to='/chairman/list'
 										outline>
@@ -717,6 +721,7 @@ const EditChairman = () => {
 				</Card>
 			)}
 		</Fragment>
+		</>
 	);
 };
 

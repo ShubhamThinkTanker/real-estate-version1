@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import '../../../../components-css/userandchairman.css';
-
+import BreadCrumbs from '@components/breadcrumbs';
 import { UncontrolledDropdown } from 'reactstrap';
 import { Edit, Eye, Trash2, Speaker } from 'react-feather';
 
@@ -91,16 +91,17 @@ const AnnouncementList = () => {
 						<UncontrolledDropdown>
 							<Link
 								to={`/announcement/view/${row._id}`}
-								style={{ color: 'black' }}>
+								className='text-primary'>
 								<Eye size={18} />
 							</Link>
 
-							<Link to={`/announcement/edit/${row._id}`}>
-								<Edit size={18} className='edit-btn' />
+							<Link to={`/announcement/edit/${row._id}`}
+							className='text-warning mx-1'>
+							<Edit size={18} />
 							</Link>
 							<Trash2
 								size={18}
-								className='delete-btn'
+								className='text-danger'
 								style={{ cursor: 'pointer' }}
 								onClick={() => OneDeleteRecord(row._id)}
 							/>
@@ -113,13 +114,21 @@ const AnnouncementList = () => {
 
 	return (
 		<div className='app-user-list'>
-			<h3>
-				<Speaker style={{ marginRight: '20px' }} />
-				Announcement List
-			</h3>
-
+			<BreadCrumbs
+				breadCrumbTitle='Announcement'
+				breadCrumbParent='Announcement'
+				breadCrumbActive='Announcement List'
+			/>
 			<Table columns={columns} />
 		</div>
+		// <div className='app-user-list'>
+		// 	<h2>
+		// 		{/* <Speaker style={{ marginRight: '20px' }} /> */}
+		// 		Announcement List
+		// 	</h2>
+
+		// 	<Table columns={columns} />
+		// </div>
 	);
 };
 

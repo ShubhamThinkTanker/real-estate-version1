@@ -14,6 +14,7 @@ import {
 	InputGroupText,
 	InputGroupAddon
 } from 'reactstrap';
+import BreadCrumbs from '../../../@core/components/breadcrumbs';
 import { Link, useHistory } from 'react-router-dom';
 import '@styles/react/libs/flatpickr/flatpickr.scss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,7 +64,15 @@ const AddComplex = () => {
 
 	return (
 		<>
-			<h3>Create </h3>
+		
+
+			<BreadCrumbs
+				breadCrumbTitle='Real Estate'
+				breadCrumbParent={
+					<Link to='/complex/list'>Real Estate List</Link>
+				}
+				breadCrumbActive='Create Real Estate'
+			/>
 			<Card>
 				<CardBody>
 
@@ -175,12 +184,7 @@ const AddComplex = () => {
 									<Label className='form-label' for='lastname'>
 										Address
 									</Label>
-									<InputGroup className={Complexerror && Complexerror.address ? "is-invalid input-group-merge" : 'input-group-merge'}>
-										<InputGroupAddon addonType='prepend'>
-											<InputGroupText className={Complexerror && Complexerror.address ? "is-invalid" : ''}>
-												<Home size={15} />
-											</InputGroupText>
-										</InputGroupAddon>
+								
 										<Input
 											className={Complexerror && Complexerror.address ? "is-invalid" : ''}
 											type='text'
@@ -192,7 +196,7 @@ const AddComplex = () => {
 												(values['address'] = e.target.value)
 											}
 										/>
-									</InputGroup>
+									
 									{Complexerror && Complexerror.address ? (
 										<div className='error'>
 											{Complexerror.address}
@@ -213,13 +217,12 @@ const AddComplex = () => {
 										Submit
 									</Button.Ripple>
 									<Button.Ripple
-										outline
-										color='secondary'
-										type='cancel'
-										tag={Link}
-										to={'/complex/list'}>
-										Cancel
-									</Button.Ripple>
+									color='danger'
+									tag={Link}
+									to='/complex/list'
+									outline>
+									Cancel
+								</Button.Ripple>
 								</div>
 							</Col>
 

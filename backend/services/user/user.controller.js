@@ -15,8 +15,50 @@ const validateForgotChagePasswordInput = require("../../validation/userValidatio
 const { deleteImage } = require("../../helper/s3aws");
 var generator = require("generate-password");
 const { Country, State, City } = require("country-state-city")
+var { faker } = require('@faker-js/faker')
 
 module.exports = {
+
+
+    fakers: async (req, res, next) => {
+
+        let users = [];
+        for (let i = 0; i < 50; i++) {
+            let obj = {}
+            let gender = faker.name.gender(true)
+            let name = faker.name.firstName(gender);
+            let email = faker.internet.email();
+            let mobile_no = faker.phone.number();
+            let profile_image = faker.image.avatar()
+            let password = faker.name.lastName()
+            let country = 'india'
+            let state = 'gujrat'
+            let city = 'Ahemedabad'
+            let address = '561 Odhav'
+            let role = 'chairman'
+            users.push({
+                "name": name,
+                "email": email,
+                "mobile_no": mobile_no,
+                "profile_image": profile_image,
+                "password": password,
+                "gender": gender,
+                "country": country,
+                "state": state,
+                "city": city,
+                "address": address,
+                "role": role
+            });
+        }
+        console.log(users, ":users");
+
+        ChairmanModel.insertMany(users).then(function () {
+            console.log("Data inserted")  // Success
+        }).catch(function (error) {
+            console.log(error)      // Failure
+        });
+        // await newChairman.save()
+    },
 
 
     GetAllCountry: async (req, res, next) => {
@@ -64,9 +106,9 @@ module.exports = {
                 return commonResponse.customErrorResponse(res, 422, 'Something went wrong', errors);
             }
 
-            // if (req.files != undefined && req.files.profile_image != undefined) {
-            //     req.body.profile_image = req.files.profile_image;
-            // }
+            if (req.files != undefined && req.files.profile_image != undefined) {
+                req.body.profile_image = req.files.profile_image;
+            }
 
             var password = generator.generate({
                 length: 10,

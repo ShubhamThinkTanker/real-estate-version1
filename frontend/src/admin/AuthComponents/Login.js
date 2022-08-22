@@ -21,13 +21,10 @@ import { loginAction } from '../../redux/actions/apislogic/authapi';
 import { selectThemeColors } from '@utils';
 import useJwt from '@src/auth/jwt/useJwt';
 import { useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { LOGIN_USER_RESET } from '../../redux/Constants/userConstants';
 import Select from 'react-select';
-import InputPasswordToggle from '@components/input-password-toggle';
-const config = useJwt.jwtConfig;
 
 const Login = () => {
 	const loginUser = useSelector((state) => state.LoginUser);
@@ -73,7 +70,6 @@ const Login = () => {
 
 	return (
 		<div className='auth-wrapper auth-v1 px-2'>
-			<ToastContainer />
 			<div className='auth-inner py-2'>
 				<Card className='mb-0'>
 					<CardBody>
@@ -193,7 +189,6 @@ const Login = () => {
 								}}
 								style={{ borderLeft: 'none' }}
 							/>
-							{/* </InputGroup> */}
 
 							{error && error.role ? (
 								<div className='error'>{error.role}</div>

@@ -17,6 +17,7 @@ import {
   InputGroupText,
   InputGroupAddon
 } from 'reactstrap';
+import BreadCrumbs from '../../../@core/components/breadcrumbs';
 import { ComplexGetAction } from '../../../redux/actions/apislogic/complexapi';
 
 const ViewComplex = () => {
@@ -32,8 +33,16 @@ const ViewComplex = () => {
 	const { getComplexRecord } = getComplexRecordList;
 
 	return (
+		<>
+		<BreadCrumbs
+				breadCrumbTitle='Real Estate'
+				breadCrumbParent={
+					<Link to='/complex/list'>Real Estate List</Link>
+				}
+				breadCrumbActive='View Real Estate'
+			/>
 		<Fragment>
-			<h3>View Complex</h3>
+		
 			{getComplexRecord && (
 				<Card>
 					<CardBody>
@@ -149,13 +158,13 @@ const ViewComplex = () => {
 								</Col>
 
 								<Col sm='12'>
-									<Button.Ripple
-										color='secondary'
-										tag={Link}
-										to='/complex/list'
-										outline>
-										Cancel
-									</Button.Ripple>
+								<Button.Ripple
+									color='danger'
+									tag={Link}
+									to='/complex/list'
+									outline>
+									Cancel
+								</Button.Ripple>
 								</Col>
 							</Row>
 						</Form>
@@ -163,6 +172,7 @@ const ViewComplex = () => {
 				</Card>
 			)}
 		</Fragment>
+		</>
 	);
 };
 

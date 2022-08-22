@@ -5,7 +5,7 @@ import '@styles/react/apps/app-users.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-
+import BreadCrumbs from '@components/breadcrumbs';
 import { UncontrolledDropdown } from 'reactstrap';
 import { Edit, Eye, Home, Trash2 } from 'react-feather';
 import '../../../../components-css/userandchairman.css';
@@ -41,68 +41,69 @@ const UsersList = () => {
 	const columns = [
 		{
 			name: 'Realestate Name',
-			minWidth: '200px',
+			minWidth: '20%',
 			selector: 'realestate_name',
 			cell: (row) => row.realestate_name,
 			sortable: true,
 		},
-		// {
-		//   name: "Address",
-		//   minWidth: "240px",
-		//   selector: "address",
-		//   cell: (row) => row.address,
-		//   sortable: true
-		// },
 
 		{
-			name: 'Country',
-			minWidth: '100px',
-			selector: 'country',
-			cell: (row) => row.country,
+		  name: "Address",
+		  minWidth: "20%",
+		  selector: "address",
+		  cell: (row) => row.address,
+		  sortable: true
+		},
+		{
+			name: 'City',
+			minWidth: '10%',
+			selector: 'city',
+			cell: (row) => row.city,
 			sortable: false,
 		},
-
 		{
 			name: 'State',
-			minWidth: '100px',
+			minWidth: '10%',
 			selector: 'state',
 			cell: (row) => row.state,
 			sortable: false,
 		},
 
 		{
-			name: 'City',
-			minWidth: '100px',
-			selector: 'city',
-			cell: (row) => row.city,
+			name: 'Country',
+			minWidth: '10%',
+			selector: 'country',
+			cell: (row) => row.country,
 			sortable: false,
 		},
 
+	
 		{
 			name: 'Actions',
 			cell: (row) => {
 				return (
 					<div className='d-flex '>
-						<UncontrolledDropdown>
+						{/* <UncontrolledDropdown> */}
 							<Link
 								to={`/complex/view/${row._id}`}
-								style={{ color: 'black' }}>
+								className='text-primary'>
 								<Eye size={18} />
+							
 							</Link>
 
 							<Link
 								to={`/complex/edit/${row._id}`}
-								style={{ color: 'black' }}>
-								<Edit size={18} className='edit-btn' />
+								className='text-warning mx-1'>
+							<Edit size={18} />
 							</Link>
 
 							<Trash2
 								size={18}
-								className='delete-btn'
+								className='text-danger'
 								style={{ cursor: 'pointer' }}
 								onClick={() => OneDeleteRecord(row._id)}
 							/>
-						</UncontrolledDropdown>
+						{/* </UncontrolledDropdown> */}
 					</div>
 				);
 			},
@@ -110,13 +111,15 @@ const UsersList = () => {
 	];
 
 	return (
+
 		<div className='app-user-list'>
-			<h3>
-				<Home style={{ marginRight: '20px' }} />
-				Realestate List
-			</h3>
-			<Table columns={columns} />
-		</div>
+		<BreadCrumbs
+			breadCrumbTitle='Real Estate'
+			breadCrumbParent='Real Estate'
+			breadCrumbActive='Real Estate List'
+		/>
+		<Table columns={columns} />
+	</div>
 	);
 };
 

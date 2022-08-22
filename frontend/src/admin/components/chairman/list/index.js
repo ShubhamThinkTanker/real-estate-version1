@@ -12,6 +12,7 @@ import '../../../../components-css/userandchairman.css';
 import { UserDeleteAction } from '../../../../redux/actions/apislogic/userapis';
 import { ChairmanListAction } from '../../../../redux/actions/apislogic/chairmanapis';
 import Avatar from '@components/avatar';
+import BreadCrumbs from '@components/breadcrumbs';
 
 const ChairmanList = () => {
 	const dispatch = useDispatch();
@@ -102,7 +103,7 @@ const ChairmanList = () => {
 	const columns = [
 		{
 			name: 'Full Name',
-			minWidth: '230px',
+			minWidth: '18%',
 			selector: 'name',
 			sortable: true,
 			cell: (row) => (
@@ -113,8 +114,8 @@ const ChairmanList = () => {
 			),
 		},
 		{
-			name: 'Chairman Email',
-			minWidth: '280px',
+			name: 'Email',
+			minWidth: '25%',
 			selector: 'email',
 			cell: (row) => row.email,
 			sortable: true,
@@ -122,7 +123,7 @@ const ChairmanList = () => {
 
 		{
 			name: 'Mobile No',
-			minWidth: '170px',
+			minWidth: '10%',
 			selector: 'mobile_no',
 			cell: (row) => row.mobile_no,
 			sortable: false,
@@ -130,7 +131,7 @@ const ChairmanList = () => {
 
 		{
 			name: 'Role',
-			minWidth: '120px',
+			minWidth: '5%',
 			selector: 'role',
 			cell: (row) => renderRole(row),
 			sortable: false,
@@ -138,10 +139,9 @@ const ChairmanList = () => {
 
 		{
 			name: 'Status',
-			minWidth: '120px',
+			minWidth: '5%',
 			selector: 'status',
 			cell: (row) => {
-				console.log(row.status);
 				return (
 					<Badge
 						color={
@@ -161,27 +161,27 @@ const ChairmanList = () => {
 			name: 'Actions',
 			cell: (row) => {
 				return (
-					<div className='d-flex '>
-						<UncontrolledDropdown>
-							<Link
-								to={`/chairman/view/${row._id}`}
-								style={{ color: 'black' }}>
-								<Eye size={18} />
-							</Link>
+					<div className='d-inline '>
+						{/* <UncontrolledDropdown> */}
+						<Link
+							to={`/chairman/view/${row._id}`}
+							className='text-primary'>
+							<Eye size={18} />
+						</Link>
 
-							<Link
-								to={`/chairman/edit/${row._id}`}
-								style={{ color: 'black' }}>
-								<Edit size={18} className='edit-btn' />
-							</Link>
+						<Link
+							to={`/chairman/edit/${row._id}`}
+							className='text-warning mx-1'>
+							<Edit size={18} />
+						</Link>
 
-							<Trash2
-								size={18}
-								className='delete-btn'
-								style={{ cursor: 'pointer' }}
-								onClick={() => OneDeleteRecord(row._id)}
-							/>
-						</UncontrolledDropdown>
+						<Trash2
+							className='text-danger'
+							size={18}
+							onClick={() => OneDeleteRecord(row._id)}
+							style={{ cursor: 'pointer' }}
+						/>
+						{/* </UncontrolledDropdown> */}
 					</div>
 				);
 			},
@@ -190,10 +190,11 @@ const ChairmanList = () => {
 
 	return (
 		<div className='app-user-list'>
-			<h3>
-				<Users style={{ marginRight: '20px' }} />
-				Chairman List
-			</h3>
+			<BreadCrumbs
+				breadCrumbTitle='Chairman'
+				breadCrumbParent='Chairman'
+				breadCrumbActive='Chairman List'
+			/>
 			<Table columns={columns} />
 		</div>
 	);

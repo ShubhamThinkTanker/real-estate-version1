@@ -14,9 +14,10 @@ import {
 	InputGroupText,
 	InputGroupAddon,
 } from 'reactstrap';
+import BreadCrumbs from '../../../@core/components/breadcrumbs';
 import { User, Smartphone, Home, Briefcase, Tool } from 'react-feather';
 import { Link } from 'react-router-dom';
-import '@styles/react/libs/flatpickr/flatpickr.scss';
+
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useHistory } from 'react-router-dom';
@@ -56,17 +57,17 @@ const AddVendor = () => {
 	const registerRecord = useSelector((state) => state.registerVendorData);
 	var { error, VendorRegisterData } = registerRecord;
 
-	useEffect(() => {
-		if (VendorRegisterData) {
-			history.push('/vendor/list');
-		}
-	}, [VendorRegisterData && VendorRegisterData]);
+	// useEffect(() => {
+	// 	if (VendorRegisterData) {
+	// 		history.push('/vendor/list');
+	// 	}
+	// }, [VendorRegisterData && VendorRegisterData]);
 
 	useEffect(() => {
 		dispatch({ type: VENDOR_REGISTER_RESET });
 	}, []);
 
-	const onSubmit = (e) => {
+	const onSubmit = async (e) => {
 		e.preventDefault();
 
 		const { name, lastname, mobile_no, profession, services, address } =
@@ -79,12 +80,19 @@ const AddVendor = () => {
 		formData.append('profession', profession);
 		formData.append('services', services);
 		formData.append('address', address);
-		dispatch(VendorRegisterAction(formData));
+		await dispatch(VendorRegisterAction(formData));
+		history.push('/vendor/list');
 	};
 
 	return (
 		<>
-			<h3>Create</h3>
+			<BreadCrumbs
+				breadCrumbTitle='Vendor'
+				breadCrumbParent={
+					<Link to='/vendor/list'>Vendor List</Link>
+				}
+				breadCrumbActive='Create Vendor'
+			/>
 			<Card>
 				<CardBody>
 					<Form onSubmit={(e) => onSubmit(e)}>
@@ -382,13 +390,12 @@ const AddVendor = () => {
 										Submit
 									</Button.Ripple>
 									<Button.Ripple
-										outline
-										color='secondary'
-										type='cancel'
-										tag={Link}
-										to={'/vendor/list'}>
-										Cancel
-									</Button.Ripple>
+									color='danger'
+									tag={Link}
+									to='/vendor/list'
+									outline>
+									Cancel
+								</Button.Ripple>
 								</div>
 							</Col>
 						</Row>

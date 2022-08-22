@@ -23,7 +23,7 @@ import '@styles/react/libs/flatpickr/flatpickr.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { COMPLEX_EDIT_RESET } from '../../../redux/Constants/userConstants';
-
+import BreadCrumbs from '../../../@core/components/breadcrumbs';
 const EditComplex = () => {
 	const { id } = useParams();
 	const history = useHistory();
@@ -93,7 +93,13 @@ const EditComplex = () => {
 
 	return (
 		<>
-			<h3>Edit Realestate</h3>
+			<BreadCrumbs
+				breadCrumbTitle='Real Estate'
+				breadCrumbParent={
+					<Link to='/complex/list'>Real Estate List</Link>
+				}
+				breadCrumbActive='Edit Real Estate'
+			/>
 			<Card>
 				<CardBody>
 					<Form onSubmit={(e) => onSubmit(e)}>
@@ -224,16 +230,15 @@ const EditComplex = () => {
 										className='me-1 mr-1'
 										color='primary'
 										type='submit'>
-										Submit
+										Save Changes
 									</Button.Ripple>
 									<Button.Ripple
-										outline
-										color='secondary'
-										type='cancel'
-										tag={Link}
-										to={'/complex/list'}>
-										Cancel
-									</Button.Ripple>
+									color='danger'
+									tag={Link}
+									to='/complex/list'
+									outline>
+									Cancel
+								</Button.Ripple>
 								</div>
 							</Col>
 						</Row>

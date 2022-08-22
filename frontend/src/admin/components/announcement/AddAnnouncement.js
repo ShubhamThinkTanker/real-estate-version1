@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState}	from 'react';
 import {
 	Col,
 	CustomInput,
@@ -11,30 +11,91 @@ import {
 	Button,
 	FormGroup,
 } from 'reactstrap';
+import BreadCrumbs from '../../../@core/components/breadcrumbs';
 import { Lock, Edit, Trash2 } from 'react-feather';
 import { Link } from 'react-router-dom';
 function AddAnnouncement() {
+	const [filesend, setFileSend] = useState();
+	const onChange = (e) => {
+		setFileSend(e.target.files[0]);
+		const reader = new FileReader(),
+			files = e.target.files;
+		reader.onload = function () {
+			setImg(reader.result);
+		};
+		reader.readAsDataURL(files[0]);
+	};
+	const [img, setImg] = useState(
+		'https://grandimageinc.com/wp-content/uploads/2015/09/icon-user-default.png'
+	);
+
 	return (
 		<>
-			<h3>Create</h3>
+		<BreadCrumbs
+				breadCrumbTitle='Announcement'
+				breadCrumbParent={
+					<Link to='/announcement/list'>Announcement List</Link>
+				}
+				breadCrumbActive='Create Announcement'
+			/>
 			<Row>
 				<Col sm='12'>
 					<Form onSubmit={(e) => onSubmit(e)}>
 						<Row>
+						<Col sm='12'>
+								<Label for='image'>Image</Label>
+								<Media className='mb-2'>
+									<img
+										className='user-avatar rounded mr-2 my-25 cursor-pointer'
+										src={img}
+										height='90'
+										width='90'
+									/>
+									<Media className='mt-50' body>
+										<div className='d-flex flex-wrap mt-1 px-0'>
+											<Button.Ripple
+												id='change-img'
+												tag={Label}
+												className='mr-75 mb-0'
+												color='primary'>
+												Upload
+												<Input
+													type='file'
+													hidden
+													id='change-img'
+													onChange={onChange}
+													accept='image/*'
+												/>
+											</Button.Ripple>
+											<Button.Ripple
+												color='danger'
+												outline
+												onClick={() =>
+													setImg(
+														'https://grandimageinc.com/wp-content/uploads/2015/09/icon-user-default.png'
+													)
+												}>
+												Remove
+											</Button.Ripple>
+										</div>
+									</Media>
+								</Media>
+							
+							</Col>
 							<Col md='6' sm='12'>
 								<FormGroup>
-									<Label for='name'>Name</Label>
+									<Label for='title'>Title</Label>
 									<Input
 										type='text'
-										id='name'
-										name='name'
-										placeholder='Name'
-										// defaultValue={values.name}
+										id='title'
+										Title='title'
+										placeholder='Title'
+										// defaultValue={values.title}
 										// onChange={(e) =>
-										// 	(values['name'] = e.target.value)
+										// 	(values['title'] = e.target.value)
 										// }
 									/>
-									{/* {error && error.name ? (
+									{/* {error && error.title ? (
 										<div className='error'>
 											{error.name}
 										</div>
@@ -43,130 +104,46 @@ function AddAnnouncement() {
 							</Col>
 							<Col md='6' sm='12'>
 								<FormGroup>
-									<Label for='email'>Email</Label>
+									<Label for='email'>Description</Label>
 									<Input
 										type='text'
-										id='email'
-										name='email'
-										placeholder='Email'
-										// defaultValue={values.email}
+										id='description'
+										name='description'
+										placeholder='Description'
+										// defaultValue={values.description}
 										// onChange={(e) =>
-										// 	(values['email'] = e.target.value)
+										// 	(values['description'] = e.target.value)
 										// }
 									/>
-									{/* {error && error.email ? (
+									{/* {error && error.description ? (
 										<div className='error'>
-											{error.email}
+											{error.description}
 										</div>
 									) : null} */}
 								</FormGroup>
 							</Col>
-							<Col md='6' sm='12'>
-								<FormGroup>
-									<Label for='mobile_no'>Mobile No</Label>
-									<Input
-										type='text'
-										id='mobile_no'
-										name='mobile_no'
-										placeholder='Mobile No'
-										// defaultValue={values.mobile_no}
-										// onChange={(e) =>
-										// 	(values['mobile_no'] =
-										// 		e.target.value)
-										// }
-									/>
-									{/* {error && error.mobile_no ? (
-										<div className='error'>
-											{error.mobile_no}
-										</div>
-									) : null} */}
-								</FormGroup>
-							</Col>
-							<Col md='6' sm='12'>
-								<Label for='gender'>Gender</Label>
-								<br></br>
-								<CustomInput
-									type='radio'
-									id='gender1'
-									name='gender'
-									inline
-									label='Male'
-									// defaultValue='male'
-									// onChange={(e) =>
-									// 	(values['gender'] = e.target.value)
-									// }
-								/>
+						
 
-								<CustomInput
-									type='radio'
-									id='gender2'
-									name='gender'
-									inline
-									label='Female'
-									// defaultValue='female'
-									// onChange={(e) =>
-									// 	(values['gender'] = e.target.value)
-									// }
-								/>
-								{/* {error && error.gender ? (
-									<div className='error'>{error.gender}</div>
-								) : null} */}
+							<Col
+								className='d-flex flex-sm-row flex-column mt-2'
+								sm='12'>
+								<Button.Ripple
+									className='mb-1 mb-sm-0 mr-0 mr-sm-1'
+									type='submit'
+									color='primary'>
+									Submit
+								</Button.Ripple>
+								<Button.Ripple
+									color='danger'
+									tag={Link}
+									to='/chairman/list'
+									outline>
+									Cancel
+								</Button.Ripple>
 							</Col>
+							
 
-							<Col sm='12'>
-								<Label for='image'>Profile Image</Label>
-								<Media className='mb-2'>
-									{/* <img
-										className='user-avatar rounded mr-2 my-25 cursor-pointer'
-										src={img}
-										height='90'
-										width='90'
-									/> */}
-									<Media className='mt-50' body>
-										<div className='d-flex flex-wrap mt-1 px-0'>
-											<Button.Ripple
-												id='change-img'
-												tag={Label}
-												className='mr-75 mb-0'
-												color='primary'>
-												<span className='d-none d-sm-block'>
-													Upload
-												</span>
-												<span className='d-block d-sm-none'>
-													<Edit size={14} />
-												</span>
-												<Input
-													type='file'
-													hidden
-													id='change-img'
-													// onChange={onChange}
-													accept='image/*'
-												/>
-											</Button.Ripple>
-											<Button.Ripple
-												color='secondary'
-												outline
-												onClick={() =>
-													setImg(
-														'https://grandimageinc.com/wp-content/uploads/2015/09/icon-user-default.png'
-													)
-												}>
-												<span className='d-none d-sm-block'>
-													Remove
-												</span>
-												<span className='d-block d-sm-none'>
-													<Trash2 size={14} />
-												</span>
-											</Button.Ripple>
-										</div>
-									</Media>
-								</Media>
-								{/* {error && error.profile_image ? (
-									<div className='error'>
-										{error.profile_image}
-									</div>
-								) : null} */}
-							</Col>
+							
 						</Row>
 					</Form>
 				</Col>
