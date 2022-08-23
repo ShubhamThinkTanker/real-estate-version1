@@ -20,7 +20,7 @@ const initialize = (app) => {
 	app.use("/chairman/announcement", announcementRoute)
 	app.use("/vendor", vendorRoutes);
 	app.use("/vehicle", vehicleRoutes)
-	app.use("/", countryRoute)
+	app.use("/api", countryRoute)
 	app.use("/maintenance", maintenanceRoute)
 
 
