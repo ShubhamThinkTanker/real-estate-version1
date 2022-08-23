@@ -13,9 +13,12 @@ import {
 	ANNOUNCEMENT_DELETE_ERROR,
 	ANNOUNCEMENT_DELETE_REQUEST,
 	ANNOUNCEMENT_DELETE_SUCCESS,
+	ANNOUNCEMENT_DELETE_RESET,
 	ANNOUNCEMENT_EDIT_REQUEST,
 	ANNOUNCEMENT_EDIT_SUCCESS,
 	ANNOUNCEMENT_EDIT_ERROR,
+	ANNOUNCEMENT_EDIT_RESET,
+	ANNOUNCEMENT_MULTI_DELETE_RESET,
 	ANNOUNCEMENT_MULTI_DELETE_REQUEST,
 	ANNOUNCEMENT_MULTI_DELETE_SUCCESS,
 	ANNOUNCEMENT_MULTI_DELETE_ERROR,
@@ -29,7 +32,7 @@ export const AnnouncementRegisterAction = (registerdata) => async (dispatch) => 
 	});
 	try {
 		const { data } = await axios.post(
-			`/chairman/announcement/create`,
+			'/chairman/announcement/create',
 			registerdata,
 			configHeader
 		);
@@ -59,7 +62,7 @@ export const AnnouncementListAction = (queryString) => async (dispatch) => {
 			type: ANNOUNCEMENT_LIST_REQUEST,
 		});
 
-		const { data } = await axios.post(
+		const { data } = await axios.get(
 			'/chairman/announcement/getAll_Announcement?' + queryString,
 			configHeader
 		);
@@ -122,6 +125,10 @@ export const EditAnnouncementAction = (updateid, announcementdata) => async (dis
 			type: ANNOUNCEMENT_EDIT_SUCCESS,
 			payload: data,
 		});
+		if (data) {
+			toast.success('Announcement Updated Successfully');
+		}
+		dispatch({ type: ANNOUNCEMENT_EDIT_RESET });
 	} catch (error) {
 		dispatch({
 			type: ANNOUNCEMENT_EDIT_ERROR,
@@ -148,6 +155,11 @@ export const AnnouncementDeleteAction = (deleteid) => async (dispatch) => {
 			type: ANNOUNCEMENT_DELETE_SUCCESS,
 			payload: data,
 		});
+		if (data) {
+			toast.error('Announcement Deleted Successfully');
+		}
+		dispatch({ type: ANNOUNCEMENT_DELETE_RESET });
+		dispatch(AnnouncementListAction());
 	} catch (error) {
 		dispatch({
 			type: ANNOUNCEMENT_DELETE_ERROR,
@@ -165,12 +177,18 @@ export const AnnouncementMultiAction = (multiid) => async (dispatch) => {
 			type: ANNOUNCEMENT_MULTI_DELETE_REQUEST,
 		});
 
-		const { data } = await axios.post(`/chairman/announcement/delete_many/`, multiid);
+		const { data } = await axios.delete(`/chairman/announcement/delete_many/`, multiid);
 
 		dispatch({
 			type: ANNOUNCEMENT_MULTI_DELETE_SUCCESS,
 			payload: data,
 		});
+		if (data) {
+			toast.error('Announcement Deleted Successfully');
+		}
+		dispatch({ type: ANNOUNCEMENT_MULTI_DELETE_RESET });
+		dispatch(AnnouncementListAction());
+		setDeletedRow([]);
 	} catch (error) {
 		dispatch({
 			type: ANNOUNCEMENT_MULTI_DELETE_ERROR,

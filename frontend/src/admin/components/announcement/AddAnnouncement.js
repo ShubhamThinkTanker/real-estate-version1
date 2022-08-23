@@ -43,14 +43,14 @@ function AddAnnouncement() {
 
 
 
-	// useEffect(() => {
-	// 	if (AnnouncementRegisterData) {
-	// 		history.push('/announcement/list');
+	useEffect(() => {
+		if (AnnouncementRegisterData) {
+			history.push('/announcement/list');
 
-	// 	}
-	// }, [AnnouncementRegisterData]);
+		}
+	}, [AnnouncementRegisterData]);
 
-	// console.log(registerRecord, "registerRecord");
+
 
 	useEffect(() => {
 		dispatch({ type: ANNOUNCEMENT_REGISTER_RESET });

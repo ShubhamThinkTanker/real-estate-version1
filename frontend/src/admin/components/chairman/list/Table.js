@@ -170,7 +170,7 @@ const Table = ({ columns }) => {
 					<Col
 						xl='6'
 						className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'>
-						<div className='d-flex align-items-center mb-sm-0 mb-1 mr-1 search-chairman-btn'>
+						<div className='d-flex align-items-center mb-sm-0 mb-1 mr-1'>
 							<Label className='mb-0' for='search-invoice'>
 								Search:
 							</Label>

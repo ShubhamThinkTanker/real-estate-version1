@@ -102,7 +102,7 @@ const AnnouncementList = () => {
 		},
 		{
 		
-			name: 'start-date',
+			name: 'start date',
 			minWidth: "15%",
 			selector : 'start_date',
 			cell: (row) => row.start_date,
@@ -110,7 +110,7 @@ const AnnouncementList = () => {
 		},
 		{
 		
-			name: 'end_date',
+			name: 'end date',
 			minWidth: "15%",
 			selector : 'end_date',
 			cell: (row) => row.end_date,
