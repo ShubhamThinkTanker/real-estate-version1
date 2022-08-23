@@ -49,6 +49,7 @@ import {
 	AnnouncementDeleteReducer,
 	AnnouncementmultiReducer,
 } from './announcementReducer/announcementReducer';
+import { vehicleReducer } from './vehicleReducer/Index';
 
 const rootReducer = combineReducers({
 	auth,
@@ -81,18 +82,14 @@ const rootReducer = combineReducers({
 	EditComplexData: EditComplexreducer,
 	ComplexdeleteMultiData: ComplexmultiReducer,
 
-	registerAnnouncementData :AnnouncementRegisterReducer,
+	registerAnnouncementData: AnnouncementRegisterReducer,
 	announcementRecords: AnnouncementGetReducer,
-	getAllAnnouncement : AnnouncementListReducer,
-	EditAnnouncementData : EditAnnouncementReducer,
-	DeleteAnnouncement : AnnouncementDeleteReducer,
-	AnnouncementdeleteMultiData : AnnouncementmultiReducer
+	getAllAnnouncement: AnnouncementListReducer,
+	EditAnnouncementData: EditAnnouncementReducer,
+	DeleteAnnouncement: AnnouncementDeleteReducer,
+	AnnouncementdeleteMultiData: AnnouncementmultiReducer,
 
-
-
-
-
-
+	vehicle: vehicleReducer,
 });
 
 export default rootReducer;

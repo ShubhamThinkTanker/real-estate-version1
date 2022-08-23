@@ -184,7 +184,7 @@ exports.UpdatePassword = async (token, HashPassword) => {
 
 // ---- ***---- Get All  Chairman -----***-----//
 
-exports.getAllChairman = async (reqQuery, sort_array, filter_value) => {
+exports.getAllChairman = async (reqQuery, sort_array, filter_value, status) => {
 	try {
 		let LIMIT = reqQuery.limit * 1;
 		let SKIP = (reqQuery.page - 1) * reqQuery.limit;
@@ -192,18 +192,27 @@ exports.getAllChairman = async (reqQuery, sort_array, filter_value) => {
 			var regex = new RegExp(filter_value, "i");
 			// console.log(regex, ":regex");
 			filter_value = {
-				$or: [{ mobile_no: regex }, { email: regex }, { name: regex }, { status: regex }]
+				$or: [{ mobile_no: regex }, { email: regex }, { name: regex }, { status: regex }, { status: status }]
 			};
 		} else {
 			filter_value = {};
 		}
+
+		if (status != "") {
+			var regex = new RegExp(status, "i");
+			status = {
+				$or: [{ status: regex }]
+			}
+		} else {
+			status = {};
+		}
 		let getAllUser = await ChairmanModel.find({
-			$and: [{ role: "chairman" }, filter_value]
+			$and: [{ role: "chairman" }, filter_value, status]
 		})
 			.limit(LIMIT)
 			.skip(SKIP)
 			.sort([sort_array]);
-		// console.log("user...",user);
+
 		return getAllUser;
 	} catch (error) {
 		return { error: error };
@@ -212,7 +221,7 @@ exports.getAllChairman = async (reqQuery, sort_array, filter_value) => {
 
 // ---- ***---- Get All User -----***-----//
 
-exports.getAlluser = async (reqQuery, sort_array, filter_value) => {
+exports.getAlluser = async (reqQuery, sort_array, filter_value, status) => {
 	try {
 		// console.log(filter_value, ":sortJson");
 		let LIMIT = reqQuery.limit * 1;
@@ -227,8 +236,17 @@ exports.getAlluser = async (reqQuery, sort_array, filter_value) => {
 			filter_value = {};
 		}
 
+		if (status != "") {
+			var regex = new RegExp(status, "i");
+			status = {
+				$or: [{ status: regex }]
+			}
+		} else {
+			status = {};
+		}
+
 		let getAllUser = await ChairmanModel.find({
-			$and: [{ role: "user" }, filter_value]
+			$and: [{ role: "user" }, filter_value, status]
 		})
 			.limit(LIMIT)
 			.skip(SKIP)

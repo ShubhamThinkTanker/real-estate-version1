@@ -1,29 +1,25 @@
 const router = require('express').Router();
-const vehicleController = require('./vehicle.controller')
+const vehicleController = require('./vehicle.controller');
 const { userAndChairmanAuthenticate } = require('../../helper/guards');
 
 router.post(
-    '/create', userAndChairmanAuthenticate,
-    vehicleController.addVehicle);
+	'/create',
+	userAndChairmanAuthenticate,
+	vehicleController.addVehicle
+);
 
-router.get(
-    '/get_vehicle/:id',
-    vehicleController.get);
+router.get('/:id', vehicleController.get);
 
-router.get(
-    '/get_all_vehicle',
-    vehicleController.findAllvehicle);
+router.get('/', vehicleController.findAllvehicle);
 
 router.put(
-    '/update/:id', userAndChairmanAuthenticate,
-    vehicleController.updatevehicle);
+	'/edit/:id',
+	userAndChairmanAuthenticate,
+	vehicleController.updatevehicle
+);
 
-router.delete(
-    '/delete_vehicle/:id',
-    vehicleController.deletevehicle);
+router.delete('/delete/:id', vehicleController.deletevehicle);
 
-router.delete(
-    '/delete_multiple_vehicle',
-    vehicleController.deleteMultiplevehicle);
+router.delete('/delete', vehicleController.deleteMultiplevehicle);
 
 module.exports = router;

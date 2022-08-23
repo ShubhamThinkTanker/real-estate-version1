@@ -200,7 +200,7 @@ module.exports = {
                 numbers: true,
             });
             bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(password, salt, async (err,hash) => {
+                bcrypt.hash(password, salt, async (err, hash) => {
                     if (err) throw err;
                     const email = req.body.email
 
@@ -231,9 +231,9 @@ module.exports = {
                         }
                     });
 
-                 
+
                     let user = await ChairmanService.userCreate(req.body, id, hash);
-                    
+
 
                     if (user) {
                         return commonResponse.success(res, 200, "Successfully Create User", user);
@@ -382,7 +382,9 @@ module.exports = {
             let sort_order = req.query.sort_order == "asc" ? "ASC" : "DESC";
             let sort_array = [order_column, sort_order];
             let filter_value = req.query.filter_value || "";
-            let findAllUser = await ChairmanService.getAllChairman(req.query, sort_array, filter_value);
+            let status = req.query.status || "";
+            console.log(status, ":status");
+            let findAllUser = await ChairmanService.getAllChairman(req.query, sort_array, filter_value, status);
             let Total_count = await ChairmanModel.countDocuments({ role: "chairman" })
             // console.log(Total_count, ":Total_count");
             if (findAllUser) {
@@ -404,8 +406,10 @@ module.exports = {
             let sort_order = req.query.sort_order == "asc" ? "ASC" : "DESC";
             let sort_array = [order_column, sort_order];
             let filter_value = req.query.filter_value || "";
-            let findAllUser = await ChairmanService.getAlluser(req.query, sort_array, filter_value);
+            let status = req.query.status || "";
+            let findAllUser = await ChairmanService.getAlluser(req.query, sort_array, filter_value, status);
             let Total_count = await ChairmanModel.countDocuments({ role: "user" })
+
             if (findAllUser) {
                 return commonResponse.success(res, 200, 'Successfully get All User', { TotalCount: Total_count, User_Details: findAllUser });
             } else {

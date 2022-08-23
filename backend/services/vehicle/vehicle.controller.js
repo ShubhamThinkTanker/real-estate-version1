@@ -33,7 +33,7 @@ module.exports = {
             }
             let vehicle = await VehicleServices.save(req.body, id)
             if (vehicle) {
-                return commonResponse.success(res, 200, 'vehicle has created succesfully ', vehicle);
+                return commonResponse.success(res, 200, 'vehicle created succesfully ', vehicle);
             } else {
                 return commonResponse.customErrorResponse(res, 422, 'Something went wrong');
             }

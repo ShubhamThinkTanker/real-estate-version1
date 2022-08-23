@@ -62,7 +62,7 @@ module.exports = {
             return new Error(error);
         }
     },
-     
+
     //------ delete vehicle ----- //
 
     delete: async (id) => {
@@ -80,7 +80,7 @@ module.exports = {
     deleteMultiple: async (id) => {
         try {
             let deleteMultipleVehicle = await Vehicle.deleteMany({ _id: { $in: id } });
-            console.log(deleteMultipleVehicle,"deleteMultipleVehicle");
+            console.log(deleteMultipleVehicle, "deleteMultipleVehicle");
             return deleteMultipleVehicle;
         } catch (error) {
             console.log('Error : ', error);
