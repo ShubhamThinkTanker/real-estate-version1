@@ -55,13 +55,13 @@ const AddVendor = () => {
 	});
 
 	const registerRecord = useSelector((state) => state.registerVendorData);
-	var { error, VendorRegisterData } = registerRecord;
+	var { error: errorVendorEditData, VendorRegisterData } = registerRecord;
 
-	// useEffect(() => {
-	// 	if (VendorRegisterData) {
-	// 		history.push('/vendor/list');
-	// 	}
-	// }, [VendorRegisterData && VendorRegisterData]);
+	useEffect(() => {
+		if (VendorRegisterData) {
+			history.push('/vendor/list');
+		}
+	}, [VendorRegisterData && VendorRegisterData]);
 
 	useEffect(() => {
 		dispatch({ type: VENDOR_REGISTER_RESET });
@@ -73,24 +73,22 @@ const AddVendor = () => {
 		const { name, lastname, mobile_no, profession, services, address } =
 			values;
 
-		const formData = new FormData();
-		formData.append('name', name);
-		formData.append('lastname', lastname);
-		formData.append('mobile_no', mobile_no);
-		formData.append('profession', profession);
-		formData.append('services', services);
-		formData.append('address', address);
-		await dispatch(VendorRegisterAction(formData));
-		history.push('/vendor/list');
+		const createVendor = {
+			name,
+			lastname,
+			mobile_no,
+			profession,
+			services,
+			address,
+		};
+		dispatch(VendorRegisterAction(createVendor));
 	};
 
 	return (
 		<>
 			<BreadCrumbs
 				breadCrumbTitle='Vendor'
-				breadCrumbParent={
-					<Link to='/vendor/list'>Vendor List</Link>
-				}
+				breadCrumbParent={<Link to='/vendor/list'>Vendor List</Link>}
 				breadCrumbActive='Create Vendor'
 			/>
 			<Card>
@@ -104,14 +102,16 @@ const AddVendor = () => {
 									</Label>
 									<InputGroup
 										className={
-											error && error.name
+											errorVendorEditData &&
+											errorVendorEditData.name
 												? 'is-invalid input-group-merge'
-												: 'input-group-merge mb-1'
+												: 'input-group-merge'
 										}>
 										<InputGroupAddon addonType='prepend'>
 											<InputGroupText
 												className={
-													error && error.name
+													errorVendorEditData &&
+													errorVendorEditData.name
 														? 'is-invalid'
 														: ''
 												}>
@@ -119,11 +119,7 @@ const AddVendor = () => {
 											</InputGroupText>
 										</InputGroupAddon>
 										<Input
-											className={
-												error && error.name
-													? 'is-invalid'
-													: ''
-											}
+											className='p-1'
 											type='text'
 											name='name'
 											id='name'
@@ -136,9 +132,10 @@ const AddVendor = () => {
 										/>
 									</InputGroup>
 
-									{error && error.name ? (
+									{errorVendorEditData &&
+									errorVendorEditData.name ? (
 										<div className='error'>
-											{error.name}
+											{errorVendorEditData.name}
 										</div>
 									) : null}
 								</FormGroup>
@@ -153,14 +150,16 @@ const AddVendor = () => {
 									</Label>
 									<InputGroup
 										className={
-											error && error.name
+											errorVendorEditData &&
+											errorVendorEditData.lastname
 												? 'is-invalid input-group-merge'
-												: 'input-group-merge mb-1'
+												: 'input-group-merge'
 										}>
 										<InputGroupAddon addonType='prepend'>
 											<InputGroupText
 												className={
-													error && error.name
+													errorVendorEditData &&
+													errorVendorEditData.lastname
 														? 'is-invalid'
 														: ''
 												}>
@@ -168,11 +167,7 @@ const AddVendor = () => {
 											</InputGroupText>
 										</InputGroupAddon>
 										<Input
-											className={
-												error && error.lastname
-													? 'is-invalid'
-													: ''
-											}
+											className='p-1'
 											type='text'
 											name='lastname'
 											id='lastname'
@@ -184,10 +179,10 @@ const AddVendor = () => {
 											}
 										/>
 									</InputGroup>
-
-									{error && error.lastname ? (
+									{errorVendorEditData &&
+									errorVendorEditData.lastname ? (
 										<div className='error'>
-											{error.lastname}
+											{errorVendorEditData.lastname}
 										</div>
 									) : null}
 								</FormGroup>
@@ -202,14 +197,16 @@ const AddVendor = () => {
 									</Label>
 									<InputGroup
 										className={
-											error && error.mobile_no
+											errorVendorEditData &&
+											errorVendorEditData.mobile_no
 												? 'is-invalid input-group-merge'
 												: 'input-group-merge'
 										}>
 										<InputGroupAddon addonType='prepend'>
 											<InputGroupText
 												className={
-													error && error.mobile_no
+													errorVendorEditData &&
+													errorVendorEditData.mobile_no
 														? 'is-invalid'
 														: ''
 												}>
@@ -217,11 +214,7 @@ const AddVendor = () => {
 											</InputGroupText>
 										</InputGroupAddon>
 										<Input
-											className={
-												error && error.mobile_no
-													? 'is-invalid'
-													: ''
-											}
+											className='p-1'
 											type='number'
 											name='mobile_no'
 											id='mobile_no'
@@ -234,9 +227,10 @@ const AddVendor = () => {
 										/>
 									</InputGroup>
 
-									{error && error.mobile_no ? (
+									{errorVendorEditData &&
+									errorVendorEditData.mobile_no ? (
 										<div className='error'>
-											{error.mobile_no}
+											{errorVendorEditData.mobile_no}
 										</div>
 									) : null}
 								</FormGroup>
@@ -251,14 +245,16 @@ const AddVendor = () => {
 									</Label>
 									<InputGroup
 										className={
-											error && error.mobile_no
+											errorVendorEditData &&
+											errorVendorEditData.profession
 												? 'is-invalid input-group-merge'
 												: 'input-group-merge'
 										}>
 										<InputGroupAddon addonType='prepend'>
 											<InputGroupText
 												className={
-													error && error.mobile_no
+													errorVendorEditData &&
+													errorVendorEditData.profession
 														? 'is-invalid'
 														: ''
 												}>
@@ -266,11 +262,7 @@ const AddVendor = () => {
 											</InputGroupText>
 										</InputGroupAddon>
 										<Input
-											className={
-												error && error.profession
-													? 'is-invalid'
-													: ''
-											}
+											className='p-1'
 											type='text'
 											name='profession'
 											id='profession'
@@ -282,9 +274,10 @@ const AddVendor = () => {
 											}
 										/>
 									</InputGroup>
-									{error && error.profession ? (
+									{errorVendorEditData &&
+									errorVendorEditData.profession ? (
 										<div className='error'>
-											{error.profession}
+											{errorVendorEditData.profession}
 										</div>
 									) : null}
 								</FormGroup>
@@ -297,14 +290,16 @@ const AddVendor = () => {
 									</Label>
 									<InputGroup
 										className={
-											error && error.mobile_no
+											errorVendorEditData &&
+											errorVendorEditData.services
 												? 'is-invalid input-group-merge'
 												: 'input-group-merge'
 										}>
 										<InputGroupAddon addonType='prepend'>
 											<InputGroupText
 												className={
-													error && error.mobile_no
+													errorVendorEditData &&
+													errorVendorEditData.services
 														? 'is-invalid'
 														: ''
 												}>
@@ -312,11 +307,7 @@ const AddVendor = () => {
 											</InputGroupText>
 										</InputGroupAddon>
 										<Input
-											className={
-												error && error.services
-													? 'is-invalid'
-													: ''
-											}
+											className='p-1'
 											type='text'
 											name='service-type'
 											id='service'
@@ -328,9 +319,10 @@ const AddVendor = () => {
 											}
 										/>
 									</InputGroup>
-									{error && error.services ? (
+									{errorVendorEditData &&
+									errorVendorEditData.services ? (
 										<div className='error'>
-											{error.services}
+											{errorVendorEditData.services}
 										</div>
 									) : null}
 								</FormGroup>
@@ -343,14 +335,16 @@ const AddVendor = () => {
 									</Label>
 									<InputGroup
 										className={
-											error && error.address
+											errorVendorEditData &&
+											errorVendorEditData.address
 												? 'is-invalid input-group-merge'
 												: 'input-group-merge'
 										}>
 										<InputGroupAddon addonType='prepend'>
 											<InputGroupText
 												className={
-													error && error.address
+													errorVendorEditData &&
+													errorVendorEditData.address
 														? 'is-invalid'
 														: ''
 												}>
@@ -358,12 +352,9 @@ const AddVendor = () => {
 											</InputGroupText>
 										</InputGroupAddon>
 										<Input
-											className={
-												error && error.address
-													? 'is-invalid'
-													: ''
-											}
+											className='p-1'
 											type='text'
+											rows='2'
 											name='address'
 											id='address'
 											placeholder='Address'
@@ -374,14 +365,15 @@ const AddVendor = () => {
 											}
 										/>
 									</InputGroup>
-									{error && error.address ? (
+									{errorVendorEditData &&
+									errorVendorEditData.address ? (
 										<div className='error'>
-											{error.address}
+											{errorVendorEditData.address}
 										</div>
 									) : null}
 								</FormGroup>
 							</Col>
-							
+
 							<Col sm='12'>
 								<div className='d-flex '>
 									<Button.Ripple
@@ -391,12 +383,12 @@ const AddVendor = () => {
 										Submit
 									</Button.Ripple>
 									<Button.Ripple
-									color='danger'
-									tag={Link}
-									to='/vendor/list'
-									outline>
-									Cancel
-								</Button.Ripple>
+										color='danger'
+										tag={Link}
+										to='/vendor/list'
+										outline>
+										Cancel
+									</Button.Ripple>
 								</div>
 							</Col>
 						</Row>

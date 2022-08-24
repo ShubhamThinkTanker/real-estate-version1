@@ -7,6 +7,7 @@ import {
 	Users,
 	Tool,
 	Speaker,
+	Truck,
 } from 'react-feather';
 import { userdatas } from '../../localstorage/localdata';
 
@@ -46,13 +47,13 @@ export default [
 				icon: <User size={20} />,
 				children: [
 					{
-						id: 'userManage',
+						id: 'userList',
 						title: 'Lists',
 						icon: <Circle size={12} />,
 						navLink: '/user/list',
 					},
 					{
-						id: 'userManage',
+						id: 'userAdd',
 						title: 'Add',
 						icon: <Circle size={12} />,
 						navLink: '/user/add',
@@ -86,13 +87,13 @@ export default [
 		icon: <User size={20} />,
 		children: [
 			{
-				id: 'complexManage',
+				id: 'complexList',
 				title: 'Lists',
 				icon: <Circle size={12} />,
 				navLink: '/vendor/list',
 			},
 			{
-				id: 'complexManage',
+				id: 'complexAdd',
 				title: 'Add',
 				icon: <Circle size={12} />,
 				navLink: '/vendor/add',
@@ -106,17 +107,56 @@ export default [
 		icon: <Speaker size={20} />,
 		children: [
 			{
-				id: 'announcementManage',
+				id: 'announcementList',
 				title: 'Lists',
 				icon: <Circle size={12} />,
 				navLink: '/announcement/list',
 			},
 			{
-				id: 'announcementManage',
+				id: 'announcementAdd',
 				title: 'Add',
 				icon: <Circle size={12} />,
 				navLink: '/announcement/add',
 			},
+		],
+	},
+
+	{
+		id: 'vehicleApp',
+		title: 'Vehicle',
+		icon: <Truck size={20} />,
+		children: [
+			{
+				id: 'vehicleList',
+				title: 'Lists',
+				icon: <Circle size={12} />,
+				navLink: '/vehicle/list',
+			},
+			{
+				id: 'vehicleCreate',
+				title: 'Add',
+				icon: <Circle size={12} />,
+				navLink: '/vehicle/create',
+			},
+		],
+	},
+	{
+		id: 'Estate-structures',
+		title: 'Estate-Structures',
+		// icon: <Speaker size={20} />,
+		children: [
+			{
+				id: 'estatestructuresList',
+				title: 'Lists',
+				icon: <Circle size={12} />,
+				navLink: '/estatestructures/list',
+			},
+			// {
+			// 	id: 'estatestructuresManage',
+			// 	title: 'Add',
+			// 	icon: <Circle size={12} />,
+			// 	navLink: '/announcement/add',
+			// },
 		],
 	},
 ];

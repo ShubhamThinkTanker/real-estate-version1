@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChevronDown, Trash, Plus } from 'react-feather';
-import { Vendor_Data_Message } from '../../../../configs/Toast_Message';
 
 // CALL IT ONCE IN YOUR APP
 import { Card, Input, Row, Col, Label, Button } from 'reactstrap';

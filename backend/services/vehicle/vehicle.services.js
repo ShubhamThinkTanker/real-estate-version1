@@ -40,15 +40,50 @@ module.exports = {
 
     //------ get All vehicle ----- //
 
-    getAllVehicle: async () => {
+    getAllVehicle: async (reqQuery, sort_array, filter_value, stickerStatus) => {
         try {
-            let getAllVehicles = await Vehicle.find()
+            console.log(filter_value, ":filter_value");
+            let LIMIT = reqQuery.limit * 1
+            let SKIP = (reqQuery.page - 1) * reqQuery.limit
+            if (filter_value != '') {
+                var regex = new RegExp(filter_value, 'i')
+
+                filter_value = {
+                    $or: [
+                        { 'vehicle_no': regex },
+
+                    ]
+                }
+            } else {
+                filter_value = {};
+            }
+            if (stickerStatus != "") {
+
+                stickerStatus = {
+                    $or: [{
+
+                        sticker_status:
+                            stickerStatus
+                    }]
+                }
+            } else {
+                stickerStatus = {};
+            }
+            let getAllVehicles = await Vehicle.find({
+                $and: [
+                    filter_value,
+                    stickerStatus
+                ]
+            }).limit(LIMIT)
+                .skip(SKIP)
+                .sort([sort_array])
             return getAllVehicles;
         } catch (error) {
             console.log("Error : ", error);
             return new Error(error);
         }
     },
+
 
     //------ update vehicle ----- //
 
@@ -87,6 +122,21 @@ module.exports = {
             return new Error(error);
         }
     },
+
+    emailexits: async (reqBody) => {
+        try {
+            let vehicleNumber = await Vehicle.findOne({
+                vehicle_no: reqBody.vehicle_no
+            }).lean();
+
+            if (!vehicleNumber) {
+                return false;
+            }
+            return vehicleNumber;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
 }

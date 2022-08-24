@@ -83,7 +83,7 @@ exports.ensureAuthenticatedChairman = async (req, res, next) => {
 
 exports.userAndChairmanAuthenticate = async (req, res, next) => {
     let token;
-    console.log(token, ":token");
+    
     if (
         req.headers.authorization &&
         req.headers.authorization.startsWith('Bearer')
@@ -96,7 +96,7 @@ exports.userAndChairmanAuthenticate = async (req, res, next) => {
                 $or: [{ role: "user" }, { role: "chairman" }],
             };
             req.user = await UserModel.findOne({ $and: [{ _id: decoded.id }, role] });
-            console.log(req.user, ":token");
+            
             next();
         } catch (error) {
 

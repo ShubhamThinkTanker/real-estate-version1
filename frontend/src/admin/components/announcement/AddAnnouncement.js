@@ -18,9 +18,9 @@ import {
 	InputGroupText,
 	InputGroupAddon,
 } from 'reactstrap';
-import Flatpickr from 'react-flatpickr'
+import Flatpickr from 'react-flatpickr';
 import BreadCrumbs from '../../../@core/components/breadcrumbs';
-import { Lock, Edit, Trash2 } from 'react-feather';
+
 import { Link } from 'react-router-dom';
 import { AnnouncementRegisterAction } from '../../../redux/actions/apislogic/announcementapis';
 import { ANNOUNCEMENT_REGISTER_RESET } from '../../../redux/Constants/userConstants';
@@ -29,28 +29,25 @@ function AddAnnouncement() {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const [filesend, setFileSend] = useState();
-	const [startPicker, setStartPicker] = useState(new Date())
-	const [endPicker, setEndPicker] = useState(new Date())
-	const [allDay, setAllDay] = useState(false)
+	const [startPicker, setStartPicker] = useState(new Date());
+	const [endPicker, setEndPicker] = useState(new Date());
+	const [allDay, setAllDay] = useState(false);
 	const [values, setValues] = useState({
 		title: '',
 		description: '',
-		location:''
+		location: '',
 	});
 
-	const registerRecord = useSelector((state) => state.registerAnnouncementData);
+	const registerRecord = useSelector(
+		(state) => state.registerAnnouncementData
+	);
 	var { error, AnnouncementRegisterData } = registerRecord;
-
-
 
 	useEffect(() => {
 		if (AnnouncementRegisterData) {
 			history.push('/announcement/list');
-
 		}
 	}, [AnnouncementRegisterData]);
-
-
 
 	useEffect(() => {
 		dispatch({ type: ANNOUNCEMENT_REGISTER_RESET });
@@ -59,7 +56,7 @@ function AddAnnouncement() {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 
-		const { title, description ,location} = values;
+		const { title, description, location } = values;
 
 		const formData = new FormData();
 		formData.append('image', filesend);
@@ -67,11 +64,10 @@ function AddAnnouncement() {
 		formData.append('description', description);
 		formData.append('start_date', startPicker);
 		formData.append('end_date', endPicker);
-		formData.append('location',location);
+		formData.append('location', location);
 		dispatch(AnnouncementRegisterAction(formData));
 		history.push('/announcement/list');
 	};
-
 
 	const onChange = (e) => {
 		setFileSend(e.target.files[0]);
@@ -83,11 +79,9 @@ function AddAnnouncement() {
 		reader.readAsDataURL(files[0]);
 	};
 
-
 	const [img, setImg] = useState(
 		'https://grandimageinc.com/wp-content/uploads/2015/09/icon-user-default.png'
 	);
-
 
 	return (
 		<>
@@ -103,7 +97,6 @@ function AddAnnouncement() {
 				<CardBody>
 					<Form onSubmit={(e) => onSubmit(e)}>
 						<Row>
-
 							<Col sm='12'>
 								<Label for='image'>Image</Label>
 								<Media className='mb-2'>
@@ -143,12 +136,9 @@ function AddAnnouncement() {
 									</Media>
 								</Media>
 								{error && error.image ? (
-									<div className='error'>
-										{error.image}
-									</div>
+									<div className='error'>{error.image}</div>
 								) : null}
 							</Col>
-
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
@@ -165,9 +155,7 @@ function AddAnnouncement() {
 													error && error.title
 														? 'is-invalid'
 														: ''
-												}>
-
-											</InputGroupText>
+												}></InputGroupText>
 										</InputGroupAddon>
 										<Input
 											className={
@@ -181,8 +169,8 @@ function AddAnnouncement() {
 											placeholder='Title'
 											defaultValue={values.title}
 											onChange={(e) =>
-											(values['title'] =
-												e.target.value)
+												(values['title'] =
+													e.target.value)
 											}
 										/>
 									</InputGroup>
@@ -193,7 +181,6 @@ function AddAnnouncement() {
 									) : null}
 								</FormGroup>
 							</Col>
-
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
@@ -210,9 +197,7 @@ function AddAnnouncement() {
 													error && error.description
 														? 'is-invalid'
 														: ''
-												}>
-
-											</InputGroupText>
+												}></InputGroupText>
 										</InputGroupAddon>
 										<Input
 											className={
@@ -226,8 +211,8 @@ function AddAnnouncement() {
 											placeholder='Description'
 											defaultValue={values.description}
 											onChange={(e) =>
-											(values['description'] =
-												e.target.value)
+												(values['description'] =
+													e.target.value)
 											}
 										/>
 									</InputGroup>
@@ -238,7 +223,6 @@ function AddAnnouncement() {
 									) : null}
 								</FormGroup>
 							</Col>
-
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
@@ -255,20 +239,20 @@ function AddAnnouncement() {
 													error && error.start_date
 														? 'is-invalid'
 														: ''
-												}>
-
-											</InputGroupText>
+												}></InputGroupText>
 										</InputGroupAddon>
 										<Flatpickr
 											required
 											id='start_date'
 											name='start_date'
 											className='form-control'
-											onChange={date => setStartPicker(date[0])}
+											onChange={(date) =>
+												setStartPicker(date[0])
+											}
 											value={startPicker}
 											options={{
 												enableTime: allDay === false,
-												dateFormat: 'Y-m-d'
+												dateFormat: 'Y-m-d',
 											}}
 										/>
 									</InputGroup>
@@ -295,20 +279,20 @@ function AddAnnouncement() {
 													error && error.end_date
 														? 'is-invalid'
 														: ''
-												}>
-
-											</InputGroupText>
+												}></InputGroupText>
 										</InputGroupAddon>
 										<Flatpickr
 											required
 											id='end_date'
 											name='end_date'
 											className='form-control'
-											onChange={date => setEndPicker(date[0])}
+											onChange={(date) =>
+												setEndPicker(date[0])
+											}
 											value={endPicker}
 											options={{
 												enableTime: allDay === false,
-												dateFormat: 'Y-m-d'
+												dateFormat: 'Y-m-d',
 											}}
 										/>
 									</InputGroup>
@@ -320,10 +304,11 @@ function AddAnnouncement() {
 								</FormGroup>
 							</Col>
 
-
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label className='form-label' for='location'>
+									<Label
+										className='form-label'
+										for='location'>
 										Location
 									</Label>
 									<InputGroup
@@ -338,9 +323,7 @@ function AddAnnouncement() {
 													error && error.location
 														? 'is-invalid'
 														: ''
-												}>
-											
-											</InputGroupText>
+												}></InputGroupText>
 										</InputGroupAddon>
 										<Input
 											className={
@@ -366,7 +349,6 @@ function AddAnnouncement() {
 									) : null}
 								</FormGroup>
 							</Col>
-
 
 							<Col sm='12'>
 								<div className='d-flex '>

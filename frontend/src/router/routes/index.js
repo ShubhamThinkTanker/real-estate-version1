@@ -105,6 +105,13 @@ const Routes = [
 		),
 	},
 
+	// {
+	// 	path: '/estatestructures/list',
+	// 	component: lazy(() =>
+	// 		import('../../admin/components/estatestructures/list')
+	// 	),
+	// },
+
 	{
 		path: '/complex/add',
 		component: lazy(() =>
@@ -123,10 +130,38 @@ const Routes = [
 			import('../../admin/components/complex/EditComplex')
 		),
 	},
+	{
+		path: '/vehicle/list',
+		component: lazy(() =>
+			import('../../admin/components/vehicle/list/Index')
+		),
+	},
+	{
+		path: '/vehicle/create',
+		component: lazy(() =>
+			import('../../admin/components/vehicle/AddVehicle')
+		),
+	},
+	{
+		path: '/vehicle/view/:id',
+		component: lazy(() =>
+			import('../../admin/components/vehicle/ViewVehicle')
+		),
+	},
+	{
+		path: '/vehicle/edit/:id',
+		component: lazy(() =>
+			import('../../admin/components/vehicle/EditVehile')
+		),
+	},
 
 	{
 		path: '/profile',
 		component: lazy(() => import('../../admin/AuthComponents/Profile')),
+	},
+	{
+		path: '/changepassword',
+		component: lazy(() => import('../../admin/AuthComponents/ChangePassword')),
 	},
 
 	{

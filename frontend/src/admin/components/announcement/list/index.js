@@ -11,13 +11,16 @@ import { UncontrolledDropdown } from 'reactstrap';
 import { Edit, Eye, Trash2, Speaker } from 'react-feather';
 
 import {
-	AnnouncementListAction,
+	AnnouncementListAction,		// <div className='d-flex justify-content-left align-items-center'>
+	// 	{renderAnnouncement(row)}
+	// 	<div className='d-flex flex-column'>{row.title}</div>
+	// </div>
+// ),
 	AnnouncementDeleteAction,
 } from '../../../../redux/actions/apislogic/announcementapis';
 import swal from 'sweetalert';
 
 const AnnouncementList = () => {
-
 	const dispatch = useDispatch();
 
 	const OneDeleteRecord = (id) => {
@@ -36,11 +39,9 @@ const AnnouncementList = () => {
 		});
 	};
 
-
 	useEffect(() => {
 		dispatch(AnnouncementListAction());
 	}, []);
-
 
 	// const renderAnnouncement = (row) => {
 	// 	const stateNum = Math.floor(Math.random() * 6),
@@ -77,50 +78,45 @@ const AnnouncementList = () => {
 	// };
 
 	const columns = [
-
 		{
-		
 			name: 'Title',
-			minWidth: "15%",
-			selector :'title',
+			minWidth: '15%',
+			selector: 'title',
 			cell: (row) => row.title,
-				// <div className='d-flex justify-content-left align-items-center'>
-				// 	{renderAnnouncement(row)}
-				// 	<div className='d-flex flex-column'>{row.title}</div>
-				// </div>
+	     	sortable: true,
+			// <div className='d-flex justify-content-left align-items-center'>
+			// 	{renderAnnouncement(row)}
+			// 	<div className='d-flex flex-column'>{row.title}</div>
+			// </div>
 			// ),
 			sortable: true,
 		},
-	
+
 		{
-		
 			name: 'Description',
-			minWidth: "15%",
-			selector : 'description',
+			minWidth: '15%',
+			selector: 'description',
 			cell: (row) => row.description,
 			sortable: true,
 		},
 		{
-		
 			name: 'start date',
-			minWidth: "15%",
-			selector : 'start_date',
+			minWidth: '15%',
+			selector: 'start_date',
 			cell: (row) => row.start_date,
 			sortable: true,
 		},
 		{
-		
 			name: 'end date',
-			minWidth: "15%",
-			selector : 'end_date',
+			minWidth: '15%',
+			selector: 'end_date',
 			cell: (row) => row.end_date,
 			sortable: true,
 		},
 		{
-		
 			name: 'location',
-			minWidth: "15%",
-			selector : 'location',
+			minWidth: '15%',
+			selector: 'location',
 			cell: (row) => row.location,
 			sortable: true,
 		},
@@ -136,9 +132,10 @@ const AnnouncementList = () => {
 								<Eye size={18} />
 							</Link>
 
-							<Link to={`/announcement/edit/${row._id}`}
-							className='text-warning mx-1'>
-							<Edit size={18} />
+							<Link
+								to={`/announcement/edit/${row._id}`}
+								className='text-warning mx-1'>
+								<Edit size={18} />
 							</Link>
 							<Trash2
 								size={18}

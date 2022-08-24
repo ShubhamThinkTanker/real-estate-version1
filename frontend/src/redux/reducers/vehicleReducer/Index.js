@@ -28,8 +28,10 @@ import {
 const initialState = {
 	loading: false,
 	error: null,
-	list: [],
-	vehicle: {},
+	data: null,
+	vehicle: null,
+	createdVehicle: null,
+	deletedVehicle: null,
 };
 
 export const vehicleReducer = (state = initialState, action) => {
@@ -44,7 +46,7 @@ export const vehicleReducer = (state = initialState, action) => {
 		case VEHICLE_REGISTER_SUCCESS:
 			newState = {
 				...state,
-				// list: [action.payload, ...state.list],
+				createdVehicle: action.payload,
 			};
 			break;
 		case VEHICLE_REGISTER_ERROR:
@@ -90,19 +92,19 @@ export const vehicleReducer = (state = initialState, action) => {
 		case VEHICLE_LIST_SUCCESS:
 			newState = {
 				...state,
-				list: action.payload,
+				loading: false,
+				data: action.payload,
 			};
 			break;
 		case VEHICLE_LIST_ERROR:
 			newState = {
 				...state,
+				loading: false,
 				error: action.payload,
 			};
 			break;
 		case VEHICLE_LIST_RESET:
-			newState = {
-				...state,
-			};
+			newState = initialState;
 			break;
 		case VEHICLE_EDIT_REQUEST:
 			newState = {
@@ -123,9 +125,7 @@ export const vehicleReducer = (state = initialState, action) => {
 			};
 			break;
 		case VEHICLE_EDIT_RESET:
-			newState = {
-				...state,
-			};
+			newState = initialState;
 			break;
 		case VEHICLE_DELETE_REQUEST:
 			newState = {
@@ -136,7 +136,7 @@ export const vehicleReducer = (state = initialState, action) => {
 		case VEHICLE_DELETE_SUCCESS:
 			newState = {
 				...state,
-				// vehicle: action.payload,
+				deletedVehicle: action.payload,
 			};
 			break;
 		case VEHICLE_DELETE_ERROR:

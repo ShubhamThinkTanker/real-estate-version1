@@ -1,0 +1,1 @@
+{"version":3,"sources":["admin/components/vehicle/EditVehile.jsx"],"names":["EditVehicle"],"mappings":"mJAAA,uBAMeA,UAJK,WACnB,OAAO","file":"static/js/39.7221e87a.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nconst EditVehicle = () => {\r\n\treturn <div>EditVehicle</div>;\r\n};\r\n\r\nexport default EditVehicle;\r\n"],"sourceRoot":""}

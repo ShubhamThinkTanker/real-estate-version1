@@ -1,0 +1,1 @@
+{"version":3,"sources":["admin/components/vehicle/ViewVehicle.jsx"],"names":["ViewVehicle"],"mappings":"mJAAA,uBAMeA,UAJK,WACnB,OAAO","file":"static/js/40.9e61f441.chunk.js","sourcesContent":["import React from 'react';\r\n\r\nconst ViewVehicle = () => {\r\n\treturn <div>ViewVehicle</div>;\r\n};\r\n\r\nexport default ViewVehicle;\r\n"],"sourceRoot":""}

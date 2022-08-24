@@ -21,10 +21,14 @@ module.exports = {
             var { errors, isValid } = validateVehicle(req.body)
 
             var user = await User.findOne({ mobile_no: req.body.mobile_no })
-            // console.log("user",user);
-            if (user == null || user.mobile_no != req.body.mobile_no) {
-                errors.error = "Mobile no is inValid"
+
+            let is_exist = await vehicleServices.emailexits(req.body);
+            console.log("is_exist", is_exist);
+            if (is_exist) {
+                errors.error = "vehicle no is already exist"
+                return commonResponse.customErrorResponse(res, 422, 'Something went wrong', errors);
             }
+
             if (!isEmpty(errors)) {
                 return commonResponse.customErrorResponse(res, 422, 'Something went wrong', errors);
             }
@@ -33,7 +37,7 @@ module.exports = {
             }
             let vehicle = await VehicleServices.save(req.body, id)
             if (vehicle) {
-                return commonResponse.success(res, 200, 'vehicle created succesfully ', vehicle);
+                return commonResponse.success(res, 201, 'vehicle created succesfully ', vehicle);
             } else {
                 return commonResponse.customErrorResponse(res, 422, 'Something went wrong');
             }
@@ -65,10 +69,20 @@ module.exports = {
 
     findAllvehicle: async (req, res, next) => {
         try {
-            let findAllVehicles = await VehicleServices.getAllVehicle();
+            const { page = 1, limit = 10 } = req.query
+            let order_column = req.query.order_column || "name";
+            let sort_order = req.query.sort_order == "asc" ? "ASC" : "DESC";
+            let sort_array = [order_column, sort_order];
+
+            let filter_value = req.query.filter_value || "";
+            let stickerStatus = req.query.stickerStatus || "";
+            let Total_count = await Vehicle.countDocuments()
+
+            let findAllVehicles = await VehicleServices.getAllVehicle(req.query, sort_array, filter_value, stickerStatus);
             if (findAllVehicles) {
-                return commonResponse.success(res, 200, 'Successfully get All Vehicle', findAllVehicles);
+                return commonResponse.success(res, 200, 'Successfully get All Vehicle', { TotalCount: Total_count, Vehicle_Details: findAllVehicles });
             } else {
+
                 return commonResponse.customErrorResponse(res, 422, 'Something went wrong');
             }
         }
@@ -78,6 +92,7 @@ module.exports = {
         }
 
     },
+
 
     // -- update Vehicle --//
 

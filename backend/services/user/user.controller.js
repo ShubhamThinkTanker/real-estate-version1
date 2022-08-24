@@ -15,7 +15,8 @@ const validateForgotChagePasswordInput = require("../../validation/userValidatio
 const { deleteImage } = require("../../helper/s3aws");
 var generator = require("generate-password");
 const { Country, State, City } = require("country-state-city")
-var { faker } = require('@faker-js/faker')
+var { faker } = require('@faker-js/faker');
+const { log } = require("console");
 
 module.exports = {
 
@@ -147,7 +148,7 @@ module.exports = {
                     let Chairman = await ChairmanService.chairmanCreate(req.body, id, hash);
 
                     if (Chairman) {
-                        return commonResponse.success(res, 200, "Successfully Create Chairman", Chairman);
+                        return commonResponse.success(res, 201, "Successfully Create Chairman", Chairman);
 
                     } else {
                         errors.error = "Something went wrong, Please try again Later"
@@ -386,9 +387,14 @@ module.exports = {
             console.log(status, ":status");
             let findAllUser = await ChairmanService.getAllChairman(req.query, sort_array, filter_value, status);
             let Total_count = await ChairmanModel.countDocuments({ role: "chairman" })
+            let Total_active = await ChairmanModel.countDocuments({ status: "active" })
+            let Total_inactive = await ChairmanModel.countDocuments({ status: "inactive" })
+
+            console.log(Total_inactive, "Total_inactive", "------", Total_active, ":Total_active");
+
             // console.log(Total_count, ":Total_count");
             if (findAllUser) {
-                return commonResponse.success(res, 200, 'Successfully get All Chairman', { TotalCount: Total_count, Chairman_Details: findAllUser });
+                return commonResponse.success(res, 200, 'Successfully get All Chairman', { TotalCount: Total_count, TotalActive: Total_active, TotalInActive: Total_inactive, Chairman_Details: findAllUser });
             } else {
                 return commonResponse.customErrorResponse(res, 422, 'Something went wrong', errors);
             }

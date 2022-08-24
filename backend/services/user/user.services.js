@@ -277,8 +277,7 @@ exports.get = async (id) => {
 // ------***------Update User  -------****--------//
 
 exports.update = async (id, reqBody) => {
-
-
+	console.log(reqBody);
 	try {
 		let findOneBYId = await ChairmanModel.findOne({ _id: id });
 

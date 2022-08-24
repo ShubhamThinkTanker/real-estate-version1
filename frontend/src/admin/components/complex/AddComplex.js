@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Home } from "react-feather";
+import { Home } from 'react-feather';
 import {
 	Card,
 	CardBody,
@@ -12,7 +12,7 @@ import {
 	FormGroup,
 	InputGroup,
 	InputGroupText,
-	InputGroupAddon
+	InputGroupAddon,
 } from 'reactstrap';
 import BreadCrumbs from '../../../@core/components/breadcrumbs';
 import { Link, useHistory } from 'react-router-dom';
@@ -20,6 +20,21 @@ import '@styles/react/libs/flatpickr/flatpickr.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { ComplexCreateAction } from '../../../redux/actions/apislogic/complexapi';
 import { COMPLEX_CREATE_RESET } from '../../../redux/Constants/userConstants';
+import { selectThemeColors } from '@utils';
+import Select from 'react-select';
+import './style.css'
+
+const countryOptions = [
+	{ value: 'india', label: 'India' }
+  ]
+const stateOptions = [
+	{ value: 'gujarat', label: 'Gujarat' }
+  ]
+const cityOptions = [
+	{ value: 'ahmedabad', label: 'Ahmedabad' },
+	{ value: 'surat', label: 'Surat' },
+	{ value: 'rajkot', label: 'Rajkot' }
+  ]
 
 const AddComplex = () => {
 	const history = useHistory();
@@ -64,8 +79,6 @@ const AddComplex = () => {
 
 	return (
 		<>
-		
-
 			<BreadCrumbs
 				breadCrumbTitle='Real Estate'
 				breadCrumbParent={
@@ -75,32 +88,34 @@ const AddComplex = () => {
 			/>
 			<Card>
 				<CardBody>
-
 					<Form onSubmit={(e) => onSubmit(e)}>
-
 						<Row>
-
 							<Col md='6' sm='12'>
-								<FormGroup className="mb-2">
+								<FormGroup className='mb-2'>
 									<Label className='form-label' for='name'>
 										Realestate Name
 									</Label>
 
 									<Input
-										className={Complexerror && Complexerror.realestate_name ? "is-invalid" : ''}
+										className={
+											Complexerror &&
+											Complexerror.realestate_name
+												? 'is-invalid'
+												: ''
+										}
 										type='text'
 										name='realestate_name'
 										id='realestate_name'
 										placeholder='Realestate Name'
 										defaultValue={values.realestate_name}
 										onChange={(e) =>
-										(values['realestate_name'] =
-											e.target.value)
+											(values['realestate_name'] =
+												e.target.value)
 										}
 									/>
 
 									{Complexerror &&
-										Complexerror.realestate_name ? (
+									Complexerror.realestate_name ? (
 										<div className='error'>
 											{Complexerror.realestate_name}
 										</div>
@@ -109,20 +124,31 @@ const AddComplex = () => {
 							</Col>
 
 							<Col md='6' sm='12'>
-								<FormGroup className="mb-2">
-									<Label className='form-label' for='mobileno'>
+								<FormGroup className='mb-2'>
+									<Label
+										className='form-label'
+										for='mobileno'>
 										Country
 									</Label>
-									<Input
-										className={Complexerror && Complexerror.country ? "is-invalid" : ''}
-										type='select'
-										onChange={(e) =>
-											(values['country'] = e.target.value)
-										}
-										name='country'>
-										<option value=''>Select Country</option>
-										<option value='india'>India</option>
-									</Input>
+									
+									<Select
+										theme={selectThemeColors}
+										name='country'
+										className={Complexerror && Complexerror.country ? "is-invalid" : 'react-select flex-fill'}
+										classNamePrefix='select'
+										defaultValue={countryOptions[2]}
+										options={countryOptions}
+										isClearable={false}
+										// onChange={(e) =>
+										// 	(values['country'] = e.target.value)
+										// }
+										onChange={(e) => {
+											setValues({
+												...values,
+												country: e.value,
+											});
+										}}
+										/>
 									{Complexerror && Complexerror.country ? (
 										<div className='error'>
 											{Complexerror.country}
@@ -132,20 +158,29 @@ const AddComplex = () => {
 							</Col>
 
 							<Col md='6' sm='12'>
-								<FormGroup className="mb-2">
-									<Label className='form-label' for='profession'>
+								<FormGroup className='mb-2'>
+									<Label
+										className='form-label'
+										for='profession'>
 										State
 									</Label>
-									<Input
-										className={Complexerror && Complexerror.state ? "is-invalid" : ''}
-										type='select'
-										onChange={(e) =>
-											(values['state'] = e.target.value)
-										}
-										name='state'>
-										<option value=''>Select State</option>
-										<option value='gujarat'>Gujarat</option>
-									</Input>
+									
+									<Select
+										theme={selectThemeColors}
+										name='state'
+										className={Complexerror && Complexerror.state ? "is-invalid" : 'react-select flex-fill'}
+										classNamePrefix='select'
+										defaultValue={stateOptions[2]}
+										options={stateOptions}
+										isClearable={false}
+										onChange={(e) => {
+											setValues({
+												...values,
+												state: e.value,
+											});
+										}}
+										/>
+
 									{Complexerror && Complexerror.state ? (
 										<div className='error'>
 											{Complexerror.state}
@@ -154,23 +189,27 @@ const AddComplex = () => {
 								</FormGroup>
 							</Col>
 
-							<Col md='6' sm='12' >
-								<FormGroup className="mb-2">
+							<Col md='6' sm='12'>
+								<FormGroup className='mb-2'>
 									<Label className='form-label' for='service'>
 										City
 									</Label>
-									<Input
-										className={Complexerror && Complexerror.city ? "is-invalid" : ''}
-										type='select'
-										onChange={(e) =>
-											(values['city'] = e.target.value)
-										}
-										name='city'>
-										<option value=''>Select City</option>
-										<option value='ahmedabad'>Ahmedabad</option>
-										<option value='surat'>Surat</option>
-										<option value='rajkot'>Rajkot</option>
-									</Input>
+									
+									<Select
+										theme={selectThemeColors}
+										name='city'
+										className={Complexerror && Complexerror.city ? "is-invalid" : 'react-select flex-fill'}
+										classNamePrefix='select'
+										defaultValue={cityOptions[2]}
+										options={cityOptions}
+										isClearable={false}
+										onChange={(e) => {
+											setValues({
+												...values,
+												city: e.value,
+											});
+										}}
+										/>
 									{Complexerror && Complexerror.city ? (
 										<div className='error'>
 											{Complexerror.city}
@@ -180,23 +219,29 @@ const AddComplex = () => {
 							</Col>
 
 							<Col md='6' sm='12'>
-								<FormGroup className="mb-2">
-									<Label className='form-label' for='lastname'>
+								<FormGroup className='mb-2'>
+									<Label
+										className='form-label'
+										for='lastname'>
 										Address
 									</Label>
-								
-										<Input
-											className={Complexerror && Complexerror.address ? "is-invalid" : ''}
-											type='text'
-											name='address'
-											id='address'
-											placeholder='Address'
-											defaultValue={values.address}
-											onChange={(e) =>
-												(values['address'] = e.target.value)
-											}
-										/>
-									
+
+									<Input
+										className={
+											Complexerror && Complexerror.address
+												? 'is-invalid'
+												: ''
+										}
+										type='text'
+										name='address'
+										id='address'
+										placeholder='Address'
+										defaultValue={values.address}
+										onChange={(e) =>
+											(values['address'] = e.target.value)
+										}
+									/>
+
 									{Complexerror && Complexerror.address ? (
 										<div className='error'>
 											{Complexerror.address}
@@ -204,9 +249,6 @@ const AddComplex = () => {
 									) : null}
 								</FormGroup>
 							</Col>
-
-
-
 
 							<Col sm='12'>
 								<div className='d-flex '>
@@ -217,15 +259,14 @@ const AddComplex = () => {
 										Submit
 									</Button.Ripple>
 									<Button.Ripple
-									color='danger'
-									tag={Link}
-									to='/complex/list'
-									outline>
-									Cancel
-								</Button.Ripple>
+										color='danger'
+										tag={Link}
+										to='/complex/list'
+										outline>
+										Cancel
+									</Button.Ripple>
 								</div>
 							</Col>
-
 						</Row>
 					</Form>
 				</CardBody>

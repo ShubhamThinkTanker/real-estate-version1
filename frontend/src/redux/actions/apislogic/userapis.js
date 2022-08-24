@@ -104,7 +104,7 @@ export const UserDeleteAction = (deleteid) => async (dispatch) => {
 			payload: data,
 		});
 		if (data) {
-			toast.error('User Deleted Successfully');
+			toast.success('User Deleted Successfully');
 		}
 		dispatch({ type: USER_DELETE_RESET });
 		dispatch(UserListAction());
@@ -136,7 +136,7 @@ export const MultiDeleteAction = (multiid) => async (dispatch) => {
 			payload: data,
 		});
 		if (data) {
-			toast.error('User Deleted Successfully');
+			toast.success('User Deleted Successfully');
 		}
 		dispatch({ type: MULTI_DELETE_RESET });
 		dispatch(UserListAction());

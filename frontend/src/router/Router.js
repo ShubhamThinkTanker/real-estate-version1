@@ -133,7 +133,11 @@ const Router = () => {
 
 			return (
 				<Route path={LayoutPaths} key={index}>
-					<ToastContainer />
+					<ToastContainer
+						pauseOnHover={false}
+						closeOnClick={true}
+						closeButton={true}
+					/>
 					<LayoutTag
 						routerProps={routerProps}
 						layout={layout}

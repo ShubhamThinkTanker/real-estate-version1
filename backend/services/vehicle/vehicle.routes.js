@@ -20,6 +20,6 @@ router.put(
 
 router.delete('/delete/:id', vehicleController.deletevehicle);
 
-router.delete('/delete', vehicleController.deleteMultiplevehicle);
+router.post('/delete', vehicleController.deleteMultiplevehicle);
 
 module.exports = router;

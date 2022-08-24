@@ -1,6 +1,4 @@
 import { Fragment, useEffect, useState } from "react";
-import { Trash2 } from "react-feather";
-import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
@@ -12,14 +10,24 @@ import {
   FormGroup,
   Alert,
   Form,
+  Card,
+  CardBody,
+  Nav, NavItem, NavLink, TabContent, TabPane, InputGroup, InputGroupText, InputGroupAddon
 } from "reactstrap";
 import { userdatas } from "../../localstorage/localdata";
 import { EditRegisterAction } from "../../redux/actions/apislogic/userapis";
-import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { UPDATE_PROFILE_RESET, USER_EDIT_RESET } from "../../redux/Constants/userConstants";
+import BreadCrumbs from "../../@core/components/breadcrumbs";
+import { User, Lock } from 'react-feather'
+// import BreadCrumbs from '../../../@core/components/breadcrumbs';
 
 const Profile = () => {
+  const [activeTab, setActiveTab] = useState('1')
+
+  // ** Function to toggle tabs
+  const toggle = tab => setActiveTab(tab)
+
   const dispatch = useDispatch();
   const [user, setUser] = useState({
     name: "",
@@ -29,7 +37,7 @@ const Profile = () => {
     _id: "",
   });
   const [sendimage, setimage] = useState();
-  const { name, mobile_no, email, profile_image, gender, _id } = user;
+  const { name, mobile_no, email, profile_image, address, country, state, city, zipcode, _id } = user;
 
   const [profileimage, setprofileimg] = useState();
 
@@ -54,9 +62,13 @@ const Profile = () => {
     formData.append("name", name);
     formData.append("email", email);
     formData.append("mobile_no", mobile_no);
-    formData.append("gender", gender);
+    formData.append("address", address);
+    formData.append("country", country);
+    formData.append("state", state);
+    formData.append("city", city);
+    formData.append("zipcode", zipcode)
     sendimage != undefined ? formData.append("profile_image", sendimage) : null;
-    dispatch(EditRegisterAction(_id, formData,userdatas.Token));
+    dispatch(EditRegisterAction(_id, formData, userdatas.Token));
   };
 
   const EditDatMessage = useSelector((state) => state.EditUSerData);
@@ -101,82 +113,316 @@ const Profile = () => {
   };
 
   return (
-    <Fragment>
-      <Form className="mt-2" onSubmit={(e) => onSubmit(e)}>
-        <Label for="username">Profile Image</Label>
-        <Media>
-          <Media className="mr-25" left>
-            {renderimagefun()}
-          </Media>
+    <>
+      <div>
 
-          <Media className="mt-75 ml-1" body>
-            <Button.Ripple
-              tag={Label}
-              className="mr-75"
-              size="sm"
-              color="primary"
-            >
-              Upload
-              <Input type="file" onChange={onChange} hidden accept="image/*" />
-            </Button.Ripple>
-            <Button.Ripple
-              tag={Label}
-              className="mr-75"
-              size="sm"
-              color="secondary"
-              outline
-              onClick={() => setprofileimg(null)}
-            >
-              Remove
-            </Button.Ripple>
-          </Media>
-        </Media>
+        <BreadCrumbs
+          breadCrumbTitle='Account Setting '
+          breadCrumbActive='Account Setting'
+        />
 
-        <Row>
-          <Col sm="6">
-            <FormGroup>
-              <Label for="username">Name</Label>
-              <Input
-                className="form-control"
-                name="name"
-                value={name}
-                onChange={(e) => onInputChange(e)}
-              />
-            </FormGroup>
-          </Col>
-          <Col sm="6">
-            <FormGroup>
-              <Label for="name">Email</Label>
-              <Input
-                className="form-control"
-                name="email"
-                value={email}
-                disabled={true}
-              />
-            </FormGroup>
-          </Col>
 
-          <Col sm="6">
-            <FormGroup>
-              <Label for="mobile_no">Mobile No</Label>
-              <Input
-                className="form-control"
-                name="mobile_no"
-                value={mobile_no}
-                onChange={(e) => onInputChange(e)}
-              />
-            </FormGroup>
-          </Col>
+        <Nav pills>
+          <NavItem>
+            <NavLink active={activeTab === '1'} onClick={() => toggle('1')}>
+              <User size={14} />
+              <span className='align-middle d-none d-sm-block'>Account</span>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink active={activeTab === '2'} onClick={() => toggle('2')}>
+              {/* <LockIcon size={14} /> */}
+              <span className='align-middle d-none d-sm-block'>Security</span>
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <Card>
+          <CardBody className='pt-2'>
+            <TabContent activeTab={activeTab}>
+              {/* Profile Details */}
+              <TabPane tabId='1'>
+                <Card>
+                  <CardBody>
+                    <h3>Profile Details</h3>
+                    <hr />
+                    <Fragment>
 
-          <Col sm="6"></Col>
-          <Col className="mt-2" sm="12">
-            <Button.Ripple type="submit" className="mr-1" color="primary">
-              Save changes
-            </Button.Ripple>
-          </Col>
-        </Row>
-      </Form>
-    </Fragment>
+                      <Form className="mt-2" onSubmit={(e) => onSubmit(e)}>
+                        <Label for="username">Profile Image</Label>
+                        <Media>
+                          <Media className="mr-25" left>
+                            {renderimagefun()}
+                          </Media>
+
+                          <Media className="mt-75 ml-1" body>
+                            <Button.Ripple
+                              tag={Label}
+                              className="mr-75"
+                              size="sm"
+                              color="primary"
+                            >
+                              Upload
+                              <Input type="file" onChange={onChange} hidden accept="image/*" />
+                            </Button.Ripple>
+                            <Button.Ripple
+                              tag={Label}
+                              className="mr-75"
+                              size="sm"
+                              color="secondary"
+                              outline
+                              onClick={() => setprofileimg(null)}
+                            >
+                              Remove
+                            </Button.Ripple>
+                          </Media>
+                        </Media>
+
+                        <Row>
+                          <Col sm="6">
+                            <FormGroup>
+                              <Label for="name">Name</Label>
+                              <Input
+                                className="form-control"
+                                name="name"
+                                value={name}
+                                onChange={(e) => onInputChange(e)}
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col sm="6">
+                            <FormGroup>
+                              <Label for="email">Email</Label>
+                              <Input
+                                className="form-control"
+                                name="email"
+                                value={email}
+
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col sm="6">
+                            <FormGroup>
+                              <Label for="mobile_no">Mobile No</Label>
+                              <Input
+                                className="form-control"
+                                name="mobile_no"
+                                value={mobile_no}
+                                onChange={(e) => onInputChange(e)}
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col sm="6">
+                            <FormGroup>
+                              <Label for="address">Address</Label>
+                              <Input
+                                className="form-control"
+                                name="address"
+                                value={address}
+                                onChange={(e) => onInputChange(e)}
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col sm="6">
+                            <FormGroup>
+                              <Label for="country">Country</Label>
+                              <Input
+                                className="form-control"
+                                name="country"
+                                value={country}
+                                onChange={(e) => onInputChange(e)}
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col sm="6">
+                            <FormGroup>
+                              <Label for="state">State</Label>
+                              <Input
+                                className="form-control"
+                                name="state"
+                                value={state}
+                                onChange={(e) => onInputChange(e)}
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col sm="6">
+                            <FormGroup>
+                              <Label for="city">City</Label>
+                              <Input
+                                className="form-control"
+                                name="city"
+                                value={city}
+                                onChange={(e) => onInputChange(e)}
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col sm="6">
+                            <FormGroup>
+                              <Label for="zipcode">Zip Code</Label>
+                              <Input
+                                className="form-control"
+                                name="zipcode"
+                                value={zipcode}
+                                onChange={(e) => onInputChange(e)}
+                              />
+                            </FormGroup>
+                          </Col>
+
+                          <Col className="mt-2" sm="12">
+                            <Button.Ripple type="submit" className="mr-1" color="primary">
+                              Save changes
+                            </Button.Ripple>
+                          </Col>
+                        </Row>
+                      </Form>
+                    </Fragment>
+                  </CardBody>
+                </Card>
+              </TabPane>
+              <TabPane tabId='2'>
+
+                <Card>
+
+                  <CardBody>
+
+                    <h3>Change Password</h3>
+                    <hr />
+
+                    <Form>
+                      <Row>
+                        <Col sm="6">
+                          <FormGroup>
+                            <Label
+                              className='form-label'
+                              for='login-password'>
+                              Current Password
+                            </Label>
+                            <InputGroup
+                              className='input-group-merge'
+                            >
+                              <InputGroupAddon addonType='prepend'>
+                                <InputGroupText>
+                                  <Lock size={15} />
+                                </InputGroupText>
+                              </InputGroupAddon>
+                              <Input
+
+                                className='input-group-merge form-control'
+                                id='login-password'
+                                placeholder='Enter Current Password'
+                              />
+                              <InputGroupAddon
+                                addonType='append'
+                              >
+                                <InputGroupText className='cursor-pointer'>
+
+                                </InputGroupText>
+                              </InputGroupAddon>
+                            </InputGroup>
+
+                          </FormGroup>
+                        </Col >
+
+                        <Col sm="6">
+                          <FormGroup>
+                            <Label
+                              className='form-label'
+                              for='login-password'>
+                              New  Password
+                            </Label>
+                            <InputGroup
+                              className='input-group-merge'
+                            >
+                              <InputGroupAddon addonType='prepend'>
+                                <InputGroupText>
+                                  <Lock size={15} />
+                                </InputGroupText>
+                              </InputGroupAddon>
+                              <Input
+
+                                className='input-group-merge form-control'
+                                id='login-password'
+                                placeholder='Enter New Password'
+                              />
+                              <InputGroupAddon
+                                addonType='append'
+                              >
+                                <InputGroupText className='cursor-pointer'>
+
+                                </InputGroupText>
+                              </InputGroupAddon>
+                            </InputGroup>
+
+                          </FormGroup>
+                        </Col >
+
+                        <Col sm="6">
+                          <FormGroup>
+                            <Label
+                              className='form-label'
+                              for='login-password'>
+                              Retype New Password
+                            </Label>
+                            <InputGroup
+                              className='input-group-merge'
+                            >
+                              <InputGroupAddon addonType='prepend'>
+                                <InputGroupText>
+                                  <Lock size={15} />
+                                </InputGroupText>
+                              </InputGroupAddon>
+                              <Input
+
+                                className='input-group-merge form-control'
+                                id='login-password'
+                                placeholder='Enter Retype New Password'
+                              />
+                              <InputGroupAddon
+                                addonType='append'
+                              >
+                                <InputGroupText className='cursor-pointer'>
+
+                                </InputGroupText>
+                              </InputGroupAddon>
+                            </InputGroup>
+
+                          </FormGroup>
+                        </Col >
+                        {/* <Row>
+                          <p><b>Password requirements</b></p>
+                          <p>
+                            <ul>
+                              <li>Minimum 8 characters long - the more, the better</li>
+                              <li>At least one lowercase character</li>
+                              <li> At least one number, symbol, or whitespace character</li>
+                            </ul>
+                          </p>
+                        </Row> */}
+                        <Col className="mt-2" sm="12">
+                          <Button.Ripple type="submit" className="mr-1" color="primary">
+                            Save changes
+                          </Button.Ripple>
+                        </Col>
+
+                      </Row>
+                    </Form>
+
+                  </CardBody>
+                </Card>
+              </TabPane>
+            </TabContent>
+          </CardBody>
+        </Card>
+      </div>
+
+
+    </>
   );
 };
 export default Profile;

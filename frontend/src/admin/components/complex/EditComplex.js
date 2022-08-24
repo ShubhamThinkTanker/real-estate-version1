@@ -24,6 +24,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { COMPLEX_EDIT_RESET } from '../../../redux/Constants/userConstants';
 import BreadCrumbs from '../../../@core/components/breadcrumbs';
+import { selectThemeColors } from '@utils';
+import Select from 'react-select';
+import './style.css'
+
+
+const countryOptions = [
+	{ value: 'india', label: 'India' }
+  ]
+const stateOptions = [
+	{ value: 'gujarat', label: 'Gujarat' }
+  ]
+const cityOptions = [
+	{ value: 'ahmedabad', label: 'Ahmedabad' },
+	{ value: 'surat', label: 'Surat' },
+	{ value: 'rajkot', label: 'Rajkot' }
+  ]
+
 const EditComplex = () => {
 	const { id } = useParams();
 	const history = useHistory();
@@ -131,14 +148,32 @@ const EditComplex = () => {
 									<Label className='form-label' for='mobileno'>
 										Country
 									</Label>
-									<Input
+									{/* <Input
 										type='select'
 										defaultValue={complex.country}
 										onChange={(e) => onInputChange(e)}
 										name='country'>
 										<option value=''>Select Country</option>
 										<option value='india'>India</option>
-									</Input>
+									</Input> */}
+									<Select
+										theme={selectThemeColors}
+										name='country'
+										className={errorComplexEditData && errorComplexEditData.country ? "is-invalid" : 'react-select flex-fill'}
+										classNamePrefix='select'
+										defaultValue={countryOptions[2]}
+										options={countryOptions}
+										isClearable={false}
+										// onChange={(e) =>
+										// 	(values['country'] = e.target.value)
+										// }
+										onChange={(e) => {
+											setComplex({
+												...complex,
+												country: e.value,
+											});
+										}}
+										/>
 									{errorComplexEditData &&
 										errorComplexEditData.country ? (
 										<div className='error'>
@@ -152,14 +187,29 @@ const EditComplex = () => {
 									<Label className='form-label' for='profession'>
 										State
 									</Label>
-									<Input
+									{/* <Input
 										type='select'
 										defaultValue={complex.state}
 										onChange={(e) => onInputChange(e)}
 										name='state'>
 										<option value=''>Select State</option>
 										<option value='gujarat'>Gujarat</option>
-									</Input>
+									</Input> */}
+									<Select
+										theme={selectThemeColors}
+										name='state'
+										className={errorComplexEditData && errorComplexEditData.state ? "is-invalid" : 'react-select flex-fill'}
+										classNamePrefix='select'
+										defaultValue={stateOptions[2]}
+										options={stateOptions}
+										isClearable={false}
+										onChange={(e) => {
+											setComplex({
+												...complex,
+												state: e.value,
+											});
+										}}
+										/>
 									{errorComplexEditData &&
 										errorComplexEditData.state ? (
 										<div className='error'>
@@ -174,7 +224,7 @@ const EditComplex = () => {
 									<Label className='form-label' for='service'>
 										City
 									</Label>
-									<Input
+									{/* <Input
 										type='select'
 										defaultValue={complex.city}
 										onChange={(e) => onInputChange(e)}
@@ -183,7 +233,22 @@ const EditComplex = () => {
 										<option value='ahmedabad'>Ahmedabad</option>
 										<option value='surat'>Surat</option>
 										<option value='rajkot'>Rajkot</option>
-									</Input>
+									</Input> */}
+									<Select
+										theme={selectThemeColors}
+										name='city'
+										className={errorComplexEditData && errorComplexEditData.city ? "is-invalid" : 'react-select flex-fill'}
+										classNamePrefix='select'
+										defaultValue={cityOptions[2]}
+										options={cityOptions}
+										isClearable={false}
+										onChange={(e) => {
+											setComplex({
+												...complex,
+												city: e.value,
+											});
+										}}
+										/>
 									{errorComplexEditData &&
 										errorComplexEditData.city ? (
 										<div className='error'>

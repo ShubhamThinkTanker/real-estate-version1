@@ -48,11 +48,11 @@ const UsersList = () => {
 		},
 
 		{
-		  name: "Address",
-		  minWidth: "20%",
-		  selector: "address",
-		  cell: (row) => row.address,
-		  sortable: true
+			name: 'Address',
+			minWidth: '20%',
+			selector: 'address',
+			cell: (row) => row.address,
+			sortable: true,
 		},
 		{
 			name: 'City',
@@ -77,32 +77,30 @@ const UsersList = () => {
 			sortable: false,
 		},
 
-	
 		{
 			name: 'Actions',
 			cell: (row) => {
 				return (
 					<div className='d-flex '>
 						{/* <UncontrolledDropdown> */}
-							<Link
-								to={`/complex/view/${row._id}`}
-								className='text-primary'>
-								<Eye size={18} />
-							
-							</Link>
+						<Link
+							to={`/complex/view/${row._id}`}
+							className='text-primary'>
+							<Eye size={18} />
+						</Link>
 
-							<Link
-								to={`/complex/edit/${row._id}`}
-								className='text-warning mx-1'>
+						<Link
+							to={`/complex/edit/${row._id}`}
+							className='text-warning mx-1'>
 							<Edit size={18} />
-							</Link>
+						</Link>
 
-							<Trash2
-								size={18}
-								className='text-danger'
-								style={{ cursor: 'pointer' }}
-								onClick={() => OneDeleteRecord(row._id)}
-							/>
+						<Trash2
+							size={18}
+							className='text-danger'
+							style={{ cursor: 'pointer' }}
+							onClick={() => OneDeleteRecord(row._id)}
+						/>
 						{/* </UncontrolledDropdown> */}
 					</div>
 				);
@@ -111,15 +109,14 @@ const UsersList = () => {
 	];
 
 	return (
-
 		<div className='app-user-list'>
-		<BreadCrumbs
-			breadCrumbTitle='Real Estate'
-			breadCrumbParent='Real Estate'
-			breadCrumbActive='Real Estate List'
-		/>
-		<Table columns={columns} />
-	</div>
+			<BreadCrumbs
+				breadCrumbTitle='Real Estate'
+				breadCrumbParent='Real Estate'
+				breadCrumbActive='Real Estate List'
+			/>
+			<Table columns={columns} />
+		</div>
 	);
 };
 

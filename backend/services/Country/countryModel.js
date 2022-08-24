@@ -11,18 +11,26 @@ const countrySchema = mongoose.Schema(
             type: String,
             require: true
         },
-        stateCode: {
+
+        phonecode: {
             type: String,
             require: true
         },
+        flag: {
+            type: String,
+            require: true
+        },
+
         latitude: {
             type: String,
             require: true
         },
+
         longitude: {
             type: String,
             require: true
         },
+
 
 
     },

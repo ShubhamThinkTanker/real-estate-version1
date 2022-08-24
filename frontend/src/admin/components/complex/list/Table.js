@@ -129,6 +129,8 @@ const Table = ({ columns }) => {
 			props.handleFilter(e);
 		};
 
+		
+
 		return (
 			<div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
 				<Row>

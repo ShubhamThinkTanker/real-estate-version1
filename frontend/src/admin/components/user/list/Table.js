@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
-import { ChevronDown , ChevronsDown, Plus, Trash} from 'react-feather';
+import { ChevronDown , ChevronsDown, Plus, Trash,Search} from 'react-feather';
 import DataTable from 'react-data-table-component';
 import swal from 'sweetalert';
 import { selectThemeColors } from '@utils';
@@ -17,6 +17,7 @@ import {
 	CardHeader,
 	CardTitle,
 	CardBody,
+	Table
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import {
@@ -71,7 +72,7 @@ import {
 // 	);
 // };
 
-const Table = ({ columns }) => {
+const TableComponent = ({ columns }) => {
 	const dispatch = useDispatch();
 	const {
 		loading: getAllUserLoading,
@@ -194,9 +195,11 @@ const Table = ({ columns }) => {
 
 	const CustomHeader = (props) => {
 		const onSearch = (e) => {
-			e.preventDefault();
+			// e.preventDefault();
 			props.handleFilter(e);
 		};
+
+		
 		return (
 			<div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
 				<Row>
@@ -226,9 +229,17 @@ const Table = ({ columns }) => {
 								className='ml-50 w-100'
 								type='text'
 								value={props.value}
-								onChange={onSearch}
+								onChange={(e) => props.handleFilter(e)}
 								placeholder='Search'
 							/>
+							{/* <Input
+								value={props.value}
+								onChange={(e) => props.handleFilter(e)}
+								placeholder="Search by Category Name"
+							/>
+							<div className="form-control-position">
+								<Search size="15" />
+							</div> */}
 						</div>
 						<div>
 							<Button.Ripple
@@ -247,7 +258,39 @@ const Table = ({ columns }) => {
 		);
 	};
 
+	const ExpandableTable = ({ data }) => {
+		return (
+			<div className='expandable-content p-2 shadow-lg  m-2 bg-body rounded'>
+		
+				<Table responsive>
+					<thead>
+						<tr>
+							<th>Address</th>
+							<th>Country</th>
+							<th>State</th>
+							<th>City</th>
+						</tr>
+					</thead>
+					<tbody>
+						<td>
+							{data.address}
+						</td>
+						<td>
+							{data.country}
+						</td>
+						<td>
+							{data.state}
+						</td>
+						<td>
+							{data.city}
+						</td>
+					</tbody>
 
+
+				</Table>
+			</div>
+		)
+		}
 	return (
 		<Fragment>
 			<Card>
@@ -304,6 +347,9 @@ const Table = ({ columns }) => {
 								/>
 							}
 							subHeader
+							expandableRows
+							expandOnRowClicked
+							expandableRowsComponent={<ExpandableTable />}
 					/>
 				</div>
 			</Card>
@@ -311,4 +357,4 @@ const Table = ({ columns }) => {
 	);
 };
 
-export default Table;
+export default TableComponent;

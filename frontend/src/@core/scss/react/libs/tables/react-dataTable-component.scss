@@ -22,7 +22,9 @@
           &:hover {
             color: $body-color;
           }
+
         }
+        @media (min-width: 1150px) and (max-width: 1300px){ padding: 0.72rem 0.5rem;}
       }
     }
   }
@@ -50,6 +52,7 @@
             }
           }
         }
+        @media (min-width: 1150px) and (max-width: 1300px){ padding: 0.72rem 0.5rem;}
       }
     }
   }
@@ -172,3 +175,8 @@
     }
   }
 }
+// @media (min-width: 1150px) and (max-width: 1300px){ 
+//   .react-dataTable .rdt_TableHead .rdt_TableCol{
+//     padding: 0.72rem 0.5rem !important;
+//   }
+// }

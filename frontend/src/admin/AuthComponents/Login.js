@@ -33,14 +33,10 @@ const Login = () => {
 
 	useEffect(() => {
 		if (error === 'Email Or Mobile Number Does not exists') {
-			toast.error(error, {
-				className: 'toast-delete-btn',
-			});
+			toast.error(error);
 			dispatch({ type: LOGIN_USER_RESET });
 		} else if (error && error.role == 'Role Does Not valid') {
-			toast.error(error && error.role, {
-				className: 'toast-delete-btn',
-			});
+			toast.error(error && error.role);
 			dispatch({ type: LOGIN_USER_RESET });
 		}
 	}, [error && error]);
@@ -167,7 +163,7 @@ const Login = () => {
 							</Label>
 							{/* <InputGroup
 								className='input-group-merge'
-								tag={FormGroup}>
+								>
 								<InputGroupAddon addonType='prepend'>
 									<InputGroupText>
 										<User size={15} />
@@ -202,7 +198,7 @@ const Login = () => {
 								</Label>
 								<InputGroup
 									className='input-group-merge'
-									tag={FormGroup}>
+									>
 									<InputGroupAddon addonType='prepend'>
 										<InputGroupText>
 											<Mail size={15} />
@@ -231,7 +227,7 @@ const Login = () => {
 								</Label>
 								<InputGroup
 									className='input-group-merge'
-									tag={FormGroup}>
+									>
 									<InputGroupAddon addonType='prepend'>
 										<InputGroupText>
 											<Lock size={15} />

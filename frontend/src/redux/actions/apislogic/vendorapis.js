@@ -123,7 +123,7 @@ export const VendorDeleteAction = (deleteid) => async (dispatch) => {
 			payload: data,
 		});
 		if (data) {
-			toast.error('Vendor Deleted Successfully');
+			toast.success('Vendor Deleted Successfully');
 		}
 		dispatch({ type: VENDOR_DELETE_RESET });
 		dispatch(VendorListAction());
@@ -151,7 +151,7 @@ export const VendorMultiAction = (multiid) => async (dispatch) => {
 			payload: data,
 		});
 		if (data) {
-			toast.error('Vendor Deleted Successfully');
+			toast.success('Vendor Deleted Successfully');
 		}
 		dispatch({ type: VENDOR_MULTI_DELETE_RESET });
 		dispatch(VendorListAction());

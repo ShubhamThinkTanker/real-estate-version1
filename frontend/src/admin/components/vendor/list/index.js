@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import '../../../../components-css/userandchairman.css';
 import BreadCrumbs from '@components/breadcrumbs';
 import { UncontrolledDropdown } from 'reactstrap';
-import { Edit, Eye, Trash2, Tool } from 'react-feather';
+import { Edit, Eye, Trash2 } from 'react-feather';
 
 import {
 	VendorListAction,
@@ -40,18 +40,17 @@ const VendorsList = () => {
 	};
 
 	const columns = [
-	
 		{
 			id: 'name',
 			name: 'First Name',
-			minWidth: "15%",
+			minWidth: '15%',
 			selector: (row) => row.name,
 			sortable: true,
 		},
 		{
 			id: 'lastname',
 			name: 'Last Name',
-			minWidth: "15%",
+			minWidth: '15%',
 			selector: (row) => row.lastname,
 			sortable: true,
 		},
@@ -59,14 +58,14 @@ const VendorsList = () => {
 		{
 			id: 'mobile_no',
 			name: 'Mobile No',
-			minWidth: "10%",
+			minWidth: '10%',
 			selector: (row) => row.mobile_no,
 			sortable: false,
 		},
 		{
 			id: 'profession',
 			name: 'profession',
-			minWidth: "10%",
+			minWidth: '10%',
 			selector: (row) => row.profession,
 			sortable: true,
 		},
@@ -74,7 +73,7 @@ const VendorsList = () => {
 		{
 			id: 'services',
 			name: 'services',
-			minWidth: "20%",
+			minWidth: '20%',
 			selector: (row) => row.services,
 			sortable: true,
 		},
@@ -98,9 +97,10 @@ const VendorsList = () => {
 								<Eye size={18} />
 							</Link>
 
-							<Link to={`/vendor/edit/${row._id}`}
-							className='text-warning mx-1'>
-							<Edit size={18} />
+							<Link
+								to={`/vendor/edit/${row._id}`}
+								className='text-warning mx-1'>
+								<Edit size={18} />
 							</Link>
 							<Trash2
 								size={18}

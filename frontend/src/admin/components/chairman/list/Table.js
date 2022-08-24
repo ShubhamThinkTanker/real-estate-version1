@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
-import { ChevronDown, ChevronsDown, Plus, Trash } from 'react-feather';
+import { ChevronDown, ChevronsDown, Plus, Trash, Search } from 'react-feather';
 import DataTable from 'react-data-table-component';
 import swal from 'sweetalert';
 import { selectThemeColors } from '@utils';
@@ -15,6 +15,7 @@ import {
 	CardHeader,
 	CardTitle,
 	CardBody,
+	Table
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { MultiDeleteAction } from '../../../../redux/actions/apislogic/userapis';
@@ -26,7 +27,7 @@ import {
 
 // ** Table Header
 
-const Table = ({ columns }) => {
+const TableComponent = ({ columns }) => {
 	const dispatch = useDispatch();
 	const {
 		loading: getAllChairmanLoading,
@@ -53,24 +54,24 @@ const Table = ({ columns }) => {
 	const DeleteAll = (e) => {
 		deletedRow.length != 0
 			? swal({
-					title: 'Are you sure?',
-					text: 'Once deleted, you will not be able to recover this data!',
-					icon: 'warning',
-					buttons: true,
-					dangerMode: true,
-			  }).then((willDelete) => {
-					if (willDelete) {
-						let multiRecordDelete = deletedRow.map(
-							(ele) => ele._id
-						);
-						let deleteObj = {
-							id: multiRecordDelete,
-						};
-						dispatch(MultiDeleteAction(deleteObj));
-					} else {
-						swal('Your data  is safe!');
-					}
-			  })
+				title: 'Are you sure?',
+				text: 'Once deleted, you will not be able to recover this data!',
+				icon: 'warning',
+				buttons: true,
+				dangerMode: true,
+			}).then((willDelete) => {
+				if (willDelete) {
+					let multiRecordDelete = deletedRow.map(
+						(ele) => ele._id
+					);
+					let deleteObj = {
+						id: multiRecordDelete,
+					};
+					dispatch(MultiDeleteAction(deleteObj));
+				} else {
+					swal('Your data  is safe!');
+				}
+			})
 			: swal('Please Select One Data');
 	};
 
@@ -128,9 +129,9 @@ const Table = ({ columns }) => {
 		setFilter_value(value);
 	};
 
-	useEffect(() => {
-		dispatch(ChairmanListAction());
-	}, []);
+	// useEffect(() => {
+	// 	dispatch(ChairmanListAction());
+	// }, []);
 
 	const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
 		<div className='custom-control custom-checkbox'>
@@ -144,7 +145,7 @@ const Table = ({ columns }) => {
 		</div>
 	));
 
-	const CustomHeader = (props) => {
+	const CustomHeaders = (props) => {
 		const onSearch = (e) => {
 			e.preventDefault();
 			props.handleFilter(e);
@@ -176,12 +177,20 @@ const Table = ({ columns }) => {
 							</Label>
 							<Input
 								id='search-invoice'
-								className='ml-50 w-100'
+								className='ml-50 w-100 react-select'
 								type='text'
 								value={props.value}
-								onChange={onSearch}
+								onChange={(e) => props.handleFilter(e)}
 								placeholder='Search'
 							/>
+							{/* <Input
+								value={props.value}
+								onChange={(e) => props.handleFilter(e)}
+								placeholder="Search by Category Name"
+							/>
+							<div className="form-control-position">
+								<Search size="15" />
+							</div> */}
 						</div>
 						<div>
 							<Button.Ripple
@@ -200,68 +209,161 @@ const Table = ({ columns }) => {
 		);
 	};
 
+	const CustomHeader = (props) => {
+		const onSearch = (e) => {
+			e.preventDefault();
+			props.handleFilter(e);
+		};
+
 	return (
-		<Fragment>
-			<Card>
-				<CardHeader>
-					<CardTitle tag='h4'>Search Filter</CardTitle>
-				</CardHeader>
-				<CardBody>
-					<Row>
-						<Col md='4'>
-							<Select
-								theme={selectThemeColors}
-								isClearable={false}
-								className='react-select'
-								classNamePrefix='select'
-								options={statusOptions}
-							/>
-						</Col>
-					</Row>
-				</CardBody>
-			</Card>
+		<div className='invoice-list-table-header w-100 mr-1 ml-50 mt-2 mb-75'>
+			<Row>
 
-			<Card>
-				<div className='app-user-list list'>
-					<DataTable
-						className='react-dataTable'
-						noHeader
-						pagination
-						selectableRows
-						onSelectedRowsChange={(e) =>
-							handelDelete(e.selectedRows)
-						}
-						columns={columns}
-						data={getAllChairmanData?.data.Chairman_Details}
-						paginationServer
-						paginationRowsPerPageOptions={datatable_per_raw}
-						paginationPerPage={table_data.limit}
-						paginationTotalRows={
-							getAllChairmanData?.data.TotalCount
-						}
-						sortIcon={<ChevronDown size={5} />}
-						selectableRowsComponent={BootstrapCheckbox}
-						onChangeRowsPerPage={handlePerRowsChange}
-						onChangePage={handlePageChange}
-						onSort={handleSort}
-						fixedHeader
-						// fixedHeaderScrollHeight='400px'
-						sortServer={true}
-						striped={true}
-						progressPending={getAllChairmanLoading}
-						subHeaderComponent={
-							<CustomHeader
-								value={filter_value}
-								handleFilter={handleFilter}
-							/>
-						}
-						subHeader
-						// paginationComponent={CustomPagination}
-					/>
-				</div>
-			</Card>
-		</Fragment>
+				<Col xl='6' className='d-flex align-items-center p-0'>
+					<div className='ml-1'>
+						{deletedRow.length !== 0 && (
+							<Button.Ripple
+								color='danger'
+								onClick={(e) => DeleteAll(e)}>
+								<Trash size={16} />
+								<span className='align-middle ml-1'>
+									Delete
+								</span>
+							</Button.Ripple>
+						)}
+					</div>
+				</Col>
+				<Col
+					xl='6'
+					className='d-flex align-items-sm-center justify-content-lg-end justify-content-start flex-lg-nowrap flex-wrap flex-sm-row flex-column pr-lg-1 p-0 mt-lg-0 mt-1'>
+					<div className='d-flex align-items-center mb-sm-0 mb-1 mr-1 '>
+						<Label className='mb-0' for='search-invoice'>
+							Search:
+						</Label>
+						<Input
+							id='search-invoice'
+							className='ml-50 w-100'
+							type='text'
+							value={props.value}
+							onChange={onSearch}
+						/>
+					</div>
+					<div>
+						<Button.Ripple
+							color='primary'
+							tag={Link}
+							to={'/complex/add'}>
+							<Plus size={16} />
+							<span className='align-middle ml-1'>
+								Create
+							</span>
+						</Button.Ripple>
+					</div>
+				</Col>
+			</Row>
+		</div>
 	);
-};
+						}
 
-export default Table;
+	const ExpandableTable = ({ data }) => {
+		return (
+			<div className='expandable-content p-2 shadow-lg  m-2 bg-body rounded'>
+		
+				<Table responsive>
+					<thead>
+						<tr>
+							<th>Address</th>
+							<th>Country</th>
+							<th>State</th>
+							<th>City</th>
+						</tr>
+					</thead>
+					<tbody>
+						<td>
+							{data.address}
+						</td>
+						<td>
+							{data.country}
+						</td>
+						<td>
+							{data.state}
+						</td>
+						<td>
+							{data.city}
+						</td>
+					</tbody>
+
+
+				</Table>
+			</div>
+		)
+		}
+
+		return (
+			<Fragment>
+				<Card>
+					<CardHeader>
+						<CardTitle tag='h4'>Search Filter</CardTitle>
+					</CardHeader>
+					<CardBody>
+						<Row>
+							<Col md='4'>
+								<Select
+									theme={selectThemeColors}
+									isClearable={false}
+									className='react-select'
+									classNamePrefix='select'
+									options={statusOptions}
+								/>
+							</Col>
+						</Row>
+					</CardBody>
+				</Card>
+
+				<Card>
+					<div className='app-user-list list'>
+						<DataTable
+							className='react-dataTable'
+							noHeader
+							pagination
+							selectableRows
+							onSelectedRowsChange={(e) =>
+								handelDelete(e.selectedRows)
+							}
+							columns={columns}
+							data={getAllChairmanData?.data.Chairman_Details}
+							paginationServer
+							paginationRowsPerPageOptions={datatable_per_raw}
+							paginationPerPage={table_data.limit}
+							paginationTotalRows={
+								getAllChairmanData?.data.TotalCount
+							}
+							sortIcon={<ChevronDown size={5} />}
+							selectableRowsComponent={BootstrapCheckbox}
+							onChangeRowsPerPage={handlePerRowsChange}
+							onChangePage={handlePageChange}
+							onSort={handleSort}
+							fixedHeader
+							// fixedHeaderScrollHeight='400px'
+							sortServer={true}
+							striped={true}
+							progressPending={getAllChairmanLoading}
+							subHeaderComponent={
+								<CustomHeader
+									value={filter_value}
+									handleFilter={handleFilter}
+								/>
+							}
+							subHeader
+							expandableRows
+							expandOnRowClicked
+							expandableRowsComponent={<ExpandableTable />}
+						// paginationComponent={CustomPagination}
+						/>
+					</div>
+				</Card>
+			</Fragment>
+		);
+	};
+
+	export default TableComponent;

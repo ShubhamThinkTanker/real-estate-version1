@@ -25,36 +25,36 @@ import {
 } from '../../Constants/userConstants';
 import { toast } from 'react-toastify';
 
-export const AnnouncementRegisterAction = (registerdata) => async (dispatch) => {
-	
-	dispatch({
-		type: ANNOUNCEMENT_REGISTER_REQUEST,
-	});
-	try {
-		const { data } = await axios.post(
-			'/chairman/announcement/create',
-			registerdata,
-			configHeader
-		);
+export const AnnouncementRegisterAction =
+	(registerdata) => async (dispatch) => {
+		dispatch({
+			type: ANNOUNCEMENT_REGISTER_REQUEST,
+		});
+		try {
+			const { data } = await axios.post(
+				'/chairman/announcement/create',
+				registerdata,
+				configHeader
+			);
 
-		if (data) {
-			toast.success('Announcement Created Successfully');
+			if (data) {
+				toast.success('Announcement Created Successfully');
+			}
+
+			dispatch({
+				type: ANNOUNCEMENT_REGISTER_SUCCESS,
+				payload: data,
+			});
+		} catch (error) {
+			dispatch({
+				type: ANNOUNCEMENT_REGISTER_ERROR,
+				payload:
+					error.response && error.response.data.errors
+						? error.response.data.errors
+						: error.message,
+			});
 		}
-
-		dispatch({
-			type: ANNOUNCEMENT_REGISTER_SUCCESS,
-			payload: data,
-		});
-	} catch (error) {
-		dispatch({
-			type: ANNOUNCEMENT_REGISTER_ERROR,
-			payload:
-				error.response && error.response.data.errors
-					? error.response.data.errors
-					: error.message,
-		});
-	}
-};
+	};
 
 export const AnnouncementListAction = (queryString) => async (dispatch) => {
 	try {
@@ -107,38 +107,39 @@ export const AnnouncementGetAction = (announcement_id) => async (dispatch) => {
 	}
 };
 
-export const EditAnnouncementAction = (updateid, announcementdata) => async (dispatch) => {
-	try {
-		dispatch({
-			type: ANNOUNCEMENT_EDIT_REQUEST,
-		});
+export const EditAnnouncementAction =
+	(updateid, announcementdata) => async (dispatch) => {
+		try {
+			dispatch({
+				type: ANNOUNCEMENT_EDIT_REQUEST,
+			});
 
-		const { data } = await axios.put(
-			`/chairman/announcement/update/${updateid}`,
-			announcementdata,
-			{
-				configHeader,
+			const { data } = await axios.put(
+				`/chairman/announcement/update/${updateid}`,
+				announcementdata,
+				{
+					configHeader,
+				}
+			);
+
+			dispatch({
+				type: ANNOUNCEMENT_EDIT_SUCCESS,
+				payload: data,
+			});
+			if (data) {
+				toast.success('Announcement Updated Successfully');
 			}
-		);
-
-		dispatch({
-			type: ANNOUNCEMENT_EDIT_SUCCESS,
-			payload: data,
-		});
-		if (data) {
-			toast.success('Announcement Updated Successfully');
+			dispatch({ type: ANNOUNCEMENT_EDIT_RESET });
+		} catch (error) {
+			dispatch({
+				type: ANNOUNCEMENT_EDIT_ERROR,
+				payload:
+					error.response && error.response.data.errors
+						? error.response.data.errors
+						: error.message,
+			});
 		}
-		dispatch({ type: ANNOUNCEMENT_EDIT_RESET });
-	} catch (error) {
-		dispatch({
-			type: ANNOUNCEMENT_EDIT_ERROR,
-			payload:
-				error.response && error.response.data.errors
-					? error.response.data.errors
-					: error.message,
-		});
-	}
-};
+	};
 
 export const AnnouncementDeleteAction = (deleteid) => async (dispatch) => {
 	try {
@@ -156,7 +157,7 @@ export const AnnouncementDeleteAction = (deleteid) => async (dispatch) => {
 			payload: data,
 		});
 		if (data) {
-			toast.error('Announcement Deleted Successfully');
+			toast.success('Announcement Deleted Successfully');
 		}
 		dispatch({ type: ANNOUNCEMENT_DELETE_RESET });
 		dispatch(AnnouncementListAction());
@@ -177,14 +178,17 @@ export const AnnouncementMultiAction = (multiid) => async (dispatch) => {
 			type: ANNOUNCEMENT_MULTI_DELETE_REQUEST,
 		});
 
-		const { data } = await axios.delete(`/chairman/announcement/delete_many/`, multiid);
+		const { data } = await axios.delete(
+			`/chairman/announcement/delete_many/`,
+			multiid
+		);
 
 		dispatch({
 			type: ANNOUNCEMENT_MULTI_DELETE_SUCCESS,
 			payload: data,
 		});
 		if (data) {
-			toast.error('Announcement Deleted Successfully');
+			toast.success('Announcement Deleted Successfully');
 		}
 		dispatch({ type: ANNOUNCEMENT_MULTI_DELETE_RESET });
 		dispatch(AnnouncementListAction());
@@ -199,5 +203,3 @@ export const AnnouncementMultiAction = (multiid) => async (dispatch) => {
 		});
 	}
 };
-
-

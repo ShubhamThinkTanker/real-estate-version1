@@ -18,7 +18,7 @@ const ChairmanList = () => {
 	const dispatch = useDispatch();
 
 	const OneDeleteRecord = (id) => {
-		console.log(id,"id");
+		// console.log(id,"id");
 		swal({
 			title: 'Are you sure?',
 			text: 'Once deleted, you will not be able to recover this data!',
@@ -189,6 +189,7 @@ const ChairmanList = () => {
 		},
 	];
 
+	
 	return (
 		<div className='app-user-list'>
 			<BreadCrumbs
