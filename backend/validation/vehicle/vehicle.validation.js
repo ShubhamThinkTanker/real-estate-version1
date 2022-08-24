@@ -9,6 +9,8 @@ module.exports = function validateVehicle(data) {
     data.vehicle_type = !isEmpty(data.vehicle_type) ? data.vehicle_type : "";
     data.vehicle_no = !isEmpty(data.vehicle_no) ? data.vehicle_no : "";
     data.sticker_status = !isEmpty(data.sticker_status) ? data.sticker_status : "";
+    data.status = !isEmpty(data.status) ? data.status : "";
+
 
     if (Validator.isEmpty(data.vehicle_type)) {
         errors.vehicle_type = "Vehicle type is required";
@@ -20,6 +22,10 @@ module.exports = function validateVehicle(data) {
 
     if (Validator.isEmpty(data.sticker_status)) {
         errors.sticker_status = "Sticker status is required";
+    }
+
+    if (Validator.isEmpty(data.status)) {
+        errors.status = "status is required";
     }
 
 

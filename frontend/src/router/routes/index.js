@@ -105,12 +105,12 @@ const Routes = [
 		),
 	},
 
-	// {
-	// 	path: '/estatestructures/list',
-	// 	component: lazy(() =>
-	// 		import('../../admin/components/estatestructures/list')
-	// 	),
-	// },
+	{
+		path: '/estatestructures/list',
+		component: lazy(() =>
+			import('../../admin/components/estatestructures/list')
+		),
+	},
 
 	{
 		path: '/complex/add',
@@ -161,7 +161,9 @@ const Routes = [
 	},
 	{
 		path: '/changepassword',
-		component: lazy(() => import('../../admin/AuthComponents/ChangePassword')),
+		component: lazy(() =>
+			import('../../admin/AuthComponents/ChangePassword')
+		),
 	},
 
 	{

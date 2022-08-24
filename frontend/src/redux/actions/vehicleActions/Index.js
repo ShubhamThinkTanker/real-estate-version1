@@ -115,13 +115,14 @@ export const VehicleGetByIdRequest = (id) => async (dispatch) => {
 };
 
 //  ------------- VEHICLE EDIT BY ID REQUEST --------------
-export const VehicleEditByIdRequest = (id) => async (dispatch) => {
+export const VehicleEditByIdRequest = (id, editedData) => async (dispatch) => {
 	dispatch({
 		type: VEHICLE_EDIT_REQUEST,
 	});
 	try {
 		const { data } = await axios.put(
 			`/api/vehicle/edit/${id}`,
+			editedData,
 			configHeader
 		);
 		const { error, statusCode } = data;

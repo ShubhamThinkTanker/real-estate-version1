@@ -103,11 +103,6 @@ export const UserDeleteAction = (deleteid) => async (dispatch) => {
 			type: USER_DELETE_SUCCESS,
 			payload: data,
 		});
-		if (data) {
-			toast.success('User Deleted Successfully');
-		}
-		dispatch({ type: USER_DELETE_RESET });
-		dispatch(UserListAction());
 	} catch (error) {
 		dispatch({
 			type: USER_DELETE_ERROR,

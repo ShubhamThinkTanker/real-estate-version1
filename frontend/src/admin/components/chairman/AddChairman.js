@@ -57,12 +57,9 @@ const AddChairman = () => {
 	const registerRecords = useSelector((state) => state.registerChairmanData);
 	var { error, ChairmanRegisterData } = registerRecords;
 
-
-
 	useEffect(() => {
 		if (ChairmanRegisterData) {
 			history.push('/chairman/list');
-
 		}
 	}, [ChairmanRegisterData]);
 
@@ -121,7 +118,9 @@ const AddChairman = () => {
 					<Form onSubmit={(e) => onSubmit(e)}>
 						<Row>
 							<Col sm='12'>
-								<Label for='image'>Profile Image</Label>
+								<Label className='required' for='image'>
+									Profile Image
+								</Label>
 								<Media className='mb-2'>
 									<img
 										className='user-avatar rounded mr-2 my-25 cursor-pointer'
@@ -167,7 +166,9 @@ const AddChairman = () => {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label for='name'>Name</Label>
+									<Label className='required' for='name'>
+										Name
+									</Label>
 									<InputGroup
 										className={
 											error && error.name
@@ -208,7 +209,9 @@ const AddChairman = () => {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label for='email'>Email</Label>
+									<Label className='required' for='email'>
+										Email
+									</Label>
 									<InputGroup
 										className={
 											error && error.email
@@ -249,7 +252,9 @@ const AddChairman = () => {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label for='mobile_no'>Mobile No</Label>
+									<Label for='mobile_no' className='required'>
+										Mobile No
+									</Label>
 									<InputGroup
 										className={
 											error && error.mobile_no
@@ -290,7 +295,9 @@ const AddChairman = () => {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label className='form-label' for='address'>
+									<Label
+										className='form-label required'
+										for='address'>
 										Address
 									</Label>
 
@@ -335,7 +342,7 @@ const AddChairman = () => {
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
 									<Label
-										className='form-label'
+										className='form-label required'
 										for='mobileno'>
 										Country
 									</Label>
@@ -352,7 +359,7 @@ const AddChairman = () => {
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
 									<Label
-										className='form-label'
+										className='form-label required'
 										for='profession'>
 										State
 									</Label>
@@ -423,7 +430,9 @@ const AddChairman = () => {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label className='form-label' for='service'>
+									<Label
+										className='form-label required'
+										for='service'>
 										City
 									</Label>
 									<Input
@@ -462,7 +471,9 @@ const AddChairman = () => {
 							</Col>
 
 							<Col md='6' sm='12'>
-								<Label for='gender'>Gender</Label>
+								<Label for='gender' className='required'>
+									Gender
+								</Label>
 								<FormGroup className='mb-2'>
 									<br></br>
 									<CustomInput

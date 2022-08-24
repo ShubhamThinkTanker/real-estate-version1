@@ -14,29 +14,40 @@ import {
 	ComplexListAction,
 	ComplexDeleteAction,
 } from '../../../../redux/actions/apislogic/complexapi';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const UsersList = () => {
 	const dispatch = useDispatch();
-
-	const OneDeleteRecord = (id) => {
-		swal({
+	const handleDeleteById = (id) => {
+		return MySwal.fire({
 			title: 'Are you sure?',
-			text: 'Once deleted, you will not be able to recover this data!',
+			text: "You won't be able to revert this!",
 			icon: 'warning',
-			buttons: true,
-			dangerMode: true,
-		}).then((willDelete) => {
-			if (willDelete) {
-				dispatch(ComplexDeleteAction(id));
-			} else {
-				swal('Your data  is safe!');
+			showCancelButton: true,
+			confirmButtonText: 'Yes, delete it!',
+			customClass: {
+				confirmButton: 'btn btn-primary',
+				cancelButton: 'btn btn-outline-danger ml-1',
+			},
+			buttonsStyling: false,
+		}).then(async function (result) {
+			if (result.value) {
+				MySwal.fire({
+					icon: 'success',
+					title: 'Deleted!',
+					text: 'Your Record has been deleted.',
+					customClass: {
+						confirmButton: 'btn btn-success',
+					},
+				});
+				await dispatch(ComplexDeleteAction(id));
+				dispatch(ComplexListAction());
 			}
 		});
 	};
-
-	useEffect(() => {
-		dispatch(ComplexListAction());
-	}, []);
 
 	const columns = [
 		{
@@ -99,7 +110,7 @@ const UsersList = () => {
 							size={18}
 							className='text-danger'
 							style={{ cursor: 'pointer' }}
-							onClick={() => OneDeleteRecord(row._id)}
+							onClick={() => handleDeleteById(row._id)}
 						/>
 						{/* </UncontrolledDropdown> */}
 					</div>

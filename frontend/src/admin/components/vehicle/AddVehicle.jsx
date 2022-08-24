@@ -82,7 +82,11 @@ const AddVehicle = () => {
 						<Row>
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label for='vehicle_no'>Vehicle No</Label>
+									<Label
+										for='vehicle_no'
+										className='required'>
+										Vehicle No
+									</Label>
 									<InputGroup
 										className={
 											error && error.vehicle_no
@@ -122,7 +126,9 @@ const AddVehicle = () => {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label for='vehicle_type'>
+									<Label
+										for='vehicle_type'
+										className='required'>
 										Vehicle Type
 									</Label>
 									<InputGroup
@@ -158,7 +164,9 @@ const AddVehicle = () => {
 							</Col>
 
 							<Col md='6' sm='12'>
-								<Label for='sticker_status'>
+								<Label
+									for='sticker_status'
+									className='required'>
 									Sticker Status
 								</Label>
 								<FormGroup className=''>

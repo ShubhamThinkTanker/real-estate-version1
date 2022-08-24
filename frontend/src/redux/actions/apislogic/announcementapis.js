@@ -156,11 +156,6 @@ export const AnnouncementDeleteAction = (deleteid) => async (dispatch) => {
 			type: ANNOUNCEMENT_DELETE_SUCCESS,
 			payload: data,
 		});
-		if (data) {
-			toast.success('Announcement Deleted Successfully');
-		}
-		dispatch({ type: ANNOUNCEMENT_DELETE_RESET });
-		dispatch(AnnouncementListAction());
 	} catch (error) {
 		dispatch({
 			type: ANNOUNCEMENT_DELETE_ERROR,

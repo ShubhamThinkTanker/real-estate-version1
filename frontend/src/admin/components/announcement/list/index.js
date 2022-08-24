@@ -11,37 +11,47 @@ import { UncontrolledDropdown } from 'reactstrap';
 import { Edit, Eye, Trash2, Speaker } from 'react-feather';
 
 import {
-	AnnouncementListAction,		// <div className='d-flex justify-content-left align-items-center'>
+	AnnouncementListAction, // <div className='d-flex justify-content-left align-items-center'>
 	// 	{renderAnnouncement(row)}
 	// 	<div className='d-flex flex-column'>{row.title}</div>
 	// </div>
-// ),
+	// ),
 	AnnouncementDeleteAction,
 } from '../../../../redux/actions/apislogic/announcementapis';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const AnnouncementList = () => {
 	const dispatch = useDispatch();
-
-	const OneDeleteRecord = (id) => {
-		swal({
+	const handleDeleteById = (id) => {
+		return MySwal.fire({
 			title: 'Are you sure?',
-			text: 'Once deleted, you will not be able to recover this data!',
+			text: "You won't be able to revert this!",
 			icon: 'warning',
-			buttons: true,
-			dangerMode: true,
-		}).then((willDelete) => {
-			if (willDelete) {
-				dispatch(AnnouncementDeleteAction(id));
-			} else {
-				swal('Your data  is safe!');
+			showCancelButton: true,
+			confirmButtonText: 'Yes, delete it!',
+			customClass: {
+				confirmButton: 'btn btn-primary',
+				cancelButton: 'btn btn-outline-danger ml-1',
+			},
+			buttonsStyling: false,
+		}).then(async function (result) {
+			if (result.value) {
+				MySwal.fire({
+					icon: 'success',
+					title: 'Deleted!',
+					text: 'Your Record has been deleted.',
+					customClass: {
+						confirmButton: 'btn btn-success',
+					},
+				});
+				await dispatch(AnnouncementListAction(id));
+				dispatch(AnnouncementListAction());
 			}
 		});
 	};
-
-	useEffect(() => {
-		dispatch(AnnouncementListAction());
-	}, []);
 
 	// const renderAnnouncement = (row) => {
 	// 	const stateNum = Math.floor(Math.random() * 6),
@@ -83,7 +93,7 @@ const AnnouncementList = () => {
 			minWidth: '15%',
 			selector: 'title',
 			cell: (row) => row.title,
-	     	sortable: true,
+			sortable: true,
 			// <div className='d-flex justify-content-left align-items-center'>
 			// 	{renderAnnouncement(row)}
 			// 	<div className='d-flex flex-column'>{row.title}</div>
@@ -141,7 +151,7 @@ const AnnouncementList = () => {
 								size={18}
 								className='text-danger'
 								style={{ cursor: 'pointer' }}
-								onClick={() => OneDeleteRecord(row._id)}
+								onClick={() => handleDeleteById(row._id)}
 							/>
 						</UncontrolledDropdown>
 					</div>

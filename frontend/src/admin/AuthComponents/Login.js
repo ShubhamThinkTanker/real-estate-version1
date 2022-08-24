@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
 	Card,
 	CardBody,
@@ -15,32 +15,35 @@ import {
 	CardText,
 } from 'reactstrap';
 import '@styles/base/pages/page-auth.scss';
-import { Mail, Lock, User, Eye, EyeOff } from 'react-feather';
+import { Mail, Lock, Eye, EyeOff } from 'react-feather';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../redux/actions/apislogic/authapi';
 import { selectThemeColors } from '@utils';
-import useJwt from '@src/auth/jwt/useJwt';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { useEffect } from 'react';
-import { LOGIN_USER_RESET } from '../../redux/Constants/userConstants';
 import Select from 'react-select';
+import toast from 'react-hot-toast';
+import Avatar from '@components/avatar';
+import { LOGIN_USER_RESET } from '../../redux/Constants/userConstants';
 
 const Login = () => {
-	const loginUser = useSelector((state) => state.LoginUser);
-	const [inputVisibility, setInputVisibility] = useState(false);
-	const { error } = loginUser;
-
-	useEffect(() => {
-		if (error === 'Email Or Mobile Number Does not exists') {
-			toast.error(error);
-			dispatch({ type: LOGIN_USER_RESET });
-		} else if (error && error.role == 'Role Does Not valid') {
-			toast.error(error && error.role);
-			dispatch({ type: LOGIN_USER_RESET });
-		}
-	}, [error && error]);
 	const dispatch = useDispatch();
+	const history = useHistory();
+	const { loading, loginUserData, error } = useSelector(
+		(state) => state?.LoginUser
+	);
+	const [inputVisibility, setInputVisibility] = useState(false);
+
+	// useEffect(() => {
+	// 	if (error === 'Email Or Mobile Number Does not exists') {
+	// 		toast.error(error);
+	// 		dispatch({ type: LOGIN_USER_RESET });
+	// 	} else if (error && error.role == 'Role Does Not valid') {
+	// 		toast.error(error && error.role);
+	// 		dispatch({ type: LOGIN_USER_RESET });
+	// 	}
+	// }, [error && error]);
 	const [values, setValues] = useState({
 		username: '',
 		password: '',
@@ -63,6 +66,32 @@ const Login = () => {
 		{ value: 'chairman', label: 'Chairman' },
 		{ value: 'user', label: 'User' },
 	];
+
+	useEffect(() => {
+		if (loginUserData) {
+			setTimeout(() => {
+				dispatch({ type: LOGIN_USER_RESET });
+				history.push('/dashboard');
+			}, 1000);
+
+			toast.custom(
+				<div className='p-2 bg-white shadow d-flex justify-content-between align-items-center rounded'>
+					<Avatar
+						img={loginUserData?.data?.User_Details?.profile_image}
+					/>
+					<div className='d-flex flex-column align-items-start ml-2'>
+						<b className=''>
+							Hello 👋🏻
+							<span className='text-primary'>
+								{loginUserData?.data?.User_Details?.name}
+							</span>{' '}
+						</b>
+						<small>Welcome to RealEstate</small>
+					</div>
+				</div>
+			);
+		}
+	}, [loginUserData]);
 
 	return (
 		<div className='auth-wrapper auth-v1 px-2'>
@@ -186,8 +215,8 @@ const Login = () => {
 								style={{ borderLeft: 'none' }}
 							/>
 
-							{error && error.role ? (
-								<div className='error'>{error.role}</div>
+							{error && error?.role ? (
+								<div className='error'>{error?.role}</div>
 							) : null}
 						</FormGroup>
 
@@ -196,9 +225,7 @@ const Login = () => {
 								<Label className='form-label' for='login-email'>
 									Email / Mobile No
 								</Label>
-								<InputGroup
-									className='input-group-merge'
-									>
+								<InputGroup className='input-group-merge'>
 									<InputGroupAddon addonType='prepend'>
 										<InputGroupText>
 											<Mail size={15} />
@@ -213,9 +240,9 @@ const Login = () => {
 										placeholder='Enter Your Email / Mobile No'
 									/>
 								</InputGroup>
-								{error && error.username ? (
+								{error && error?.username ? (
 									<div className='error'>
-										{error.username}
+										{error?.username}
 									</div>
 								) : null}
 							</FormGroup>
@@ -225,9 +252,7 @@ const Login = () => {
 									for='login-password'>
 									Password
 								</Label>
-								<InputGroup
-									className='input-group-merge'
-									>
+								<InputGroup className='input-group-merge'>
 									<InputGroupAddon addonType='prepend'>
 										<InputGroupText>
 											<Lock size={15} />
@@ -259,9 +284,9 @@ const Login = () => {
 										</InputGroupText>
 									</InputGroupAddon>
 								</InputGroup>
-								{error && error.password ? (
+								{error && error?.password ? (
 									<div className='error'>
-										{error.password}
+										{error?.password}
 									</div>
 								) : null}
 							</FormGroup>

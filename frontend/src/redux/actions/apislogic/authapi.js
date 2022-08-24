@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { configHeader } from '../../../localstorage/localdata';
+
 import '../../.././index.css';
 import {
 	FORGOTPASSWORD_USER_ERROR,
@@ -33,7 +34,6 @@ export const loginAction = (logindata) => async (dispatch) => {
 				User_Details: data.data.User_Details,
 			})
 		);
-		window.location.href = 'dashboard';
 	} catch (error) {
 		dispatch({
 			type: LOGIN_USER_ERROR,

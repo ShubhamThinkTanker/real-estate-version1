@@ -36,4 +36,7 @@ router.get('/country', controller.GetAllCountry);
 
 router.post('/fakre', controller.fakers)
 
+router.post('/security', controller.profilesecurity)
+
+
 module.exports = router;

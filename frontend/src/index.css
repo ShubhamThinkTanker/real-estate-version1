@@ -47,7 +47,7 @@
 .Toastify__progress-bar--success {
 	background-color: green !important;
 }
-/* delete css */
+/* error css */
 .Toastify__toast--error {
 	background-color: white !important;
 	color: red !important;
@@ -58,4 +58,33 @@
 
 .Toastify__progress-bar--error {
 	background-color: red !important;
+}
+
+/* ----------PAGINATION BUTTON CSS-------------- */
+#pagination-next-page:hover:not(:disabled),
+#pagination-first-page:hover:not(:disabled),
+#pagination-previous-page:hover:not(:disabled),
+#pagination-last-page:hover:not(:disabled) {
+	background-color: #7367f0 !important;
+	color: #ffffff !important;
+	fill: #ffffff !important;
+}
+#pagination-next-page,
+#pagination-first-page,
+#pagination-previous-page,
+#pagination-last-page {
+	border-radius: 50% !important;
+}
+/*....... Required Field............ */
+.required:after {
+	content: ' *';
+	color: red;
+}
+
+/* ----- React Select Border ----- */
+.border-select__control {
+	border-color: #d8d6de;
+}
+.border-select__indicator-separator {
+	background-color: #d8d6de;
 }

@@ -14,9 +14,17 @@ module.exports = {
       let allCountry = await countryModel.find()
       let countryName = allCountry.map(index => index.name)
 
-
+      var allCountryData = []
       if (countryName) {
-        return commonResponse.success(res, 200, 'Get all countrys', countryName);
+        for (let i = 0; i < countryName.length; i++) {
+          var obj = {}
+          obj['value'] = countryName[i]
+          obj['label'] = countryName[i]
+          allCountryData.push(obj)
+        }
+
+        return commonResponse.success(res, 200, 'Get all countrys', allCountryData);
+
       } else {
         return commonResponse.customErrorResponse(res, 422, 'Something went wrong');
       }

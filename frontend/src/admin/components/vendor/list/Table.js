@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChevronDown, Trash, Plus } from 'react-feather';
-
+import swal from 'sweetalert';
 // CALL IT ONCE IN YOUR APP
 import { Card, Input, Row, Col, Label, Button } from 'reactstrap';
 import DataTable from 'react-data-table-component';

@@ -31,6 +31,7 @@ const initialState = {
 	data: null,
 	vehicle: null,
 	createdVehicle: null,
+	editedVehicle: null,
 	deletedVehicle: null,
 };
 
@@ -46,19 +47,19 @@ export const vehicleReducer = (state = initialState, action) => {
 		case VEHICLE_REGISTER_SUCCESS:
 			newState = {
 				...state,
+				loading: false,
 				createdVehicle: action.payload,
 			};
 			break;
 		case VEHICLE_REGISTER_ERROR:
 			newState = {
 				...state,
+				loading: false,
 				error: action.payload,
 			};
 			break;
 		case VEHICLE_REGISTER_RESET:
-			newState = {
-				...state,
-			};
+			newState = initialState;
 			break;
 		case VEHICLE_GET_REQUEST:
 			newState = {
@@ -69,19 +70,19 @@ export const vehicleReducer = (state = initialState, action) => {
 		case VEHICLE_GET_SUCCESS:
 			newState = {
 				...state,
-				vehicle: action.payload,
+				loading: false,
+				vehicle: action.payload.data,
 			};
 			break;
 		case VEHICLE_GET_ERROR:
 			newState = {
 				...state,
+				loading: false,
 				error: action.payload,
 			};
 			break;
 		case VEHICLE_GET_RESET:
-			newState = {
-				...state,
-			};
+			newState = initialState;
 			break;
 		case VEHICLE_LIST_REQUEST:
 			newState = {
@@ -115,12 +116,14 @@ export const vehicleReducer = (state = initialState, action) => {
 		case VEHICLE_EDIT_SUCCESS:
 			newState = {
 				...state,
-				vehicle: action.payload,
+				loading: false,
+				editedVehicle: action.payload,
 			};
 			break;
 		case VEHICLE_EDIT_ERROR:
 			newState = {
 				...state,
+				loading: false,
 				error: action.payload,
 			};
 			break;
@@ -136,19 +139,19 @@ export const vehicleReducer = (state = initialState, action) => {
 		case VEHICLE_DELETE_SUCCESS:
 			newState = {
 				...state,
+				loading: false,
 				deletedVehicle: action.payload,
 			};
 			break;
 		case VEHICLE_DELETE_ERROR:
 			newState = {
 				...state,
+				loading: false,
 				error: action.payload,
 			};
 			break;
 		case VEHICLE_DELETE_RESET:
-			newState = {
-				...state,
-			};
+			newState = initialState;
 			break;
 		case VEHICLE_MULTI_DELETE_REQUEST:
 			newState = {
@@ -159,19 +162,19 @@ export const vehicleReducer = (state = initialState, action) => {
 		case VEHICLE_MULTI_DELETE_SUCCESS:
 			newState = {
 				...state,
-				// vehicle: action.payload,
+				loading: false,
+				deletedVehicle: action.payload,
 			};
 			break;
 		case VEHICLE_MULTI_DELETE_ERROR:
 			newState = {
 				...state,
+				loading: false,
 				error: action.payload,
 			};
 			break;
 		case VEHICLE_MULTI_DELETE_RESET:
-			newState = {
-				...state,
-			};
+			newState = initialState;
 			break;
 		default:
 			newState = state;

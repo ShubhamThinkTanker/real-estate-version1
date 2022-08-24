@@ -22,19 +22,15 @@ import { ComplexCreateAction } from '../../../redux/actions/apislogic/complexapi
 import { COMPLEX_CREATE_RESET } from '../../../redux/Constants/userConstants';
 import { selectThemeColors } from '@utils';
 import Select from 'react-select';
-import './style.css'
+import './style.css';
 
-const countryOptions = [
-	{ value: 'india', label: 'India' }
-  ]
-const stateOptions = [
-	{ value: 'gujarat', label: 'Gujarat' }
-  ]
+const countryOptions = [{ value: 'india', label: 'India' }];
+const stateOptions = [{ value: 'gujarat', label: 'Gujarat' }];
 const cityOptions = [
 	{ value: 'ahmedabad', label: 'Ahmedabad' },
 	{ value: 'surat', label: 'Surat' },
-	{ value: 'rajkot', label: 'Rajkot' }
-  ]
+	{ value: 'rajkot', label: 'Rajkot' },
+];
 
 const AddComplex = () => {
 	const history = useHistory();
@@ -92,7 +88,9 @@ const AddComplex = () => {
 						<Row>
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label className='form-label' for='name'>
+									<Label
+										className='form-label required'
+										for='name'>
 										Realestate Name
 									</Label>
 
@@ -126,15 +124,19 @@ const AddComplex = () => {
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
 									<Label
-										className='form-label'
+										className='form-label required'
 										for='mobileno'>
 										Country
 									</Label>
-									
+
 									<Select
 										theme={selectThemeColors}
 										name='country'
-										className={Complexerror && Complexerror.country ? "is-invalid" : 'react-select flex-fill'}
+										className={
+											Complexerror && Complexerror.country
+												? 'is-invalid'
+												: 'react-select flex-fill'
+										}
 										classNamePrefix='select'
 										defaultValue={countryOptions[2]}
 										options={countryOptions}
@@ -148,7 +150,7 @@ const AddComplex = () => {
 												country: e.value,
 											});
 										}}
-										/>
+									/>
 									{Complexerror && Complexerror.country ? (
 										<div className='error'>
 											{Complexerror.country}
@@ -160,15 +162,19 @@ const AddComplex = () => {
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
 									<Label
-										className='form-label'
+										className='form-label required'
 										for='profession'>
 										State
 									</Label>
-									
+
 									<Select
 										theme={selectThemeColors}
 										name='state'
-										className={Complexerror && Complexerror.state ? "is-invalid" : 'react-select flex-fill'}
+										className={
+											Complexerror && Complexerror.state
+												? 'is-invalid'
+												: 'react-select flex-fill'
+										}
 										classNamePrefix='select'
 										defaultValue={stateOptions[2]}
 										options={stateOptions}
@@ -179,7 +185,7 @@ const AddComplex = () => {
 												state: e.value,
 											});
 										}}
-										/>
+									/>
 
 									{Complexerror && Complexerror.state ? (
 										<div className='error'>
@@ -191,14 +197,20 @@ const AddComplex = () => {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label className='form-label' for='service'>
+									<Label
+										className='form-label required'
+										for='service'>
 										City
 									</Label>
-									
+
 									<Select
 										theme={selectThemeColors}
 										name='city'
-										className={Complexerror && Complexerror.city ? "is-invalid" : 'react-select flex-fill'}
+										className={
+											Complexerror && Complexerror.city
+												? 'is-invalid'
+												: 'react-select flex-fill'
+										}
 										classNamePrefix='select'
 										defaultValue={cityOptions[2]}
 										options={cityOptions}
@@ -209,7 +221,7 @@ const AddComplex = () => {
 												city: e.value,
 											});
 										}}
-										/>
+									/>
 									{Complexerror && Complexerror.city ? (
 										<div className='error'>
 											{Complexerror.city}
@@ -221,7 +233,7 @@ const AddComplex = () => {
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
 									<Label
-										className='form-label'
+										className='form-label required'
 										for='lastname'>
 										Address
 									</Label>

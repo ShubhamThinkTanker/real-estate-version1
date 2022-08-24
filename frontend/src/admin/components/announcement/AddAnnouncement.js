@@ -98,7 +98,9 @@ function AddAnnouncement() {
 					<Form onSubmit={(e) => onSubmit(e)}>
 						<Row>
 							<Col sm='12'>
-								<Label for='image'>Image</Label>
+								<Label for='image' className='required'>
+									Image
+								</Label>
 								<Media className='mb-2'>
 									<img
 										className='user-avatar rounded mr-2 my-25 cursor-pointer'
@@ -142,7 +144,9 @@ function AddAnnouncement() {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label for='title'>Title</Label>
+									<Label for='title' className='required'>
+										Title
+									</Label>
 									<InputGroup
 										className={
 											error && error.title
@@ -184,7 +188,11 @@ function AddAnnouncement() {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label for='description'>Description</Label>
+									<Label
+										for='description'
+										className='required'>
+										Description
+									</Label>
 									<InputGroup
 										className={
 											error && error.description
@@ -226,7 +234,9 @@ function AddAnnouncement() {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label for='startDate'>Start Date</Label>
+									<Label for='startDate' className='required'>
+										Start Date
+									</Label>
 									<InputGroup
 										className={
 											error && error.start_date
@@ -266,7 +276,9 @@ function AddAnnouncement() {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label for='end_date'>End Date</Label>
+									<Label for='end_date' className='required'>
+										End Date
+									</Label>
 									<InputGroup
 										className={
 											error && error.end_date
@@ -307,7 +319,7 @@ function AddAnnouncement() {
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
 									<Label
-										className='form-label'
+										className='form-label required'
 										for='location'>
 										Location
 									</Label>

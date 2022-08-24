@@ -5,22 +5,27 @@ let vehicleSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    user_id:{
+    user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User' 
+        ref: 'User'
     },
     vehicle_type: {
         type: String,
-        required:true,
+        required: true,
     },
     vehicle_no: {
         type: String,
-        required:true,
-       
+        required: true,
+
     },
     sticker_status: {
         type: Boolean,
-        default:false
+        default: false
+    },
+    status: {
+        type: String,
+        enum: ["active", "inactive"],
+        default: "active",
     },
     created_at: {
         type: Date,

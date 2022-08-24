@@ -122,11 +122,6 @@ export const VendorDeleteAction = (deleteid) => async (dispatch) => {
 			type: VENDOR_DELETE_SUCCESS,
 			payload: data,
 		});
-		if (data) {
-			toast.success('Vendor Deleted Successfully');
-		}
-		dispatch({ type: VENDOR_DELETE_RESET });
-		dispatch(VendorListAction());
 	} catch (error) {
 		dispatch({
 			type: VENDOR_DELETE_ERROR,

@@ -30,6 +30,7 @@ import { isUserLoggedIn } from '@utils';
 import Logout from '../LogoutTime/Logout';
 import { userdatas } from '../localstorage/localdata';
 import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
 const Router = () => {
 	// ** Hooks
@@ -133,10 +134,12 @@ const Router = () => {
 
 			return (
 				<Route path={LayoutPaths} key={index}>
-					<ToastContainer
-						pauseOnHover={false}
-						closeOnClick={true}
-						closeButton={true}
+					<ToastContainer autoClose={2000} closeButton={true} />
+					<Toaster
+						position='top-right'
+						toastOptions={{
+							duration: 4000,
+						}}
 					/>
 					<LayoutTag
 						routerProps={routerProps}

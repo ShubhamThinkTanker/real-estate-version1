@@ -140,10 +140,11 @@ export default [
 			},
 		],
 	},
+
 	{
-		id: 'Estate-structures',
-		title: 'Estate-Structures',
-		// icon: <Speaker size={20} />,
+		id: 'estatestructuresApp',
+		title: 'Estate-structures',
+		// icon: <Truck size={20} />,
 		children: [
 			{
 				id: 'estatestructuresList',
@@ -152,10 +153,10 @@ export default [
 				navLink: '/estatestructures/list',
 			},
 			// {
-			// 	id: 'estatestructuresManage',
+			// 	id: 'estatestructuresCreate',
 			// 	title: 'Add',
 			// 	icon: <Circle size={12} />,
-			// 	navLink: '/announcement/add',
+			// 	navLink: '/estatestructures/create',
 			// },
 		],
 	},

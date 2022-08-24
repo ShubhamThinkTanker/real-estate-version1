@@ -155,11 +155,6 @@ export const ComplexDeleteAction = (deleteid) => async (dispatch) => {
 			type: COMPLEX_DELETE_SUCCESS,
 			payload: data,
 		});
-		if (data) {
-			toast.success('Realestate Deleted Successfully');
-		}
-		dispatch({ type: COMPLEX_DELETE_RESET });
-		dispatch(ComplexListAction());
 	} catch (error) {
 		dispatch({
 			type: COMPLEX_DELETE_ERROR,

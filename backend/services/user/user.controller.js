@@ -9,6 +9,8 @@ const ChairmanService = require("./user.services");
 const isEmpty = require("../../validation/isEmpty");
 const { commonResponse, commonFunctions, customErrorResponse } = require("../../helper");
 const validateRegisterInput = require('../../validation/userValidation/user.validation')
+const validateSecurityInput = require('../../validation/userValidation/profileSecurity.validation.js')
+
 const validateLoginInput = require('../../validation/userValidation/loginValidation');
 const validateForgotPasswordInput = require('../../validation/userValidation/forgotPasswordValidation');
 const validateForgotChagePasswordInput = require("../../validation/userValidation/resetPasswordValidation");
@@ -519,6 +521,51 @@ module.exports = {
         } catch (error) {
             return next(error);
         }
+    },
+
+    profilesecurity: async (req, res, next) => {
+        try {
+            token = req.headers.authorization.split(' ')[1];
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            req.user = await ChairmanModel.findOne({ _id: decoded.id });
+
+            if (req.user) {
+
+                var { errors, isValid } = validateSecurityInput(req.body)
+                if (!isEmpty(errors)) {
+                    return commonResponse.customErrorResponse(res, 422, 'Something went wrong', errors);
+                }
+
+                bcrypt.compare(req.body.currentpassword, req.user.password, (err, data) => {
+
+
+                    if (data) {
+                        bcrypt.genSalt(10, (err, salt) => {
+                            bcrypt.hash(req.body.newpassword, salt, async (err, hash) => {
+                                let id = req.user._id
+
+                                let password = await ChairmanService.updatepassword(id, hash);
+                                if (password) {
+                                    return commonResponse.success(res, 201, "Successfully Create Chairman", password);
+
+                                } else {
+                                    errors.error = "Something went wrong, Please try again Later"
+                                    return commonResponse.customErrorResponse(res, 422, 'Something went wrong', errors);
+                                }
+                            })
+                        })
+                    } else {
+                        errors.currentpassword = "Password does not match to your old password"
+                        return commonResponse.customErrorResponse(res, 401, 'Something went wrong', errors);
+                    }
+                })
+            }
+
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 }
+

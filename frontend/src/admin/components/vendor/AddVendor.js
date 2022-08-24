@@ -97,7 +97,9 @@ const AddVendor = () => {
 						<Row>
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label className='form-label' for='name'>
+									<Label
+										className='form-label required'
+										for='name'>
 										First Name
 									</Label>
 									<InputGroup
@@ -144,7 +146,7 @@ const AddVendor = () => {
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
 									<Label
-										className='form-label'
+										className='form-label required'
 										for='lastname'>
 										Last Name
 									</Label>
@@ -191,7 +193,7 @@ const AddVendor = () => {
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
 									<Label
-										className='form-label'
+										className='form-label required'
 										for='mobile_no'>
 										Mobile No
 									</Label>
@@ -239,7 +241,7 @@ const AddVendor = () => {
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
 									<Label
-										className='form-label'
+										className='form-label required'
 										for='profession'>
 										Profession
 									</Label>
@@ -285,7 +287,9 @@ const AddVendor = () => {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label className='form-label' for='service'>
+									<Label
+										className='form-label required'
+										for='service'>
 										Type of Service
 									</Label>
 									<InputGroup
@@ -330,7 +334,9 @@ const AddVendor = () => {
 
 							<Col md='6' sm='12'>
 								<FormGroup className='mb-2'>
-									<Label className='form-label' for='address'>
+									<Label
+										className='form-label required'
+										for='address'>
 										Address
 									</Label>
 									<InputGroup

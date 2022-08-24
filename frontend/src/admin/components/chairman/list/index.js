@@ -13,30 +13,40 @@ import { UserDeleteAction } from '../../../../redux/actions/apislogic/userapis';
 import { ChairmanListAction } from '../../../../redux/actions/apislogic/chairmanapis';
 import Avatar from '@components/avatar';
 import BreadCrumbs from '@components/breadcrumbs';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 const ChairmanList = () => {
 	const dispatch = useDispatch();
-
-	const OneDeleteRecord = (id) => {
-		// console.log(id,"id");
-		swal({
+	const handleDeleteById = (id) => {
+		return MySwal.fire({
 			title: 'Are you sure?',
-			text: 'Once deleted, you will not be able to recover this data!',
+			text: "You won't be able to revert this!",
 			icon: 'warning',
-			buttons: true,
-			dangerMode: true,
-		}).then((willDelete) => {
-			if (willDelete) {
-				dispatch(UserDeleteAction(id));
-			} else {
-				swal('Your data  is safe!');
+			showCancelButton: true,
+			confirmButtonText: 'Yes, delete it!',
+			customClass: {
+				confirmButton: 'btn btn-primary',
+				cancelButton: 'btn btn-outline-danger ml-1',
+			},
+			buttonsStyling: false,
+		}).then(async function (result) {
+			if (result.value) {
+				MySwal.fire({
+					icon: 'success',
+					title: 'Deleted!',
+					text: 'Your Record has been deleted.',
+					customClass: {
+						confirmButton: 'btn btn-success',
+					},
+				});
+				await dispatch(UserDeleteAction(id));
+				dispatch(ChairmanListAction());
 			}
 		});
 	};
-
-	useEffect(() => {
-		dispatch(ChairmanListAction());
-	}, []);
 
 	// ** Renders Chairman Columns
 	const renderChairman = (row) => {
@@ -179,7 +189,7 @@ const ChairmanList = () => {
 						<Trash2
 							className='text-danger'
 							size={18}
-							onClick={() => OneDeleteRecord(row._id)}
+							onClick={() => handleDeleteById(row._id)}
 							style={{ cursor: 'pointer' }}
 						/>
 						{/* </UncontrolledDropdown> */}
@@ -189,7 +199,6 @@ const ChairmanList = () => {
 		},
 	];
 
-	
 	return (
 		<div className='app-user-list'>
 			<BreadCrumbs

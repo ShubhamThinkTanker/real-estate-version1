@@ -2,7 +2,7 @@ const { commonResponse } = require("../../helper");
 const ChairmanModel = require("./user.model");
 const { fileUploadToS3, deleteImage } = require("../../helper/s3aws");
 
-// ------***------  Register Data  -------****--------//
+
 
 exports.chairmanCreate = async (reqbody, id, hash) => {
 	try {
@@ -33,7 +33,7 @@ exports.chairmanCreate = async (reqbody, id, hash) => {
 	}
 };
 
-// ------***------  user Save Data Api -------****--------//
+
 exports.userCreate = async (reqbody, id, hash) => {
 	try {
 		var link = await fileUploadToS3(reqbody.profile_image);
@@ -60,13 +60,8 @@ exports.userCreate = async (reqbody, id, hash) => {
 		console.log("  Error-------------user : ", error);
 		return { error: error };
 	}
-}
+};
 
-
-
-
-
-// ------***------  Check Email Exist Or Not -------****--------//
 
 exports.is_email_exist = async (reqBody) => {
 	try {
@@ -82,7 +77,6 @@ exports.is_email_exist = async (reqBody) => {
 	}
 };
 
-// ------***------  Check MObile No Exist Or Not -------****--------//
 
 exports.is_mobile_no_exist = async (reqBody) => {
 	try {
@@ -99,7 +93,6 @@ exports.is_mobile_no_exist = async (reqBody) => {
 	}
 };
 
-// ------***------  Update Token-------****--------//
 
 exports.Update = async (token, id) => {
 	try {
@@ -114,7 +107,6 @@ exports.Update = async (token, id) => {
 	}
 };
 
-// ------***------  Login Email & Mobile To   -------****--------//
 
 exports.login = async (reqBody) => {
 	try {
@@ -132,7 +124,6 @@ exports.login = async (reqBody) => {
 	}
 };
 
-// ------***------  Add New User Successfully -------****--------//
 
 exports.FindAdmin = async (reqBody) => {
 	try {
@@ -149,7 +140,6 @@ exports.FindAdmin = async (reqBody) => {
 	}
 };
 
-// ------***------  Token Verify -------****--------//
 
 exports.Valid_token = async (token) => {
 	try {
@@ -167,7 +157,6 @@ exports.Valid_token = async (token) => {
 	}
 };
 
-// ------***------  Update Password  -------****--------//
 
 exports.UpdatePassword = async (token, HashPassword) => {
 	try {
@@ -182,7 +171,6 @@ exports.UpdatePassword = async (token, HashPassword) => {
 	}
 };
 
-// ---- ***---- Get All  Chairman -----***-----//
 
 exports.getAllChairman = async (reqQuery, sort_array, filter_value, status) => {
 	try {
@@ -219,7 +207,6 @@ exports.getAllChairman = async (reqQuery, sort_array, filter_value, status) => {
 	}
 };
 
-// ---- ***---- Get All User -----***-----//
 
 exports.getAlluser = async (reqQuery, sort_array, filter_value, status) => {
 	try {
@@ -257,7 +244,6 @@ exports.getAlluser = async (reqQuery, sort_array, filter_value, status) => {
 	}
 };
 
-// ------***------ Find User By Id-------****--------//
 
 exports.get = async (id) => {
 	// console.log(id , ":id");
@@ -274,7 +260,6 @@ exports.get = async (id) => {
 	}
 };
 
-// ------***------Update User  -------****--------//
 
 exports.update = async (id, reqBody) => {
 	console.log(reqBody);
@@ -305,8 +290,6 @@ exports.update = async (id, reqBody) => {
 }
 
 
-// ------***------Delete User-------****--------//
-
 exports.delete = async (id) => {
 
 	try {
@@ -329,13 +312,6 @@ exports.delete = async (id) => {
 	}
 }
 
-// console.log("deleteUserData", deleteUserData);
-// console.log("deleteUserData.......", deleteUserData.profile_image.split("/")[deleteUserData.profile_image.split("/").length - 1]);
-
-
-
-// ------***------Delete Multipal User-------****--------//
-
 exports.deletemulti = async (id) => {
 	try {
 		let GetData = await ChairmanModel.deleteMany({ _id: { $in: id } });
@@ -345,3 +321,19 @@ exports.deletemulti = async (id) => {
 		return new Error(error);
 	}
 };
+
+exports.updatepassword = async (id, hash) => {
+	try {
+
+		let updatepassword = await ChairmanModel.findOneAndUpdate({ _id: id }, { password: hash }).lean();
+
+		if (!updatepassword) {
+			return new Error(commonResponse.getErrorMessage("Data not found"));
+		}
+		return updatepassword;
+	} catch (error) {
+		console.log(error, ":error");
+	}
+}
+
+

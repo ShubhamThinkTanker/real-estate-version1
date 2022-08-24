@@ -1,17 +1,9 @@
 // ** React Imports
 import { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
-// ** Redux Imports
 import { Provider } from 'react-redux';
-import { Toast, ToastBody, ToastHeader, Row, Col } from 'reactstrap';
-
-// ** Toast & ThemeColors Context
 import { ThemeContext } from './utility/context/ThemeColors';
-
-// ** Spinner (Splash Screen)
 import Spinner from './@core/components/spinner/Fallback-spinner';
-
-// ** Ripple Button
 import './@core/components/ripple-button';
 
 // ** PrismJS
